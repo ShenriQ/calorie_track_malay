@@ -10,9 +10,9 @@ import {icons, tmp_imgs} from '@assets';
 import {constant, common, lang} from '../../utils' //'@utils';
 import {user_helper, profile_helper} from '@helper';
 import Icon from 'react-native-vector-icons/Feather';
-import SearchListItem from '../../components/Diary/SearchFoodExercise/SearchListItem';
+import SearchListItem from '../../components/Diary/SearchListItem';
 
-export default class vLearn extends React.Component {
+export default class vSearchFoodExercise extends React.Component {
     constructor(props){
         super(props);
 
@@ -24,15 +24,6 @@ export default class vLearn extends React.Component {
     }
 
     componentDidMount = () => {
-    }
-
-    goLogin = () => {
-        this.props.navigation.navigate('login')
-    }
-
-    onQuitApp = () => {
-        Platform.OS === 'ios' ?
-        RNExitApp.exitApp() : BackHandler.exitApp()
     }
 
     food_items = [
@@ -50,10 +41,9 @@ export default class vLearn extends React.Component {
         },
     ]
 
-    goMedDetail = () => {
-        this.props.navigation.navigate('meddetail')
+    goAddFood = () => {
+        this.props.navigation.navigate('add_food')
     }
-
 
     render(){
         return (
@@ -95,7 +85,7 @@ export default class vLearn extends React.Component {
                     <ScrollView style = {{flex : 1, width : '100%'}} >
                         {
                             [].concat(this.food_items, this.food_items, this.food_items, this.food_items).map((item, index) => 
-                                <SearchListItem item = {item} hiddenDate = {true} key = {index} onPress = {() => this.goMedDetail()}/>
+                                <SearchListItem item = {item} hiddenAddBtn = {false} key = {index} onPress = {() => this.goAddFood()}/>
                             )
                         }
                         <View style = {{height: 25,}}></View>
@@ -111,7 +101,7 @@ const styles = StyleSheet.create({
         flex : 1, flexDirection : 'column', alignItems : 'center', backgroundColor : constant.C_BLACK_0,
     },
     header : {
-        backgroundColor : constant.C_BLUE_50, width : '100%', height : 90, alignItems : 'center', flexDirection : 'row', justifyContent : 'space-evenly',
+        backgroundColor : constant.C_BLUE_50, width : '100%', height : 84, alignItems : 'center', flexDirection : 'row', justifyContent : 'space-evenly',
     },
     fs_12 : {fontSize : 12},
     headerTab: {height : 50, width : 276, backgroundColor : constant.C_BLACK_0, borderRadius : 15, flexDirection : 'row', justifyContent : 'space-evenly', alignItems : 'center'},
@@ -122,27 +112,6 @@ const styles = StyleSheet.create({
         flex : 1, flexDirection : 'column', justifyContent : 'flex-start', alignItems : 'center', width : '100%', paddingTop : 10,
         paddingLeft : 25, paddingRight : 25,
     },
-    titleView : {
-        width : '100%', alignItems : 'center', marginTop : 8, marginBottom : 40,
-    },
-    titleTxt : {
-        textAlign : 'center', fontSize : 22, fontWeight : '700', color : constant.Color_Text
-    },
-    termsTxt : {
-        textAlign : 'center', fontSize : 12, color : constant.Color_Text1,
-    },
-    fogotTxt : {
-        textAlign : 'center', fontSize : 14, fontWeight : '500', color : constant.Color_Primary
-    },
     inputContainer : {height : 56, paddingLeft : 10, backgroundColor : constant.Color_InputBg, borderBottomWidth : 0, borderRadius : 8},
-    logo : {
-        width : 163, resizeMode : 'contain', marginTop : 10, marginBottom : 20
-    },
-    loginBtn : {
-        width : '100%', borderRadius : 8, height : 56,
-    },
-    socialBtn : {
-        justifyContent : 'center', alignItems : 'center', width : 44, height : 44, borderRadius : 22, borderColor : constant.Color_Primary, borderWidth : 1, 
-    }
 });
 

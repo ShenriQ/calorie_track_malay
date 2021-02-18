@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import {width, height, totalSize} from 'react-native-dimension';
 // custom import
 import {icons, imgs} from '@assets';
-import {constant, common, lang} from '../../../utils';
+import {constant, common, lang} from '../../utils';
 import {user_helper, profile_helper} from '@helper';
 
 
@@ -40,9 +40,12 @@ export default class SearchListItem extends React.Component {
                 </View>
                 <View style = {styles.calorie}>
                     <Text style = {styles.calorie_val}>{this.state.item.cal}</Text>
-                    <TouchableOpacity style = {styles.calorie_plus} onPress = {()=>{}}>
-                        <Feather name = "plus" size = {24} color = {constant.C_BLUE_50}/>
-                    </TouchableOpacity>
+                    {
+                        this.props.hiddenAddBtn == false && 
+                        <TouchableOpacity style = {styles.calorie_plus} onPress = {()=>this.props.onPress()}>
+                            <Feather name = "plus" size = {24} color = {constant.C_BLUE_50}/>
+                        </TouchableOpacity>
+                    }
                 </View>
             </TouchableOpacity>
         );
@@ -52,7 +55,9 @@ export default class SearchListItem extends React.Component {
 
 const styles = StyleSheet.create({
     container : {
-        width : '100%', flexDirection : 'row', padding : 12, borderRadius : 13, marginTop : 10, 
+        width : '100%', flexDirection : 'row', paddingTop : 10, paddingBottom : 10, 
+        // marginTop : 10, 
+        // borderRadius : 13, 
         // backgroundColor : '#fff', 
         // elevation : 1,
     },

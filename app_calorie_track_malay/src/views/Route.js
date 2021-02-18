@@ -5,7 +5,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import vSplash from './Auth/vSplash';
 import vLogin from './Auth/vLogin';
 import vRegister from './Auth/vRegister';
+// Diary
 import vSearchFoodExercise from './Diary/vSearchFoodExercise';
+import vAddFood from './Diary/vAddFood';
 
 const Stack = createStackNavigator();
 export default function Route () {
@@ -16,12 +18,13 @@ export default function Route () {
                 screenOptions={{
                     headerShown: false
                 }}   
-                initialRouteName = "home"
+                initialRouteName = "search"
             >
                 <Stack.Screen name = "splash" component = {vSplash} />
                 <Stack.Screen name = "login" component = {vLogin} />
                 <Stack.Screen name = "register" component = {vRegister} />
-                <Stack.Screen name = "home" component = {vSearchFoodExercise} />
+                <Stack.Screen name = "search" component = {vSearchFoodExercise} />
+                <Stack.Screen name = "add_food" component = {vAddFood} />
             </Stack.Navigator>
         </NavigationContainer>
     );
