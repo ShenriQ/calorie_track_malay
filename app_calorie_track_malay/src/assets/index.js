@@ -22,15 +22,15 @@ export const icons = {
     dosage: require('./icons/dosage.png'),
     forbidden: require('./icons/forbidden.png'),
     refill: require('./icons/refill.png'),
-    circle_check : require('./icons/circle_check.png'),
-    scan_focus : require('./icons/scan_focus.png'),
-    scanbtn : require('./icons/scanbtn.png'),
-    photo_library : require('./icons/photo_library.png'),
+    circle_check: require('./icons/circle_check.png'),
+    scan_focus: require('./icons/scan_focus.png'),
+    scanbtn: require('./icons/scanbtn.png'),
+    photo_library: require('./icons/photo_library.png'),
 }
 
 export const tmp_imgs = {
-    apple : require('./imgs/tmp/apple.jpg'),
-    apple1 : require('./imgs/tmp/apple1.jpg'),
+    apple: require('./imgs/tmp/apple.jpg'),
+    apple1: require('./imgs/tmp/apple1.jpg'),
 }
 
 export const imgs = {

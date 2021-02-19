@@ -1,4 +1,4 @@
-const api_base_url =  'http://localhost/';  
+const api_base_url = 'http://localhost/';
 
 // colors
 const C_BG_WHITE = "#DCDCDC";
@@ -18,7 +18,7 @@ const C_YELLOW_50 = '#F7BA1E';
 const Key_usertoken = "user_token";
 
 export default {
-    api_base_url, 
+    api_base_url,
     //////////
     C_BG_WHITE,
     C_RED_50,

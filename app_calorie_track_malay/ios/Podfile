@@ -10,6 +10,8 @@ target 'app_calorie_track_malay' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'ReactNativeLocalization', :path => '../node_modules/react-native-localization'
+
   target 'app_calorie_track_malayTests' do
     inherit! :complete
     # Pods for testing

@@ -10,7 +10,7 @@ function userReducer(state = initialState, action) {
       user: action.payload
     });
   }
-  
+
   return state;
 }
 
