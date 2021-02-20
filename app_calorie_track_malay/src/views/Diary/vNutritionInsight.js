@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
     nutri_btnbar: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: -30 },
     nutri_info: {
         width: '100%',
-        marginTop : 42,
+        marginTop: 42,
         // backgroundColor: '#ff0',
     },
     macro_analysis: {

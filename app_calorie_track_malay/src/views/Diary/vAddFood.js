@@ -24,7 +24,7 @@ export default class vAddFood extends React.Component {
         this.state = {
             activeTab: 0,
             isModal: false,
-            serv_item : {
+            serv_item: {
                 name: "Medium",
                 value: 2,
             },
@@ -109,8 +109,8 @@ export default class vAddFood extends React.Component {
         )
     }
 
-    onSetServ = (serv_item)=>{
-        this.setState({serv_item : serv_item})
+    onSetServ = (serv_item) => {
+        this.setState({ serv_item: serv_item })
     }
 
     render() {
@@ -137,44 +137,44 @@ export default class vAddFood extends React.Component {
                             <View style={styles.serv_info}>
                                 <Text style={styles.serv_gram_txt}>200g</Text>
                                 <Text style={styles.serv_txt}>
-                                    {this.state.serv_item.value} 
+                                    {this.state.serv_item.value}
                                     <Text style={Gstyles.fs_24}> {this.state.serv_item.name}</Text>
                                 </Text>
-                                <Image source={require('../../assets/icons/diary/weighing-machine.png')}/>
+                                <Image source={require('../../assets/icons/diary/weighing-machine.png')} />
                             </View>
                             <View style={styles.serv_ruler}>
-                                <Ruler onSelect={this.onSetServ}/>
+                                <Ruler onSelect={this.onSetServ} />
                             </View>
                         </View>
                         <View style={[styles.set_occation, Gstyles.row_center]}>
-                            <Text style={[Gstyles.color_title, Gstyles.fs_14, {flex : 1, marginRight : 50}]}>{Strings["Add to meal Occasion"]}</Text>
+                            <Text style={[Gstyles.color_title, Gstyles.fs_14, { flex: 1, marginRight: 50 }]}>{Strings["Add to meal Occasion"]}</Text>
                             <View style={[Gstyles.row_center]}>
-                                <View style={[Gstyles.col_center, {height : 70, marginRight : 18}]}>
+                                <View style={[Gstyles.col_center, { height: 70, marginRight: 18 }]}>
                                     <Image source={require('../../assets/icons/diary/morning.png')} />
                                     <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
                                     </TouchableOpacity>
                                 </View>
-                                <View style={[Gstyles.col_center, {height : 70, paddingTop : 4, marginRight : 18}]}>
+                                <View style={[Gstyles.col_center, { height: 70, paddingTop: 4, marginRight: 18 }]}>
                                     <Image source={require('../../assets/icons/diary/sun.png')} />
                                     <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
                                     </TouchableOpacity>
                                 </View>
-                                <View style={[Gstyles.col_center, {height : 70, paddingTop : 5, marginRight : 18}]}>
+                                <View style={[Gstyles.col_center, { height: 70, paddingTop: 5, marginRight: 18 }]}>
                                     <Image source={require('../../assets/icons/diary/night.png')} />
                                     <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
                                     </TouchableOpacity>
                                 </View>
-                                <View style={[Gstyles.col_center, {height : 70, paddingTop : 6,}]}>
+                                <View style={[Gstyles.col_center, { height: 70, paddingTop: 6, }]}>
                                     <Image source={require('../../assets/icons/diary/potato-chips.png')} />
                                     <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -235,11 +235,11 @@ const styles = StyleSheet.create({
     titleTxt: {
         textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.C_BLACK_80
     },
-    serv_info : {flexDirection: 'row', justifyContent: 'center', alignItems: 'center'},
-    serv_ruler : {width : '100%'},
-    serv_gram_txt : {fontSize : 14, fontWeight : '400', color : constant.C_BLACK_40, },
-    serv_txt : {fontSize : 32, fontWeight : '400', color : constant.C_BLUE_50, flex : 1, textAlign : 'center'},
-    set_occation : {borderRadius : 20, backgroundColor : constant.C_BLACK_0, elevation : 2, padding : 20, margin : 5, marginTop : 20},
+    serv_info: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
+    serv_ruler: { width: '100%' },
+    serv_gram_txt: { fontSize: 14, fontWeight: '400', color: constant.C_BLACK_40, },
+    serv_txt: { fontSize: 32, fontWeight: '400', color: constant.C_BLUE_50, flex: 1, textAlign: 'center' },
+    set_occation: { borderRadius: 20, backgroundColor: constant.C_BLACK_0, elevation: 2, padding: 20, margin: 5, marginTop: 20 },
     subjectTxt: { fontSize: 20, fontWeight: '500', color: constant.C_BLACK_80, marginTop: 24, marginBottom: 8 },
     nutri_info: { width: '100%', },
     nutri_chart: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 16 },
@@ -257,15 +257,15 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 10,
         margin: 2,
-        marginTop : 20,
-        marginBottom : 20,
+        marginTop: 20,
+        marginBottom: 20,
         elevation: 5,
     },
     tr: { height: 60, flex: 1, flexDirection: 'row' },
-    td: { height: '100%', flex: 1, borderWidth: 2, borderColor: constant.C_BLUE_10, justifyContent : 'center', alignItems : 'center' },
+    td: { height: '100%', flex: 1, borderWidth: 2, borderColor: constant.C_BLUE_10, justifyContent: 'center', alignItems: 'center' },
     td_odd: { backgroundColor: constant.C_BLUE_5 },
     // tr_gap : {width : '100%', height : 1, backgroundColor : constant},
     // td_gap : {height : '100%', width : 1},
-    color_desc : {color : constant.C_BLACK_60}
+    color_desc: { color: constant.C_BLACK_60 }
 });
 

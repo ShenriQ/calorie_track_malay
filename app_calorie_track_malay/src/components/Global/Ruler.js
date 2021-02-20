@@ -38,7 +38,7 @@ export default class vRuler extends React.Component {
     componentDidMount = () => {
     }
 
-    onSelect=(index)=>{
+    onSelect = (index) => {
         this.setState({ activeIndex: index })
         this.props.onSelect(this.state.carouselItems[index])
     }
