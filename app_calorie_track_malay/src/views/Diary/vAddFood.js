@@ -8,11 +8,12 @@ import RNExitApp from 'react-native-exit-app';
 import Pie from 'react-native-pie';
 // custom import
 import { icons, tmp_imgs } from '@assets';
-import { constant, common, lang } from '../../utils' //'@utils';
+import { constant, common, lang, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import Icon from 'react-native-vector-icons/Feather';
 import SearchListItem from '../../components/Diary/SearchListItem';
 import ColorIndicator from '../../components/Diary/ColorIndicator';
+import Ruler from '../../components/Global/Ruler';
 import Strings from '../../utils/lang';
 
 export default class vAddFood extends React.Component {
@@ -23,6 +24,10 @@ export default class vAddFood extends React.Component {
         this.state = {
             activeTab: 0,
             isModal: false,
+            serv_item : {
+                name: "Medium",
+                value: 2,
+            },
         }
     }
 
@@ -104,6 +109,10 @@ export default class vAddFood extends React.Component {
         )
     }
 
+    onSetServ = (serv_item)=>{
+        this.setState({serv_item : serv_item})
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -123,6 +132,53 @@ export default class vAddFood extends React.Component {
                 <View style={styles.formView} >
                     <ScrollView style={{ flex: 1, width: '100%' }} >
                         <SearchListItem item={this.food_item} hiddenAddBtn={true} onPress={() => { }} />
+                        <View style={styles.set_serving}>
+                            <Text style={styles.subjectTxt}>{Strings["Serving size"]}</Text>
+                            <View style={styles.serv_info}>
+                                <Text style={styles.serv_gram_txt}>200g</Text>
+                                <Text style={styles.serv_txt}>
+                                    {this.state.serv_item.value} 
+                                    <Text style={Gstyles.fs_24}> {this.state.serv_item.name}</Text>
+                                </Text>
+                                <Image source={require('../../assets/icons/diary/weighing-machine.png')}/>
+                            </View>
+                            <View style={styles.serv_ruler}>
+                                <Ruler onSelect={this.onSetServ}/>
+                            </View>
+                        </View>
+                        <View style={[styles.set_occation, Gstyles.row_center]}>
+                            <Text style={[Gstyles.color_title, Gstyles.fs_14, {flex : 1, marginRight : 50}]}>{Strings["Add to meal Occasion"]}</Text>
+                            <View style={[Gstyles.row_center]}>
+                                <View style={[Gstyles.col_center, {height : 70, marginRight : 18}]}>
+                                    <Image source={require('../../assets/icons/diary/morning.png')} />
+                                    <View style={Gstyles.flex_1}></View>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={[Gstyles.col_center, {height : 70, paddingTop : 4, marginRight : 18}]}>
+                                    <Image source={require('../../assets/icons/diary/sun.png')} />
+                                    <View style={Gstyles.flex_1}></View>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={[Gstyles.col_center, {height : 70, paddingTop : 5, marginRight : 18}]}>
+                                    <Image source={require('../../assets/icons/diary/night.png')} />
+                                    <View style={Gstyles.flex_1}></View>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={[Gstyles.col_center, {height : 70, paddingTop : 6,}]}>
+                                    <Image source={require('../../assets/icons/diary/potato-chips.png')} />
+                                    <View style={Gstyles.flex_1}></View>
+                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => {}}>
+                                        <Image source={require('../../assets/icons/diary/plus_btn.png')}/>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
                         <View style={styles.nutri_info}>
                             <Text style={styles.subjectTxt}>{Strings["Nutrition info"]}</Text>
                             <View style={styles.nutri_chart}>
@@ -179,7 +235,12 @@ const styles = StyleSheet.create({
     titleTxt: {
         textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.C_BLACK_80
     },
-    subjectTxt: { fontSize: 20, fontWeight: '500', color: constant.C_BLACK_80, marginTop: 16, marginBottom: 8 },
+    serv_info : {flexDirection: 'row', justifyContent: 'center', alignItems: 'center'},
+    serv_ruler : {width : '100%'},
+    serv_gram_txt : {fontSize : 14, fontWeight : '400', color : constant.C_BLACK_40, },
+    serv_txt : {fontSize : 32, fontWeight : '400', color : constant.C_BLUE_50, flex : 1, textAlign : 'center'},
+    set_occation : {borderRadius : 20, backgroundColor : constant.C_BLACK_0, elevation : 2, padding : 20, margin : 5, marginTop : 20},
+    subjectTxt: { fontSize: 20, fontWeight: '500', color: constant.C_BLACK_80, marginTop: 24, marginBottom: 8 },
     nutri_info: { width: '100%', },
     nutri_chart: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 16 },
     nutri_piechart: { marginRight: 24, },
@@ -188,7 +249,6 @@ const styles = StyleSheet.create({
     nutri_chart_info: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 12, },
     nutri_item_info: { width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
     nutri_item_info_txt: { fontSize: 14, paddingLeft: 12, marginTop: 6, marginBottom: 6 },
-
     table: {
         backgroundColor: constant.C_BLACK_0,
         borderRadius: 10,

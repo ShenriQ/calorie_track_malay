@@ -14,7 +14,7 @@ import { user_helper, profile_helper } from '@helper';
 import Icon from 'react-native-vector-icons/Feather';
 import SearchListItem from '../../components/Diary/SearchListItem';
 import ColorIndicator from '../../components/Diary/ColorIndicator';
-import PieChart from '../../components/Pie';
+import PieChart from '../../components/Global/Pie';
 
 export default class vNutritionInsight extends React.Component {
     constructor(props) {

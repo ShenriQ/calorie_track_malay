@@ -6,6 +6,8 @@ const C_BG_WHITE = "#DCDCDC";
 const C_BLACK_0 = '#FFFFFF';
 const C_BLACK_5 = '#FDFDFD';
 const C_BLACK_10 = '#F6F6F6';
+const C_BLACK_20 = '#E6E6E6';
+const C_BLACK_30 = '#CCCCCC';
 const C_BLACK_40 = '#999999';
 const C_BLACK_60 = '#666666';
 const C_BLACK_70 = '#4D4D4D';
@@ -35,6 +37,8 @@ export default {
     C_BLACK_0,
     C_BLACK_5,
     C_BLACK_10,
+    C_BLACK_20,
+    C_BLACK_30,
     C_BLACK_40,
     C_BLACK_60,
     C_BLACK_70,
