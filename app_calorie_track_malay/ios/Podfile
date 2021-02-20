@@ -12,6 +12,8 @@ target 'app_calorie_track_malay' do
 
   pod 'ReactNativeLocalization', :path => '../node_modules/react-native-localization'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'app_calorie_track_malayTests' do
     inherit! :complete
     # Pods for testing

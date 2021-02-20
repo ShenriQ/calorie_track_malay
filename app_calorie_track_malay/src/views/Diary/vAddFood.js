@@ -41,6 +41,69 @@ export default class vAddFood extends React.Component {
         { name: 'Protein', w: '2.5g', percentage: 50, color: constant.C_BLUE_50 },
     ]
 
+    _renderTable = (data) => {
+        return (
+            <View style={styles.table}>
+                <View style={styles.tr}>
+                    <View style={styles.td}>
+                        <Text>Serving size</Text>
+                    </View>
+                    <View style={styles.td}>
+                        <Text style={styles.color_desc}>1.0 Small</Text>
+                    </View>
+                </View>
+                <View style={styles.tr}>
+                    <View style={[styles.td, styles.td_odd]}>
+                        <Text>Calories <Text style={styles.color_desc}>(Kcal)</Text></Text>
+                    </View>
+                    <View style={[styles.td, styles.td_odd]}>
+                        <Text style={styles.color_desc}>88</Text>
+                    </View>
+                </View>
+                <View style={styles.tr}>
+                    <View style={styles.td}>
+                        <Text>Protein <Text style={styles.color_desc}>(g)</Text></Text>
+                    </View>
+                    <View style={styles.td}>
+                        <Text style={styles.color_desc}>0.5</Text>
+                    </View>
+                </View>
+                <View style={styles.tr}>
+                    <View style={[styles.td, styles.td_odd]}>
+                        <Text >Carbohydrate <Text style={styles.color_desc}>(g)</Text></Text>
+                    </View>
+                    <View style={[styles.td, styles.td_odd]}>
+                        <Text style={styles.color_desc}>25.1</Text>
+                    </View>
+                </View>
+                <View style={styles.tr}>
+                    <View style={styles.td}>
+                        <Text>Sugar <Text style={styles.color_desc}>(g)</Text></Text>
+                    </View>
+                    <View style={styles.td}>
+                        <Text style={styles.color_desc}>3.1</Text>
+                    </View>
+                </View>
+                <View style={styles.tr}>
+                    <View style={[styles.td, styles.td_odd]}>
+                        <Text>Fat <Text style={styles.color_desc}>(g)</Text></Text>
+                    </View>
+                    <View style={[styles.td, styles.td_odd]}>
+                        <Text style={styles.color_desc}>0.0</Text>
+                    </View>
+                </View>
+                <View style={styles.tr}>
+                    <View style={styles.td}>
+                        <Text>Fibre <Text style={styles.color_desc}>(g)</Text></Text>
+                    </View>
+                    <View style={styles.td}>
+                        <Text style={styles.color_desc}>1.2</Text>
+                    </View>
+                </View>
+            </View>
+        )
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -68,6 +131,10 @@ export default class vAddFood extends React.Component {
                                         sections={this.nutri_info}
                                         strokeCap={'butt'}
                                     />
+                                    <View style={{ position: 'absolute', top: '25%', left: '35%' }}>
+                                        <Text style={styles.pie_chart_num}>95</Text>
+                                        <Text style={styles.pie_chart_unit}>Kcal</Text>
+                                    </View>
                                 </View>
                                 <View style={styles.nutri_chart_info}>
                                     {
@@ -82,6 +149,9 @@ export default class vAddFood extends React.Component {
                                     }
                                 </View>
                             </View>
+                            {
+                                this._renderTable()
+                            }
                         </View>
                     </ScrollView>
                 </View>
@@ -113,8 +183,29 @@ const styles = StyleSheet.create({
     nutri_info: { width: '100%', },
     nutri_chart: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 16 },
     nutri_piechart: { marginRight: 24, },
+    pie_chart_num: { textAlign: 'center', fontSize: 18, fontWeight: '500', color: constant.C_BLACK_90 },
+    pie_chart_unit: { textAlign: 'center', fontSize: 14, color: constant.C_BLACK_60 },
     nutri_chart_info: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 12, },
     nutri_item_info: { width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
-    nutri_item_info_txt: { fontSize: 14, paddingLeft: 12, marginTop: 6, marginBottom: 6 }
+    nutri_item_info_txt: { fontSize: 14, paddingLeft: 12, marginTop: 6, marginBottom: 6 },
+
+    table: {
+        backgroundColor: constant.C_BLACK_0,
+        borderRadius: 10,
+        shadowColor: '#f00',
+        shadowOffset: { width: 6, height: 6 },
+        shadowOpacity: 0.8,
+        shadowRadius: 10,
+        margin: 2,
+        marginTop : 20,
+        marginBottom : 20,
+        elevation: 5,
+    },
+    tr: { height: 60, flex: 1, flexDirection: 'row' },
+    td: { height: '100%', flex: 1, borderWidth: 2, borderColor: constant.C_BLUE_10, justifyContent : 'center', alignItems : 'center' },
+    td_odd: { backgroundColor: constant.C_BLUE_5 },
+    // tr_gap : {width : '100%', height : 1, backgroundColor : constant},
+    // td_gap : {height : '100%', width : 1},
+    color_desc : {color : constant.C_BLACK_60}
 });
 
