@@ -75,10 +75,10 @@ export default class vSearchFoodExercise extends React.Component {
                 </View>
                 <View style={{ height: 50, marginTop: 20, }}>
                     <Input
-                        placeholder='Search name here...' placeholderTextColor={constant.C_BLACK_40}
+                        placeholder='Search name here...' placeholderTextColor={constant.C_BLACK_50}
                         onChangeText={value => this.setState({ pass: value })} errorMessage={this.state.err_pass}
                         inputStyle={{ color: constant.C_BLACK_80, fontSize: 14 }} secureTextEntry={true}
-                        leftIcon={<Feather name="search" size={18} color={constant.C_BLACK_40} />}
+                        leftIcon={<Feather name="search" size={18} color={constant.C_BLACK_50} />}
                         inputContainerStyle={styles.searchBar}
                     />
                 </View>

@@ -1,15 +1,17 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Image, TextInput, Platform, } from 'react-native';
+import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import Feather from 'react-native-vector-icons/Feather';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
-import { connect } from 'react-redux';
+import {CheckBox} from 'react-native-elements';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // custom import
 import { icons, imgs } from '@assets';
-import { constant, common, lang } from '@utils';
+import { constant, common, Strings, Gstyles } from '../../utils';
 import { user_helper, profile_helper } from '@helper';
-import { addUser } from '../../redux/actions';
+import { connect } from "react-redux";
+import { addUser } from "../../redux/actions";
+import { RectBtn, LinkBtn } from '../../components/Auth/Btns';
+import { InputSignin } from '../../components/Auth/Inputs';
+import Spacing from '../../components/Global/Spacing';
 
 class vRegister extends React.Component {
     constructor(props) {
@@ -18,15 +20,11 @@ class vRegister extends React.Component {
         this.props = props;
         this.state = {
             loading: false,
-            fname: '',
-            lname: '',
-            username: '',
-            phone: '',
             email: '',
             pass: '',
-            confirm_pass: '',
-            err_id: -1,
-            err_str: '',
+            err_email: '',
+            err_pass: '',
+            termchecked : false,
         }
     }
 
@@ -34,60 +32,26 @@ class vRegister extends React.Component {
     }
 
     validate = () => {
-        if (this.state.fname == '') {
-            this.setState({ err_str: 'please input first name', err_id: 0 });
-            return false;
-        }
-        else if (this.state.lname == '') {
-            this.setState({ err_str: 'please input last name', err_id: 1 });
-            return false;
-        }
-        else if (this.state.username == '') {
-            this.setState({ err_str: 'please input username', err_id: 2 });
-            return false;
-        }
-        else if (this.state.phone == '') {
-            this.setState({ err_str: 'please input phone number', err_id: 3 });
-            return false;
-        }
-        else if (this.state.email == '') {
-            this.setState({ err_str: 'please input email address', err_id: 4 });
+        if (this.state.email == '') {
+            this.setState({ err_email: 'please input valid email', err_pass: '' });
             return false;
         }
         else if (this.state.pass == '') {
-            this.setState({ err_str: 'please input password', err_id: 5 });
-            return false;
-        }
-        else if (this.state.pass != this.state.confirm_pass) {
-            this.setState({ err_str: 'please confirm password', err_id: 6 });
+            this.setState({ err_email: '', err_pass: 'please input password' });
             return false;
         }
         else {
-            this.setState({ err_str: '', err_id: -1 });
-            return true
+            this.setState({ err_email: '', err_pass: '' });
+            return true;
         }
     }
 
-    goLogin = () => {
-        this.props.navigation.navigate('login')
-    }
-
-    onRegister = () => {
+    onLogin = () => {
         let isValid = this.validate()
         if (isValid == true) {
             this.setState({ loading: true })
-
-            let user = {
-                firstName: this.state.fname,
-                lastName: this.state.lname,
-                username: this.state.username,
-                phone: this.state.phone,
-                email: this.state.email,
-                userStatus: 0,
-                password: this.state.pass
-            }
-            user_helper.register(user,
-                this.onRegisterSuccess,
+            user_helper.login(this.state.email, this.state.pass,
+                this.onLoginSuccess,
                 (error) => {
                     // if(error.response.status == 400)
                     this.setState({ loading: false })
@@ -98,7 +62,7 @@ class vRegister extends React.Component {
         }
     }
 
-    onRegisterSuccess = async (res) => {
+    onLoginSuccess = async (res) => {
         console.log('res', res)
         this.setState({ loading: false })
         let userObj = { token: res.Authorization }
@@ -109,45 +73,55 @@ class vRegister extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+            <React.Fragment>
+                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
                 <Spinner visible={this.state.loading} />
-            </View>
+                <KeyboardAwareScrollView
+                    // style={{}}
+                    resetScrollToCoords={{ x: 0, y: 0 }}
+                    contentContainerStyle={styles.container}
+                    scrollEnabled={false}
+                >
+                    <View style={[styles.container, Gstyles.col_center]}>
+                        <View style={[styles.img_view, Gstyles.col_center]} >
+                            <Image source={require('../../assets/imgs/auth/2.png')} style={styles.img} />
+                        </View>
+                        <View style={styles.formView}>
+                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["First name (min. 3 characters)"]} />
+                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Email"]} />
+                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Password (min. 6 characters)"]} />
+                            <View style={[Gstyles.col_center, styles.btn_view]}>
+                                <CheckBox
+                                    containerStyle={styles.checkbox}
+                                    textStyle={styles.termstxt}
+                                    center
+                                    title='By using this App you agree to the Terms of Use and Privacy Policy.'
+                                    checked={this.state.termchecked}
+                                    onPress={()=>this.setState({termchecked : !this.state.termchecked})}
+                                    />
+                                    <RectBtn onPress={()=>{}} name={Strings["Next"]} />
+                            </View>
+                        </View>
+                    </View>
+                </KeyboardAwareScrollView>
+            </React.Fragment>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', alignItems: 'center', backgroundColor: constant.Color_Primary
+        flex: 1, flexDirection: 'column', backgroundColor: constant.C_BLACK_0, 
     },
     formView: {
-        flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%', paddingTop: 20,
-        paddingLeft: 40, paddingRight: 40, backgroundColor: '#fff', borderTopLeftRadius: 35, borderTopRightRadius: 35,
+        width: '100%', padding: 20,
     },
-    titleView: {
-        width: '100%', alignItems: 'center', marginTop: 8, marginBottom: 40,
-    },
-    titleTxt: {
-        textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.Color_Text
-    },
-    termsTxt: {
-        textAlign: 'center', fontSize: 12, color: constant.Color_Text1,
-    },
-    fogotTxt: {
-        textAlign: 'center', fontSize: 14, fontWeight: '500', color: constant.Color_Primary
-    },
-    inputContainer: { height: 56, paddingLeft: 10, backgroundColor: constant.Color_InputBg, borderBottomWidth: 0, borderRadius: 8 },
-    logo: {
-        width: 163, resizeMode: 'contain', marginTop: 10, marginBottom: 20
-    },
-    loginBtn: {
-        width: '100%', borderRadius: 8, height: 56,
-    },
-    socialBtn: {
-        justifyContent: 'center', alignItems: 'center', width: 44, height: 44, borderRadius: 22, borderColor: constant.Color_Primary, borderWidth: 1,
-    }
+    img_view: { flex: 1, minHeight: 286 },
+    img: { width: 286, height: 286, resizeMode: 'contain' },
+    btn_view: { marginBottom : 50},
+    checkbox : {backgroundColor : constant.C_BLACK_0, borderWidth : 0, width : 273},
+    termstxt : {fontSize : 10, fontWeight : '400', color : constant.C_BLACK_100}
 });
 
 
-export default connect(null)(vRegister)
+export default connect(null)(vRegister);

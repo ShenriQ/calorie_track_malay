@@ -7,25 +7,18 @@ import RNExitApp from 'react-native-exit-app';
 import { connect } from 'react-redux';
 // custom import
 import { icons, imgs } from '@assets';
-import { constant, common, } from '@utils';
+import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import { addUser } from '../../redux/actions';
+import {RectBtn, LinkBtn} from '../../components/Auth/Btns';
 
 class vSplash extends React.Component {
     constructor(props) {
         super(props);
-
+        
         this.props = props;
         this.state = {
             loading: false,
-            login_success: false,
-            pass_login_eneabled: true,
-            login_result_msg: '',
-            email: '',
-            pass: '',
-            err_email: '',
-            err_pass: '',
-            lang: global.lang
         }
     }
 
@@ -38,45 +31,51 @@ class vSplash extends React.Component {
         if (userObj != null) {
             console.log('saved userObj', userObj)
             this.props.dispatch(addUser(userObj))
-            this.goDiscover()
         }
-        else {
-            setTimeout(() => {
-                this.goLogin()
-            }, 3000)
-        }
-    }
-
-    goDiscover = () => {
-        this.props.navigation.replace('discover')
-    }
-
-    goLogin = () => {
-        this.props.navigation.replace('login')
     }
 
     onQuitApp = () => {
         Platform.OS === 'ios' ?
             RNExitApp.exitApp() : BackHandler.exitApp()
     }
+    onStartQuery=()=>{
+        this.props.navigation.navigate('q1')
+    }
+    onGoLogin=()=>{
+        this.props.navigation.navigate('login')
+    }
 
     render() {
         return (
-            <View style={styles.container}>
+            <React.Fragment>
                 <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                <Image source={icons.logo} style={styles.logo} />
-            </View>
+                <View style={styles.container}>
+                    <Text style={styles.brand_txt}>{constant.app_brand}</Text>
+                    <View style={styles.container}>
+                        <View style={styles.img_view}>
+                            <Image source={require('../../assets/imgs/auth/1.png')} style={styles.img} />
+                        </View>
+                        <Text style={styles.appname_txt}>{constant.app_name}</Text>
+                    </View>
+                    <View style={[Gstyles.col_center, styles.btn_view]}>
+                        <RectBtn onPress={this.onStartQuery} name={Strings["Get started"]}/>
+                        <LinkBtn onPress={this.onGoLogin} name={Strings["I’m already a member"]}/>
+                    </View>
+                </View>
+            </React.Fragment>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        flex: 1, flexDirection: 'column', backgroundColor : constant.C_BLACK_0
     },
-    logo: {
-        width: 180, resizeMode: 'contain',
-    },
+    brand_txt : {fontSize : 24, fontWeight : '700', color : constant.C_BLACK_100, marginTop : 70, marginLeft : 20},
+    appname_txt : {fontSize:14, fontWeight : '400', color : constant.C_BLACK_100, textAlign : 'center', width : '100%', marginTop : 12},
+    img_view : {flex : 1, paddingRight : 35},
+    img : {width : '100%', height : '100%', resizeMode : 'contain'},
+    btn_view : {marginBottom : 50, marginTop : 65}
 });
 
 export default connect(null)(vSplash)

@@ -10,7 +10,6 @@ import Pie from 'react-native-pie';
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, lang, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
-import Icon from 'react-native-vector-icons/Feather';
 import SearchListItem from '../../components/Diary/SearchListItem';
 import ColorIndicator from '../../components/Diary/ColorIndicator';
 import Ruler from '../../components/Global/Ruler';
@@ -126,7 +125,7 @@ export default class vAddFood extends React.Component {
                         <Text style={styles.titleTxt}>{Strings["Add Food"]}</Text>
                     </View>
                     <TouchableOpacity style={styles.calorie_plus} onPress={() => this.props.navigation.goBack()}>
-                        <AntDesign name="close" size={24} color={constant.C_BLACK_40} />
+                        <AntDesign name="close" size={24} color={constant.C_BLACK_50} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.formView} >
@@ -199,7 +198,7 @@ export default class vAddFood extends React.Component {
                                                 <ColorIndicator color={item.color} />
                                                 <Text style={[styles.nutri_item_info_txt, { color: constant.C_BLACK_100, flex: 5 }]}>{item.name}</Text>
                                                 <Text style={[styles.nutri_item_info_txt, { color: constant.C_BLACK_60, flex: 2 }]}>{item.w}</Text>
-                                                <Text style={[styles.nutri_item_info_txt, { color: constant.C_BLUE_50 }]}>%{item.percentage}</Text>
+                                                <Text style={[styles.nutri_item_info_txt, { color: constant.C_BLUE_50 }]}>{item.percentage}%</Text>
                                             </View>
                                         )
                                     }
@@ -237,7 +236,7 @@ const styles = StyleSheet.create({
     },
     serv_info: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
     serv_ruler: { width: '100%' },
-    serv_gram_txt: { fontSize: 14, fontWeight: '400', color: constant.C_BLACK_40, },
+    serv_gram_txt: { fontSize: 14, fontWeight: '400', color: constant.C_BLACK_50, },
     serv_txt: { fontSize: 32, fontWeight: '400', color: constant.C_BLUE_50, flex: 1, textAlign: 'center' },
     set_occation: { borderRadius: 20, backgroundColor: constant.C_BLACK_0, elevation: 2, padding: 20, margin: 5, marginTop: 20 },
     subjectTxt: { fontSize: 20, fontWeight: '500', color: constant.C_BLACK_80, marginTop: 24, marginBottom: 8 },

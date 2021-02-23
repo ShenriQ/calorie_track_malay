@@ -14,6 +14,8 @@ target 'app_calorie_track_malay' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'app_calorie_track_malayTests' do
     inherit! :complete
     # Pods for testing

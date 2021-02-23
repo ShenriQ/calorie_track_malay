@@ -1,15 +1,15 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, TextInput, Platform } from 'react-native';
+import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import Feather from 'react-native-vector-icons/Feather';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // custom import
 import { icons, imgs } from '@assets';
-import { constant, common } from '@utils';
+import { constant, common, Strings, Gstyles } from '../../utils';
 import { user_helper, profile_helper } from '@helper';
 import { connect } from "react-redux";
 import { addUser } from "../../redux/actions";
+import { RectBtn, LinkBtn } from '../../components/Auth/Btns';
+import { InputSignin } from '../../components/Auth/Inputs';
 
 class vLogin extends React.Component {
     constructor(props) {
@@ -43,10 +43,6 @@ class vLogin extends React.Component {
         }
     }
 
-    goRegister = () => {
-        this.props.navigation.navigate('register')
-    }
-
     onLogin = () => {
         let isValid = this.validate()
         if (isValid == true) {
@@ -74,47 +70,45 @@ class vLogin extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+            <React.Fragment>
+                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
                 <Spinner visible={this.state.loading} />
-            </View>
+                <KeyboardAwareScrollView
+                    // style={{}}
+                    resetScrollToCoords={{ x: 0, y: 0 }}
+                    contentContainerStyle={styles.container}
+                    scrollEnabled={false}
+                >
+                    <View style={[styles.container, Gstyles.col_center]}>
+                        <View style={[styles.img_view, Gstyles.col_center]} >
+                            <Image source={require('../../assets/imgs/auth/2.png')} style={styles.img} />
+                        </View>
+                        <View style={styles.formView}>
+                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Email"]} />
+                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Password"]} />
+                            <View style={[Gstyles.col_center, styles.btn_view]}>
+                                <RectBtn onPress={this.onStartQuery} name={Strings["Sign in"]} />
+                                <LinkBtn onPress={this.onGoLogin} name={Strings["Forgotten your password?"]} />
+                            </View>
+                        </View>
+                    </View>
+                </KeyboardAwareScrollView>
+            </React.Fragment>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', alignItems: 'center', backgroundColor: constant.Color_Primary
+        flex: 1, flexDirection: 'column', backgroundColor: constant.C_BLACK_0
     },
     formView: {
-        flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%', paddingTop: 20,
-        paddingLeft: 40, paddingRight: 40, backgroundColor: '#fff', borderTopLeftRadius: 35, borderTopRightRadius: 35,
+        width: '100%', padding: 20,
     },
-    titleView: {
-        width: '100%', alignItems: 'center', marginTop: 8, marginBottom: 40,
-    },
-    titleTxt: {
-        textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.Color_Text
-    },
-    termsTxt: {
-        textAlign: 'center', fontSize: 12, color: constant.Color_Text1,
-    },
-    fogotTxt: {
-        textAlign: 'center', fontSize: 14, fontWeight: '500', color: constant.Color_Primary
-    },
-    inputContainer: { height: 56, paddingLeft: 10, backgroundColor: constant.Color_InputBg, borderBottomWidth: 0, borderRadius: 8 },
-    logo: {
-        width: 163, resizeMode: 'contain', marginTop: 10, marginBottom: 20
-    },
-    loginBtn: {
-        width: '100%', borderRadius: 8, height: 56,
-    },
-    socialBtn: {
-        justifyContent: 'center', alignItems: 'center', width: 44, height: 44, borderRadius: 22, borderColor: constant.Color_Primary, borderWidth: 1,
-    }
+    img_view: { flex: 1, minHeight: 286 },
+    img: { width: 286, height: 286, resizeMode: 'contain' },
+    btn_view: { marginBottom: 50, marginTop: 15 }
 });
 
 
-export default connect(
-    null
-)(vLogin);
+export default connect(null)(vLogin);

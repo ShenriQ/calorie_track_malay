@@ -248,7 +248,7 @@ export default class vNutritionInsight extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
-                        <AntDesign name="close" size={24} color={constant.C_BLACK_40} />
+                        <AntDesign name="close" size={24} color={constant.C_BLACK_50} />
                     </TouchableOpacity>
                 </View>
                 <View style={styles.formView} >

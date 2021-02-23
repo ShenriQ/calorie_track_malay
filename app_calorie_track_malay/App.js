@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Provider } from 'react-redux'
 import store from './src/redux/store';
-import Route from './src/views/Route';
+import MemberRoute from './src/routes/Member';
+import GuestRoute from './src/routes/Guest';
 
-class App extends React.Component {
-  render() {
+const App = (props) => {
+    const [isLogged, SetIsLogged] = useState(false)
+
     return (
       <Provider store={store}>
-        <Route />
+        {
+          isLogged ? <MemberRoute /> : <GuestRoute />
+        }
       </Provider>
     );
-  }
 }
 
 export default App;
