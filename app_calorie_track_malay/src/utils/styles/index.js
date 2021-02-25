@@ -3,10 +3,12 @@ import constant from '../constant'
 
 const styles = StyleSheet.create({
     w_100: {width : '100%'},
+    fs_8: { fontSize: 8 },
     fs_12: { fontSize: 12 },
     fs_14: { fontSize: 14 },
     fs_16: { fontSize: 16 },
     fs_18: { fontSize: 18 },
+    fs_20: { fontSize: 20 },
     fs_24: { fontSize: 24 },
     ml_8 : {marginLeft : 8},
     ml_12 : {marginLeft : 12},

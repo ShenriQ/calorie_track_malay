@@ -47,6 +47,7 @@ let strings = new LocalizedStrings({
         "To be healthier." : "To be healthier.",
         "Type" : "Type",
         "We use this to calculate your calorie target" : "We use this to calculate your calorie target",
+        "What do you want to search?" : "What do you want to search?",
         "What’s your goal ?" : "What’s your goal ?",
         "Why do you choose that goal?" : "Why do you choose that goal?",
     },
@@ -96,6 +97,7 @@ let strings = new LocalizedStrings({
         "To be healthier." : "To be healthier.",
         "Type" : "Type",
         "We use this to calculate your calorie target" : "We use this to calculate your calorie target",
+        "What do you want to search?" : "What do you want to search?",
         "What’s your goal ?" : "What’s your goal ?",
         "Why do you choose that goal?" : "Why do you choose that goal?",
     }

@@ -30,7 +30,8 @@ export const icons = {
 
 export const tmp_imgs = {
     apple: require('./imgs/tmp/apple.jpg'),
-    apple1: require('./imgs/tmp/apple1.jpg'),
+    // apple1: require('./imgs/tmp/apple1.jpg'),
+    apple1: require('./imgs/discover/aa.svg'),
 }
 
 export const imgs = {

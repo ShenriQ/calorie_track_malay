@@ -49,7 +49,6 @@ export default class vSearchFoodExercise extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                {this.state.isModal && <ModalOption navigation={this.props.navigation} onBackPressed={() => this.setState({ isModal: false })} />}
                 <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <Spinner visible={this.state.loading} />
                 <View style={styles.header}>
@@ -77,7 +76,7 @@ export default class vSearchFoodExercise extends React.Component {
                     <Input
                         placeholder='Search name here...' placeholderTextColor={constant.C_BLACK_50}
                         onChangeText={value => this.setState({ pass: value })} errorMessage={this.state.err_pass}
-                        inputStyle={{ color: constant.C_BLACK_80, fontSize: 14 }} secureTextEntry={true}
+                        inputStyle={{ color: constant.C_BLACK_80, fontSize: 14 }} 
                         leftIcon={<Feather name="search" size={18} color={constant.C_BLACK_50} />}
                         inputContainerStyle={styles.searchBar}
                     />

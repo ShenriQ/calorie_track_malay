@@ -5,7 +5,7 @@ import MemberRoute from './src/routes/Member';
 import GuestRoute from './src/routes/Guest';
 
 const App = (props) => {
-    const [isLogged, SetIsLogged] = useState(false)
+    const [isLogged, SetIsLogged] = useState(true)
 
     return (
       <Provider store={store}>
