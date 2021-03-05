@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import { ModalPortal } from 'react-native-modals';
 import { Provider } from 'react-redux'
 import store from './src/redux/store';
 import MemberRoute from './src/routes/Member';
@@ -12,6 +13,7 @@ const App = (props) => {
         {
           isLogged ? <MemberRoute /> : <GuestRoute />
         }
+        <ModalPortal />
       </Provider>
     );
 }

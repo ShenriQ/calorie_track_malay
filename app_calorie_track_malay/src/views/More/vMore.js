@@ -5,15 +5,14 @@ import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
 import { width, height } from 'react-native-dimension';
-
+import { Modal, ModalContent } from 'react-native-modals';
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import Spacing from '../../components/Global/Spacing';
+import AboutModal from '../../components/Modals/About';
 
 export default class vMore extends React.Component {
     constructor(props) {
@@ -22,7 +21,7 @@ export default class vMore extends React.Component {
         this.props = props;
         this.state = {
             activeTab: 0,
-            isModal: false,
+            isShowAboutModal: false,
         }
     }
 
@@ -85,6 +84,15 @@ export default class vMore extends React.Component {
             else if(data.name == 'Reminders') {
 
             }
+            else if(data.name == 'About/Contact Us') {
+                this.setState({isShowAboutModal : true})
+            }
+            else if(data.name == 'Sign Out') {
+
+            }
+            else if(data.name == 'Shopping List') {
+
+            }
         }
         return (
             <TouchableOpacity key={index} activeOpacity={0.7} style={styles.setting_item} onPress={()=>onClick()}>
@@ -120,6 +128,7 @@ export default class vMore extends React.Component {
                     </View>
 
                 </View>
+                <AboutModal visible={this.state.isShowAboutModal} close={()=>this.setState({isShowAboutModal : false})}/>
             </View>
         );
     }
