@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     pl_4 : {paddingLeft : 4},
     pl_8 : {paddingLeft : 8},
     pl_12 : {paddingLeft : 12},
+    pl_16 : {paddingLeft : 16},
     pr_8 : {paddingRight : 8},
     pr_12 : {paddingRight : 12},
     pt_8 : {paddingTop : 8},
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
     flex_1 : {flex : 1},
     row_center: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
     col_center: { flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
+    col_center_start: { flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' },
     color_title: { color: constant.C_BLACK_90, fontWeight : '500' },
     color_desc: { color: constant.C_BLACK_60, fontWeight : '500' }
 });
