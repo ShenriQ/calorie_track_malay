@@ -13,6 +13,7 @@ import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import Spacing from '../../components/Global/Spacing';
 import AboutModal from '../../components/Modals/About';
+import SignoutModal from '../../components/Modals/SignOut';
 
 export default class vMore extends React.Component {
     constructor(props) {
@@ -22,6 +23,7 @@ export default class vMore extends React.Component {
         this.state = {
             activeTab: 0,
             isShowAboutModal: false,
+            isShowSignoutModal : false,
         }
     }
 
@@ -88,7 +90,7 @@ export default class vMore extends React.Component {
                 this.setState({isShowAboutModal : true})
             }
             else if(data.name == 'Sign Out') {
-
+                this.setState({isShowSignoutModal : true})
             }
             else if(data.name == 'Shopping List') {
 
@@ -129,6 +131,7 @@ export default class vMore extends React.Component {
 
                 </View>
                 <AboutModal visible={this.state.isShowAboutModal} close={()=>this.setState({isShowAboutModal : false})}/>
+                <SignoutModal visible={this.state.isShowSignoutModal} close={()=>this.setState({isShowSignoutModal : false})}/>
             </View>
         );
     }
