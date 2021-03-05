@@ -93,7 +93,7 @@ export default class vMore extends React.Component {
                 this.setState({isShowSignoutModal : true})
             }
             else if(data.name == 'Shopping List') {
-
+                this.props.navigation.navigate('shoppinglist');
             }
         }
         return (
