@@ -84,7 +84,7 @@ export default class vMore extends React.Component {
                 this.props.navigation.navigate('profile');
             }
             else if(data.name == 'Reminders') {
-
+                this.props.navigation.navigate('reminders');
             }
             else if(data.name == 'About/Contact Us') {
                 this.setState({isShowAboutModal : true})

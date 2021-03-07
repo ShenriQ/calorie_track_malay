@@ -21,6 +21,7 @@ const C_BLACK_100 = '#010101';
 
 const C_BLUE_5 = '#F8FAFF';
 const C_BLUE_10 = '#F0F4FF';
+const C_BLUE_30 = '#5789F4';
 const C_BLUE_50 = '#4779F1';
 
 const C_RED_50 = '#FF477C';
@@ -38,6 +39,7 @@ export default {
     C_RED_50,
     C_BLUE_5,
     C_BLUE_10,
+    C_BLUE_30,
     C_BLUE_50,
     C_BLACK_0,
     C_BLACK_5,
