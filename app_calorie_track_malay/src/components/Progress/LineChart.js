@@ -18,36 +18,30 @@ const LineGraph = (props) => {
         value: 0,
     });
 
-    const Y_origin = (y) => {
-        return H - y
-    }
-
     let values = [75, 75, 74, 73, 72]
     let start = values[0]
     let now = values[values.length - 1]
     let goal = 70
     let y_step = (3 * goal - goal) / (start - goal)
-    const getConvertedData = () => {
-        
-
-        let real_step = (values[0] - goal) / values.length
-
-
-        let y_values = []
-        
-        values.map((item) => {
-            y_values.push(goal + (item - goal) * y_step)
-        })
-        // console.log(y_values)
-        return y_values
-    }
+    
     const originPos = { x: 40, y: 30 }
     const graphH = H - originPos.y - 12
     const realGraphH = H - 60
     const realGraphW = props.width * 0.75
     const goalLineY = (realGraphH - originPos.y - 16) / 3
-    let innerGraphPos = { x: 40, }
 
+    const getConvertedData = () => {
+        let y_values = []
+        values.map((item) => {
+            y_values.push(goal + (item - goal) * y_step)
+        })
+        return y_values
+    }
+
+    const Y_origin = (y) => {
+        return H - y
+    }
+    
     const startPos=()=>{
         let startY = goalLineY * 3
         let startX = ((realGraphW - 64)  * (1) ) / values.length + originPos.x
@@ -215,7 +209,7 @@ const LineGraph = (props) => {
 
             </Svg>
             <View style={{position: 'absolute', top : 12, right : 16, padding : 5, borderRadius: 4, borderWidth : 1, borderColor : '#fff'}}>
-                <Text style={{fontSize :14, fontWeight: '500', color : '#fff'}}>Unit: kg</Text>
+                <Text style={{fontSize :14, fontWeight: '500', color : '#fff'}}>Unit: {props.unit}</Text>
             </View>
         </View>
 

@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
     col_center_start: { flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' },
     color_title: { color: constant.C_BLACK_90, fontWeight : '500' },
     color_desc: { color: constant.C_BLACK_60, fontWeight : '500' },
+    text_left: {textAlign:'left', width: '100%'},
     text_center: {textAlign:'center', width: '100%'},
+    text_right: {textAlign:'right', width: '100%'},
 });
 
 export default styles
