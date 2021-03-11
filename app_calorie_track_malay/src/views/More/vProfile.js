@@ -14,7 +14,7 @@ import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import Spacing from '../../components/Global/Spacing';
 // svgs
-import Weight_svg from '../../assets/svgs/Weight_Icon.svg';
+import Weight_svg from '../../assets/svgs/ic_weight.svg';
 
 
 export default class vProfile extends React.Component {
@@ -69,7 +69,7 @@ export default class vProfile extends React.Component {
         {
             id: 'start_weight',
             name: 'Start Weight',
-            icon: <Weight_svg width={24} height={24} />
+            icon: <Weight_svg width={24} height={24}/>
         },
         {
             id: 'activity_level',

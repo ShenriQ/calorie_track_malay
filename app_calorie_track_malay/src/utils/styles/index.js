@@ -27,9 +27,11 @@ const styles = StyleSheet.create({
     flex_1 : {flex : 1},
     row_center: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
     col_center: { flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
+    row_center_start: { flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' },
     col_center_start: { flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center' },
     color_title: { color: constant.C_BLACK_90, fontWeight : '500' },
-    color_desc: { color: constant.C_BLACK_60, fontWeight : '500' }
+    color_desc: { color: constant.C_BLACK_60, fontWeight : '500' },
+    text_center: {textAlign:'center', width: '100%'},
 });
 
 export default styles
