@@ -9,6 +9,7 @@ import vAddFood from '../views/Diary/vAddFood';
 import vNutritionInsight from '../views/Diary/vNutritionInsight';
 // Home
 import HomeTab from '../views/Home';
+import vMealDetails from '../views/Discover/vMealDetails';
 
 const Stack = createStackNavigator();
 export default function Route() {
@@ -25,6 +26,7 @@ export default function Route() {
                 <Stack.Screen name="search" component={vSearchFoodExercise} />
                 <Stack.Screen name="add_food" component={vAddFood} />
                 <Stack.Screen name="nutri_insight" component={vNutritionInsight} />
+                <Stack.Screen name="meal_detail" component={vMealDetails} />
             </Stack.Navigator>
         </NavigationContainer>
     );

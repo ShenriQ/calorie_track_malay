@@ -3,14 +3,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // custom input
 import vDiary from '../Diary';
-import vDiscover from '../Discover';
+import Discover from '../Discover';
 import vProgress from '../Progress';
 import vMore from '../More';
 import {constant} from '../../utils'
 
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+function MyTabs(props) {
   return (
     <Tab.Navigator
       initialRouteName="Diary"
@@ -34,7 +34,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Discover"
-        component={vDiscover}
+        children={()=> <Discover rootnav={props.navigation} />}
         options={{
           tabBarLabel: 'Discover',
           tabBarIcon: ({ color, size }) => (
