@@ -37,7 +37,7 @@ export default class vSearchFoodExercise extends React.Component {
         {
             title: 'Apple Pie',
             description: '220g',
-            photo: tmp_imgs.apple1,
+            photo: tmp_imgs.apple,
             cal: '209Kcal',
         },
     ]

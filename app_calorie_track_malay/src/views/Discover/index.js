@@ -13,6 +13,12 @@ import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import Spacing from '../../components/Global/Spacing';
+import Svg_Tomato from '../../assets/svgs/ic_tomato.svg';
+import Svg_Brocooli from '../../assets/svgs/ic_broccoli.svg';
+import Svg_Blueberry from '../../assets/svgs/ic_blueberry.svg';
+import Svg_BgredCateg from '../../assets/svgs/bg_red_food_categ.svg';
+import Svg_BgtealCateg from '../../assets/svgs/bg_teal_food_categ.svg';
+import Svg_BgblueCateg from '../../assets/svgs/bg_blue_food_categ.svg';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get('window').height
@@ -37,24 +43,24 @@ export default class vDiscover extends React.Component {
             categ_name: 'Vegetables',
             food_name: 'Tomatoes',
             unit: 2,
-            icon: require('../../assets/imgs/discover/tomato.png'),
-            photo: require('../../assets/imgs/discover/food_blue_bg.png'),
+            icon: <Svg_Tomato width={32} height={32}/>,
+            photo: <Svg_BgredCateg  style={{position : 'absolute', top : 0, left : 0, }}/>,
             cal: 120,
         },
         {
             categ_name: 'Fruit',
             food_name: 'Blueberry',
             unit: 12,
-            icon: require('../../assets/imgs/discover/blueberry.png'),
-            photo: require('../../assets/imgs/discover/food_red_bg.png'),
+            icon: <Svg_Blueberry width={32} height={32}/>,
+            photo: <Svg_BgblueCateg  style={{position : 'absolute', top : 0, left : 0, }}/>,
             cal: 339,
         },
         {
             categ_name: 'Vegetables',
             food_name: 'Broccoli',
             unit: 5,
-            icon: require('../../assets/imgs/discover/broccoli.png'),
-            photo: require('../../assets/imgs/discover/food_green_bg.png'),
+            icon: <Svg_Brocooli width={32} height={32}/>,
+            photo: <Svg_BgtealCateg  style={{position : 'absolute', top : 0, left : 0, }}/>,
             cal: 160,
         },
     ]
@@ -117,8 +123,11 @@ export default class vDiscover extends React.Component {
     _renderFoodItem = (data, index) => {
         return (
             <TouchableOpacity key={index} activeOpacity={0.7} style={styles.food_categ_item}>
-                <ImageBackground source={data.photo} style={styles.food_categ_img}>
-                    <Image source={data.icon} style={styles.food_categ_icon} />
+                <View 
+                    style={styles.food_categ_img}
+                >
+                    {data.photo}
+                    {data.icon}
                     <Text style={styles.food_categ_name}>{data.categ_name}</Text>
                     <View style={[Gstyles.row_center, Gstyles.flex_1]}>
                         <Text style={[Gstyles.fs_12, Gstyles.flex_1, { color: constant.C_BLACK_0 }]}>{data.food_name}</Text>
@@ -129,7 +138,8 @@ export default class vDiscover extends React.Component {
                         {data.cal}
                         <Text style={[Gstyles.fs_8, { color: constant.C_BLACK_0 }]}> Kcal</Text>
                     </Text>
-                </ImageBackground>
+                    
+                </View>
             </TouchableOpacity>
 
         )
@@ -224,7 +234,7 @@ export default class vDiscover extends React.Component {
         return (
             <View key={index} style={[Gstyles.col_center, { padding: 8, width : w }]}>
                 <TouchableOpacity onPress={()=>this.goMealDetail(foodItem)} style={[{ backgroundColor: constant.C_BLACK_0, elevation : 2, borderRadius : 12, width : '100%'}, Gstyles.col_center]}>
-                    <ImageBackground source={foodItem.photo} style={{width : (w-12), height : (w-12),}} imageStyle={{borderTopLeftRadius : 12, borderTopRightRadius : 12}}>
+                    <ImageBackground source={foodItem.photo} style={{width : '100%', height : (w-12),}} imageStyle={{borderTopLeftRadius : 12, borderTopRightRadius : 12}}>
                         <TouchableOpacity activeOpacity={0.7} style={[{ position : 'absolute', bottom : 16, right : 16,  padding: 6, paddingTop : 2, paddingBottom : 2, backgroundColor : constant.C_BLACK_0, borderRadius: 12 }, Gstyles.row_center]}>
                             <Text style={{ color: constant.C_RED_50, fontSize: 10, fontWeight : '500', marginRight: 4 }}>{foodItem.cnt}</Text>
                             <Ionicons name={foodItem.isFav ? "ios-heart" : "heart-outline"} size={16} color={constant.C_RED_50} />

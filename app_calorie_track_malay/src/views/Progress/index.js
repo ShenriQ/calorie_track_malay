@@ -64,7 +64,7 @@ export default class vProgress extends React.Component {
             entryValName: 'Weight',
             unit: 'kg',
             boardData : [{ 'name': 'Lost so far', value: '3 kg', color: constant.C_RED_50 }, { 'name': 'Now', value: '75 kg', color: constant.C_TEAL_50 },
-            { 'name': 'Left to loose', value: '5 kg', color: constant.C_YELLOW_50 }, { 'name': 'Goal', value: '70 kg', color: constant.C_BLUE_50 },],
+            { 'name': 'Left to lose', value: '5 kg', color: constant.C_YELLOW_50 }, { 'name': 'Goal', value: '70 kg', color: constant.C_BLUE_50 },],
             milestones: [{ icon: Archiv_svg1, }, { icon: Archiv_svg2, }, { icon: Archiv_svg3, }, { icon: Archiv_svg4, }, { icon: Archiv_svg5, }, { icon: Archiv_svg6, }, { icon: Archiv_svg7, },],
         },
         'Body fat': {
