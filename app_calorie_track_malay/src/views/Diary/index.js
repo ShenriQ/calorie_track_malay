@@ -1,40 +1,25 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Image, ImageBackground, TextInput, Platform, } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 // custom import
-import { icons, tmp_imgs } from '@assets';
-import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
-import SearchListItem from '../../components/Diary/SearchListItem';
+import vDiary from './vDiary';
+import vNutritionInsight from './vNutritionInsight';
+import Options from './vOptions';
+import vWeekview from './vWeekview';
 
-export default class vDiary extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.props = props;
-        this.state = {
-        }
-    }
-
-    componentDidMount = () => {
-    }
-
-    render() {
-        return (
-            <View style={[styles.container, Gstyles.col_center]}>
-                <Text>Diary</Text>
-            </View>
-        );
-    }
+const Stack = createStackNavigator();
+export default function Route(props) {
+    return (
+        <Stack.Navigator
+            // this options hide all header
+            screenOptions={{
+                headerShown: false
+            }}
+            initialRouteName="diary"
+        >
+            <Stack.Screen name="diary" component={vDiary} />
+            <Stack.Screen name="nutri_insight" component={vNutritionInsight} />
+            <Stack.Screen name="options" children={(_props)=><Options rootnav={props.rootnav} navigation={_props.navigation}/>} />
+        </Stack.Navigator>
+    );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1, flexDirection: 'column', alignItems: 'center', backgroundColor: constant.C_BLACK_0,
-    },
-});
-

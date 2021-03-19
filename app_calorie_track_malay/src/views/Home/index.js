@@ -2,7 +2,7 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 // custom input
-import vDiary from '../Diary';
+import Diary from '../Diary';
 import Discover from '../Discover';
 import vProgress from '../Progress';
 import vMore from '../More';
@@ -24,7 +24,7 @@ function MyTabs(props) {
     >
       <Tab.Screen
         name="Diary"
-        component={vDiary}
+        children={()=> <Diary rootnav={props.navigation} />}
         options={{
           tabBarLabel: 'Diary',
           tabBarIcon: ({ color, size }) => (

@@ -305,7 +305,7 @@ export default class vDiscover extends React.Component {
     }
 
     goMealDetail = (foodItem) => {
-        this.props.rootnav.navigate('meal_detail', {foodItem : foodItem})
+        this.props.rootnav.navigate('discover_meal_detail', {foodItem : foodItem})
     }
 
     render() {

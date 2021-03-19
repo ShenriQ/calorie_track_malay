@@ -19,6 +19,7 @@ export const SwitchItem = (props) => (
     circleActiveColor={constant.C_BLACK_0}
     circleInActiveColor={constant.C_BLACK_0}
     changeValueImmediately={true}
+    useNativeDriver={true}
     // renderInsideCircle={() => <CustomComponent />} // custom component to render inside the Switch circle (Text, Image, etc.)
     innerCircleStyle={{ alignItems: "center", justifyContent: "center" }} // style for inner animated circle for what you (may) be rendering inside the circle
     outerCircleStyle={{}} // style for outer animated circle

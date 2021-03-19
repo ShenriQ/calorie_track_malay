@@ -4,6 +4,7 @@ import constant from '../constant'
 const styles = StyleSheet.create({
     w_100: {width : '100%'},
     fs_8: { fontSize: 8 },
+    fs_11 : {fontSize : 11},
     fs_12: { fontSize: 12 },
     fs_14: { fontSize: 14 },
     fs_16: { fontSize: 16 },
