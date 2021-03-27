@@ -16,7 +16,7 @@ import Toast, { BaseToast } from 'react-native-toast-message';
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import Spacing from '../../components/Global/Spacing';
-import NutriInfo from '../../components/Global/NutriInfo';
+import NutriInfoPie from '../../components/Global/NutriInfoPie';
 
 const toastConfig = {
     success: ({ text1, ...rest }) => (
@@ -269,7 +269,7 @@ export default class vMealDetails extends React.Component {
                         </View>
                         <View style={styles.border1} />
                         <View style={[Gstyles.col_center, { width: '100%', paddingLeft: 24, paddingRight: 24, }]} >
-                            <NutriInfo />
+                            <NutriInfoPie />
                         </View>
                         <View style={styles.border1} />
                         <View style={[Gstyles.col_center, { width: '100%', paddingLeft: 24, paddingRight: 24, }]} >

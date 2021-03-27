@@ -8,12 +8,11 @@ import RNExitApp from 'react-native-exit-app';
 import Pie from 'react-native-pie';
 // custom import
 import { icons, tmp_imgs } from '@assets';
-import { constant, common, lang, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
-import SearchListItem from '../../components/Diary/SearchListItem';
-import ColorIndicator from '../../components/Diary/ColorIndicator';
+import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import Ruler from '../../components/Global/Ruler';
-import Strings from '../../utils/lang';
+import NutriInfoTable from '../../components/Global/NutriInfoTable';
+// svgs
+import Svg_weighmachine from '../../assets/svgs/diary/ic_weigh_machine.svg';
 
 export default class vAddFood extends React.Component {
     constructor(props) {
@@ -45,64 +44,17 @@ export default class vAddFood extends React.Component {
         { name: 'Protein', w: '2.5g', percentage: 50, color: constant.C_BLUE_50 },
     ]
 
-    _renderTable = (data) => {
+    _renderHeader = () => {
         return (
-            <View style={styles.table}>
-                <View style={styles.tr}>
-                    <View style={styles.td}>
-                        <Text>Serving size</Text>
+            <View style={styles.header}>
+                <View style={[{ width: '100%', }, Gstyles.row_center]}>
+                    <View style={[Gstyles.flex_1, { flexDirection: 'row', paddingLeft: 20 }]}>
+                        <TouchableOpacity onPress={() => { this.props.navigation.pop() }}>
+                            <Feather name="arrow-left" size={24} color={constant.C_BLACK_80} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.td}>
-                        <Text style={styles.color_desc}>1.0 Small</Text>
-                    </View>
-                </View>
-                <View style={styles.tr}>
-                    <View style={[styles.td, styles.td_odd]}>
-                        <Text>Calories <Text style={styles.color_desc}>(Kcal)</Text></Text>
-                    </View>
-                    <View style={[styles.td, styles.td_odd]}>
-                        <Text style={styles.color_desc}>88</Text>
-                    </View>
-                </View>
-                <View style={styles.tr}>
-                    <View style={styles.td}>
-                        <Text>Protein <Text style={styles.color_desc}>(g)</Text></Text>
-                    </View>
-                    <View style={styles.td}>
-                        <Text style={styles.color_desc}>0.5</Text>
-                    </View>
-                </View>
-                <View style={styles.tr}>
-                    <View style={[styles.td, styles.td_odd]}>
-                        <Text >Carbohydrate <Text style={styles.color_desc}>(g)</Text></Text>
-                    </View>
-                    <View style={[styles.td, styles.td_odd]}>
-                        <Text style={styles.color_desc}>25.1</Text>
-                    </View>
-                </View>
-                <View style={styles.tr}>
-                    <View style={styles.td}>
-                        <Text>Sugar <Text style={styles.color_desc}>(g)</Text></Text>
-                    </View>
-                    <View style={styles.td}>
-                        <Text style={styles.color_desc}>3.1</Text>
-                    </View>
-                </View>
-                <View style={styles.tr}>
-                    <View style={[styles.td, styles.td_odd]}>
-                        <Text>Fat <Text style={styles.color_desc}>(g)</Text></Text>
-                    </View>
-                    <View style={[styles.td, styles.td_odd]}>
-                        <Text style={styles.color_desc}>0.0</Text>
-                    </View>
-                </View>
-                <View style={styles.tr}>
-                    <View style={styles.td}>
-                        <Text>Fibre <Text style={styles.color_desc}>(g)</Text></Text>
-                    </View>
-                    <View style={styles.td}>
-                        <Text style={styles.color_desc}>1.2</Text>
-                    </View>
+                    <Text style={styles.titleTxt}>Add food</Text>
+                    <View style={{width: 24, flex: 1}}/>
                 </View>
             </View>
         )
@@ -117,97 +69,44 @@ export default class vAddFood extends React.Component {
             <View style={styles.container}>
                 <StatusBar hidden={true} translucent backgroundColor="transparent" barStyle="light-content" />
                 <Spinner visible={this.state.loading} />
-                <View style={styles.header}>
-                    <TouchableOpacity style={styles.calorie_plus} onPress={() => this.props.navigation.goBack()}>
-                        <AntDesign name="arrowleft" size={24} color={constant.C_BLACK_80} />
-                    </TouchableOpacity>
-                    <View style={styles.titleView}>
-                        <Text style={styles.titleTxt}>{Strings["Add Food"]}</Text>
-                    </View>
-                    <TouchableOpacity style={styles.calorie_plus} onPress={() => this.props.navigation.goBack()}>
-                        <AntDesign name="close" size={24} color={constant.C_BLACK_50} />
-                    </TouchableOpacity>
-                </View>
+                {this._renderHeader()}
                 <View style={styles.formView} >
                     <ScrollView style={{ flex: 1, width: '100%' }} >
-                        <SearchListItem item={this.food_item} hiddenAddBtn={true} onPress={() => { }} />
-                        <View style={styles.set_serving}>
-                            <Text style={styles.subjectTxt}>{Strings["Serving size"]}</Text>
+                        <View style={[Gstyles.col_center, {marginTop: 25, marginBottom: 25}]}>
+                            <Image source={tmp_imgs.apple} style={styles.foodimg}/>
+                            <Text style={styles.foodTxt}>Apple</Text>
+                        </View>
+                        <View >
+                            <View>
+                                <View style={{alignItems: 'flex-end'}}>
+                                <Text style={{fontSize : 18, fontWeight: '400', color: constant.C_BLACK_70}}>230 kcal</Text>
+                                </View>
+                            </View>
                             <View style={styles.serv_info}>
-                                <Text style={styles.serv_gram_txt}>200g</Text>
+                                <View style={{flex: 1}}>
+                                <Svg_weighmachine width={18} height={18} />
+                                </View>
                                 <Text style={styles.serv_txt}>
                                     {this.state.serv_item.value}
                                     <Text style={Gstyles.fs_24}> {this.state.serv_item.name}</Text>
                                 </Text>
-                                <Image source={require('../../assets/icons/diary/weighing-machine.png')} />
+                                <View style={{alignItems: 'flex-end', flex :1}}>
+                                    <Text style={styles.serv_gram_txt}>200g</Text>
+                                </View>
                             </View>
                             <View style={styles.serv_ruler}>
                                 <Ruler onSelect={this.onSetServ} />
                             </View>
                         </View>
-                        <View style={[styles.set_occation, Gstyles.row_center]}>
-                            <Text style={[Gstyles.color_title, Gstyles.fs_14, { flex: 1, marginRight: 50 }]}>{Strings["Add to meal Occasion"]}</Text>
-                            <View style={[Gstyles.row_center]}>
-                                <View style={[Gstyles.col_center, { height: 70, marginRight: 18 }]}>
-                                    <Image source={require('../../assets/icons/diary/morning.png')} />
-                                    <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[Gstyles.col_center, { height: 70, paddingTop: 4, marginRight: 18 }]}>
-                                    <Image source={require('../../assets/icons/diary/sun.png')} />
-                                    <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[Gstyles.col_center, { height: 70, paddingTop: 5, marginRight: 18 }]}>
-                                    <Image source={require('../../assets/icons/diary/night.png')} />
-                                    <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={[Gstyles.col_center, { height: 70, paddingTop: 6, }]}>
-                                    <Image source={require('../../assets/icons/diary/potato-chips.png')} />
-                                    <View style={Gstyles.flex_1}></View>
-                                    <TouchableOpacity style={styles.calorie_plus} onPress={() => { }}>
-                                        <Image source={require('../../assets/icons/diary/plus_btn.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                        <View style={[styles.btnview, Gstyles.col_center]}>
+                            <TouchableOpacity activeOpacity={0.7}
+                                style={[styles.trackbtn, Gstyles.col_center]}
+                                onPress={() => { }}>
+                                <Text style={[Gstyles.fs_16, { color: constant.C_BLACK_0, fontWeight: '700' }]} >Track food</Text>
+                            </TouchableOpacity>
+                            <NutriInfoTable />
                         </View>
-                        <View style={styles.nutri_info}>
-                            <Text style={styles.subjectTxt}>{Strings["Nutrition info"]}</Text>
-                            <View style={styles.nutri_chart}>
-                                <View style={styles.nutri_piechart}>
-                                    <Pie radius={50} innerRadius={35}
-                                        sections={this.nutri_info}
-                                        strokeCap={'butt'}
-                                    />
-                                    <View style={{ position: 'absolute', top: '25%', left: '35%' }}>
-                                        <Text style={styles.pie_chart_num}>95</Text>
-                                        <Text style={styles.pie_chart_unit}>Kcal</Text>
-                                    </View>
-                                </View>
-                                <View style={styles.nutri_chart_info}>
-                                    {
-                                        this.nutri_info.map((item, index) =>
-                                            <View key={index} style={styles.nutri_item_info}>
-                                                <ColorIndicator color={item.color} />
-                                                <Text style={[styles.nutri_item_info_txt, { color: constant.C_BLACK_100, flex: 5 }]}>{item.name}</Text>
-                                                <Text style={[styles.nutri_item_info_txt, { color: constant.C_BLACK_60, flex: 2 }]}>{item.w}</Text>
-                                                <Text style={[styles.nutri_item_info_txt, { color: constant.C_BLUE_50 }]}>{item.percentage}%</Text>
-                                            </View>
-                                        )
-                                    }
-                                </View>
-                            </View>
-                            {
-                                this._renderTable()
-                            }
-                        </View>
+
                     </ScrollView>
                 </View>
             </View>
@@ -220,7 +119,7 @@ const styles = StyleSheet.create({
         flex: 1, flexDirection: 'column', alignItems: 'center', backgroundColor: constant.C_BLACK_0,
     },
     header: {
-        backgroundColor: constant.C_BLACK_0, width: '100%', height: 84, elevation: 6, alignItems: 'center', flexDirection: 'row', justifyContent: 'space-evenly',
+        backgroundColor: constant.C_BLACK_0, width: '100%', elevation : 4, height: 80, paddingBottom: 8, alignItems: 'flex-end', flexDirection: 'row',
     },
     fs_14: { fontSize: 14 },
     fs_24: { fontSize: 24 },
@@ -228,43 +127,20 @@ const styles = StyleSheet.create({
         flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%', paddingTop: 10,
         paddingLeft: 25, paddingRight: 25,
     },
-    titleView: {
-        height: 50, width: 276, backgroundColor: constant.C_BLACK_0, borderRadius: 15, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'
-    },
     titleTxt: {
-        textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.C_BLACK_80
+        textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.C_BLACK_80, marginLeft: 16, marginRight: 16
     },
     serv_info: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
     serv_ruler: { width: '100%' },
     serv_gram_txt: { fontSize: 14, fontWeight: '400', color: constant.C_BLACK_50, },
-    serv_txt: { fontSize: 32, fontWeight: '400', color: constant.C_BLUE_50, flex: 1, textAlign: 'center' },
+    serv_txt: { fontSize: 28, fontWeight: '400', color: constant.C_BLUE_50, textAlign: 'center' },
     set_occation: { borderRadius: 20, backgroundColor: constant.C_BLACK_0, elevation: 2, padding: 20, margin: 5, marginTop: 20 },
     subjectTxt: { fontSize: 20, fontWeight: '500', color: constant.C_BLACK_80, marginTop: 24, marginBottom: 8 },
     nutri_info: { width: '100%', },
-    nutri_chart: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 16 },
-    nutri_piechart: { marginRight: 24, },
-    pie_chart_num: { textAlign: 'center', fontSize: 18, fontWeight: '500', color: constant.C_BLACK_90 },
-    pie_chart_unit: { textAlign: 'center', fontSize: 14, color: constant.C_BLACK_60 },
-    nutri_chart_info: { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 12, },
-    nutri_item_info: { width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', },
-    nutri_item_info_txt: { fontSize: 14, paddingLeft: 12, marginTop: 6, marginBottom: 6 },
-    table: {
-        backgroundColor: constant.C_BLACK_0,
-        borderRadius: 10,
-        shadowColor: '#f00',
-        shadowOffset: { width: 6, height: 6 },
-        shadowOpacity: 0.8,
-        shadowRadius: 10,
-        margin: 2,
-        marginTop: 20,
-        marginBottom: 20,
-        elevation: 5,
-    },
-    tr: { height: 60, flex: 1, flexDirection: 'row' },
-    td: { height: '100%', flex: 1, borderWidth: 2, borderColor: constant.C_BLUE_10, justifyContent: 'center', alignItems: 'center' },
-    td_odd: { backgroundColor: constant.C_BLUE_5 },
-    // tr_gap : {width : '100%', height : 1, backgroundColor : constant},
-    // td_gap : {height : '100%', width : 1},
-    color_desc: { color: constant.C_BLACK_60 }
+    btnview: {width: '100%', marginTop: 28,  borderTopWidth: 2, borderTopColor: constant.C_BLACK_20, },
+    trackbtn: { width: '100%', height: 45, marginBottom: 12, borderRadius: 10, backgroundColor: constant.C_BLUE_80 },
+    color_desc: { color: constant.C_BLACK_60 },
+    foodimg: {width : 53, height : 53, resizeMode: 'cover', borderRadius: 12},
+    foodTxt: {fontSize: 35, fontWeight: '400', color: constant.C_BLACK_80},
 });
 

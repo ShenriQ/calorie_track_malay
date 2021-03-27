@@ -11,6 +11,13 @@ import vAppBadge from '../views/Diary/vAppBadge';
 import vShare from '../views/Diary/vShare';
 import vSetmyown from '../views/Diary/vSetmyown';
 import vOptiondiet from '../views/Diary/vOptiondiet';
+import vAddMeal from '../views/Diary/vAddMeal';
+import vQuickAdd from '../views/Diary/vQuickAdd';
+import vCreateMeal from '../views/Diary/vCreateMeal';
+import vCreateFood from '../views/Diary/vCreateFood';
+import vAddFood from '../views/Diary/vAddFood';
+import vTrackingSteps from '../views/Diary/vTrackingSteps';
+import vAddNote from '../views/Diary/vAddNote';
 // discover stack
 import vMealDetails from '../views/Discover/vMealDetails';
 
@@ -33,6 +40,13 @@ export default function Route() {
                 <Stack.Screen name="diary_share" component={vShare} />
                 <Stack.Screen name="diary_setmyown" component={vSetmyown} />
                 <Stack.Screen name="diary_optiondiet" component={vOptiondiet} />
+                <Stack.Screen name="diary_addmeal" component={vAddMeal} />
+                <Stack.Screen name="diary_quickadd" component={vQuickAdd} />
+                <Stack.Screen name="diary_createmeal" component={vCreateMeal} />
+                <Stack.Screen name="diary_createfood" component={vCreateFood} />
+                <Stack.Screen name="diary_addfood" component={vAddFood} />
+                <Stack.Screen name="diary_trackingsteps" component={vTrackingSteps} />
+                <Stack.Screen name="diary_addnote" component={vAddNote} />
             </Stack.Navigator>
         </NavigationContainer>
     );

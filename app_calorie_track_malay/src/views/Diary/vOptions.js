@@ -6,7 +6,6 @@ import Feather from 'react-native-vector-icons/Feather';
 import { Button, Input } from 'react-native-elements';
 import RNExitApp from 'react-native-exit-app';
 // import Pie from 'react-native-pie';
-import * as Progress from 'react-native-progress';
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
