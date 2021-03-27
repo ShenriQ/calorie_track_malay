@@ -13,25 +13,8 @@ export default class vRuler extends React.Component {
         this.props = props;
 
         this.state = {
-            activeIndex: 1,
-            carouselItems: [
-                {
-                    name: "Small",
-                    value: 1,
-                },
-                {
-                    name: "Medium",
-                    value: 2,
-                },
-                {
-                    name: "Big",
-                    value: 3,
-                },
-                {
-                    name: "Jumbo",
-                    value: 4,
-                },
-            ]
+            activeIndex: this.props.activeIndex,
+            carouselItems: this.props.items
         }
     }
 

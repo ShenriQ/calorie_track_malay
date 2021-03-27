@@ -1,5 +1,5 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Image, ImageBackground, TextInput, Platform, } from 'react-native';
+import { BackHandler, View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Dimensions, Animated, TextInput, Platform, } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
@@ -22,7 +22,11 @@ import Svg_apple from '../../assets/svgs/diary/ic_apple.svg';
 import Svg_arrow from '../../assets/svgs/diary/ic_arrow.svg';
 import Svg_water from '../../assets/svgs/diary/ic_water.svg';
 import Svg_face_good from '../../assets/svgs/diary/ic_good.svg'
+import Svg_watercup from '../../assets/svgs/diary/ic_watercup.svg'
+import Svg_wave from '../../assets/svgs/diary/img_waterwave.svg'
 
+const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get('window').height
 
 export default class vDiary extends React.Component {
     constructor(props) {
@@ -35,6 +39,8 @@ export default class vDiary extends React.Component {
             isfrom: false,
             todate: new Date(),
             fromdate: new Date(),
+            waterCnt: 0,
+            waterModalY: new Animated.Value(-screenHeight),
         }
     }
 
@@ -80,8 +86,14 @@ export default class vDiary extends React.Component {
     goPage = (page) => {
         this.props.navigation.navigate(page)
     }
-    goAddFood = (mealtype) => {
-        this.props.rootnav.navigate('diary_addmeal', { mealtype: mealtype })
+
+    goAdd = (data) => {
+        if (data.type == 'activity') {
+            this.props.rootnav.navigate('diary_addactivity')
+        }
+        else {
+            this.props.rootnav.navigate('diary_addmeal', { mealtype: data.name })
+        }
     }
 
     _renderHeader = () => {
@@ -118,6 +130,11 @@ export default class vDiary extends React.Component {
         const data = [{ name: 'Protein', value: 4, total: 82, color: constant.C_BLUE_50 },
         { name: 'Carbohydrates', value: 5, total: 164, color: constant.C_RED_50 },
         { name: 'Fat', value: 2, total: 37, color: constant.C_TEAL_50 },]
+
+        const onClickWater = () => {
+            this.openWaterModal()
+        }
+
         return (
             <View style={{ width: '100%', backgroundColor: constant.C_BLACK_0 }}>
                 <View style={[{ width: '100%', }, Gstyles.row_center]}>
@@ -157,12 +174,15 @@ export default class vDiary extends React.Component {
                             </View>
                         )
                     }
-                    <View style={styles.dashbox}>
+                    <TouchableOpacity style={styles.dashbox} onPress={() => { onClickWater() }}>
                         <Text style={{ fontSize: 12, fontWeight: '400', color: constant.C_BLACK_100 }}>Water</Text>
-                        <TouchableOpacity>
-                            <Svg_water width={56} height={45} />
-                        </TouchableOpacity>
-                    </View>
+                        <View>
+                            <Svg_water width={24} height={20} />
+                        </View>
+                        <View style={[Gstyles.col_center, { width: 59, height: 16, backgroundColor: constant.C_BLUE_50, borderRadius: 30 }]}>
+                            <Text style={{ fontSize: 8, fontWeight: '400', color: constant.C_BLACK_0 }}>{this.state.waterCnt} glass</Text>
+                        </View>
+                    </TouchableOpacity>
 
                 </View>
             </View>
@@ -192,7 +212,7 @@ export default class vDiary extends React.Component {
                     }
                 </View>
                 <View style={[{ width: '100%', height: 50, backgroundColor: '#f5f8ff', paddingLeft: 18, paddingRight: 18 }, Gstyles.row_center]}>
-                    <TouchableOpacity onPress={() => this.goAddFood(data.name)} style={[Gstyles.row_center]}>
+                    <TouchableOpacity onPress={() => this.goAdd(data)} style={[Gstyles.row_center]}>
                         <Feather name='plus' size={20} color={constant.C_BLUE_50} />
                         <Text style={{ color: constant.C_BLUE_50, fontSize: 14, fontWeight: '400', marginLeft: 6 }}>Add {data.type}</Text>
                     </TouchableOpacity>
@@ -206,10 +226,10 @@ export default class vDiary extends React.Component {
     }
 
     _renderPanelNote = (list) => {
-        const goAddNote=()=>{
+        const goAddNote = () => {
             this.props.rootnav.navigate('diary_addnote')
         }
-        
+
         return (
             <View style={{ width: '100%', backgroundColor: constant.C_BLACK_0, marginTop: 12, elevation: 1 }}>
                 <View style={[{ width: '100%', height: 50, backgroundColor: constant.C_BLUE_50, paddingLeft: 16, paddingRight: 12 }, Gstyles.row_center]}>
@@ -220,8 +240,8 @@ export default class vDiary extends React.Component {
                     {
                         list.map((item, index) =>
                             <View key={index} style={[{ width: '100%', padding: 16, }, Gstyles.row_center]}>
-                                <TouchableOpacity onPress={()=>{}}> 
-                                {item.icon}
+                                <TouchableOpacity onPress={() => { }}>
+                                    {item.icon}
                                 </TouchableOpacity>
                                 <Text style={{ flex: 1, fontSize: 14, fontWeight: '400', width: '100%', color: constant.C_BLUE_50, marginLeft: 12 }}>{item.note}</Text>
                             </View>
@@ -229,7 +249,7 @@ export default class vDiary extends React.Component {
                     }
                 </View>
                 <View style={[{ width: '100%', height: 50, backgroundColor: '#f5f8ff', paddingLeft: 18, paddingRight: 18 }, Gstyles.row_center]}>
-                    <TouchableOpacity onPress={()=>goAddNote()} style={[Gstyles.row_center]}>
+                    <TouchableOpacity onPress={() => goAddNote()} style={[Gstyles.row_center]}>
                         <Feather name='plus' size={20} color={constant.C_BLUE_50} />
                         <Text style={{ color: constant.C_BLUE_50, fontSize: 14, fontWeight: '400', marginLeft: 6 }}>Add</Text>
                     </TouchableOpacity>
@@ -240,15 +260,15 @@ export default class vDiary extends React.Component {
     }
 
     _renderMoreOptionModal = () => {
-        const onTrackingStep=()=>{
-            this.setState({isOptionModal : false,})
+        const onTrackingStep = () => {
+            this.setState({ isOptionModal: false, })
             this.props.rootnav.navigate('diary_trackingsteps')
         }
-        const onCopyTodate=()=>{
-            this.setState({isfrom : false, isOptionModal : false, isDateModal : true})
+        const onCopyTodate = () => {
+            this.setState({ isfrom: false, isOptionModal: false, isDateModal: true })
         }
-        const onCopyfromdate=()=>{
-            this.setState({isfrom : true, isOptionModal : false, isDateModal : true})
+        const onCopyfromdate = () => {
+            this.setState({ isfrom: true, isOptionModal: false, isDateModal: true })
         }
         return (
             <BottomModal
@@ -261,15 +281,15 @@ export default class vDiary extends React.Component {
                 <View
                     style={[{ flex: 1, backgroundColor: constant.C_BLACK_0, }, Gstyles.col_center]}
                 >
-                    <TouchableOpacity onPress={()=>onTrackingStep()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                    <TouchableOpacity onPress={() => onTrackingStep()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
                         <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Manage steps tracking</Text>
                     </TouchableOpacity>
                     <View style={[styles.border1, { width: '100%' }]} />
-                    <TouchableOpacity onPress={()=>onCopyfromdate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                    <TouchableOpacity onPress={() => onCopyfromdate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
                         <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy from date</Text>
                     </TouchableOpacity>
                     <View style={[styles.border1, { width: '100%' }]} />
-                    <TouchableOpacity onPress={()=>onCopyTodate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                    <TouchableOpacity onPress={() => onCopyTodate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
                         <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy to date</Text>
                     </TouchableOpacity>
                 </View>
@@ -325,7 +345,7 @@ export default class vDiary extends React.Component {
                             textColor={constant.C_BLUE_50}
                             date={this.state.isfrom ? this.state.fromdate : this.state.todate}
                             onDateChange={(value) => {
-                                if(this.state.isfrom) {
+                                if (this.state.isfrom) {
                                     this.setState({ fromdate: value })
                                 }
                                 else {
@@ -336,6 +356,74 @@ export default class vDiary extends React.Component {
                     </View>
                 </View>
             </BottomModal>
+        )
+    }
+
+
+    openWaterModal = () => {
+        Animated.timing(this.state.waterModalY, {
+            duration: 100,
+            toValue: 0,
+            useNativeDriver: true
+        }).start();
+    }
+
+    closeWaterModal = () => {
+        Animated.timing(this.state.waterModalY, {
+            duration: 100,
+            toValue: -screenHeight,
+            useNativeDriver: true
+        }).start();
+    }
+    _renderWaterModal = () => {
+        const onPlus=()=>{
+            this.setState({waterCnt: this.state.waterCnt + 1})
+        }
+        const onMinus=()=>{
+            if(this.state.waterCnt > 0) {
+                this.setState({waterCnt: this.state.waterCnt - 1})
+            }
+        }
+        return (
+            <Animated.View
+                style={[
+                    styles.topmodal,
+                    {
+                        transform: [
+                            { translateY: this.state.waterModalY }
+                        ],
+                        elevation: 10
+                    }
+                ]}
+            >
+                <View style={[styles.waterModalContent, Gstyles.col_center, Gstyles.w_100]}>
+                    <View style={[Gstyles.row_center, Gstyles.w_100, styles.waterModalHeader,]}>
+                        <TouchableOpacity onPress={() => { this.closeWaterModal() }}>
+                            <AntDesign name="close" size={24} color={constant.C_BLACK_80} />
+                        </TouchableOpacity>
+                        <Text style={[styles.titleTxt, Gstyles.flex_1]}>Water</Text>
+                        <View style={{ width: 24 }} />
+                    </View>
+                    <View style={[Gstyles.col_center, { paddingLeft: 0, paddingRight: 0, paddingTop: 25, zIndex: 10 }]}>
+                        <Text style={{ fontSize: 16, color: constant.C_BLACK_60 }}>Aim to drink 8 glasses of water per day</Text>
+                        <View style={{ width: 50, height: 2, marginTop: 6, backgroundColor: constant.C_BLUE_50 }} />
+                        <View style={[Gstyles.row_center, { alignItems: 'flex-start', marginTop: 28 }]}>
+                            <TouchableOpacity style={[styles.waterModalBtn]} onPress={onMinus}>
+                                <AntDesign name="minus" size={24} color={constant.C_BLUE_50} />
+                            </TouchableOpacity>
+                            <View style={[Gstyles.col_center, { marginLeft: 20, marginRight: 20 }]}>
+                                <Svg_watercup width={150} height={150} />
+                                <Text style={{position: 'absolute', top: '38%', color: constant.C_BLACK_0, fontSize: 18, fontWeight: '700'}}>x{this.state.waterCnt}</Text>
+                                <Text style={{fontSize:12, color: constant.C_BLACK_60}}>250ml per glass</Text>
+                            </View>
+                            <TouchableOpacity style={[styles.waterModalBtn]} onPress={onPlus}>
+                                <AntDesign name="plus" size={24} color={constant.C_BLUE_50} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <Svg_wave width={screenWidth} height={110} style={{marginTop: -70}}/>
+                </View>
+            </Animated.View>
         )
     }
 
@@ -360,6 +448,7 @@ export default class vDiary extends React.Component {
                 </View>
                 {this._renderMoreOptionModal()}
                 {this._renderDateModal()}
+                {this._renderWaterModal()}
             </View>
         );
     }
@@ -370,7 +459,7 @@ const styles = StyleSheet.create({
         flex: 1, flexDirection: 'column', alignItems: 'center', backgroundColor: constant.C_BLACK_0,
     },
     header: {
-        backgroundColor: constant.C_BLACK_0, width: '100%', height: 80, elevation: 6, paddingBottom: 5, alignItems: 'flex-end', flexDirection: 'row',
+        backgroundColor: constant.C_BLACK_0, width: '100%', height: 80, elevation: 5, paddingBottom: 5, alignItems: 'flex-end', flexDirection: 'row',
     },
     headerChartBtn: { height: 40, width: 40, borderRadius: 10, marginLeft: 8, backgroundColor: constant.C_BLACK_0, elevation: 3 },
     titleTxt: {
@@ -387,5 +476,20 @@ const styles = StyleSheet.create({
     subjectTxt: { fontSize: 20, fontWeight: '500', color: constant.C_BLACK_80, marginTop: 24, marginBottom: 16 },
     modalTitleBar: { height: 56 },
     modalTitleTxt: { fontSize: 18, fontWeight: '700', color: constant.C_BLACK_80, textAlign: 'center' },
+    topmodal: {
+        height: screenHeight,
+        width: '100%', // screenWidth,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        backgroundColor: '#00000055',
+        justifyContent: 'flex-start',
+        elevation: 15,
+    },
+    waterModalContent: { width: '100%', elevation: 15, backgroundColor: constant.C_BLACK_0, borderBottomRightRadius: 12, borderBottomLeftRadius: 12, },
+    waterModalHeader: {
+        backgroundColor: constant.C_BLACK_0, width: '100%', height: 80, paddingLeft: 16, paddingRight: 16, paddingBottom: 8, alignItems: 'flex-end', flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: constant.C_BLACK_20
+    },
+    waterModalBtn: { marginTop: 20, padding: 6, borderRadius: 8, borderColor: constant.C_BLUE_50, borderWidth: 1 },
 });
 

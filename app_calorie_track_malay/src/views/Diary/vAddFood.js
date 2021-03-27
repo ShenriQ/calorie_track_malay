@@ -95,7 +95,26 @@ export default class vAddFood extends React.Component {
                                 </View>
                             </View>
                             <View style={styles.serv_ruler}>
-                                <Ruler onSelect={this.onSetServ} />
+                                <Ruler activeIndex = {1} items = {
+                                    [
+                                        {
+                                            name: "Small",
+                                            value: 1,
+                                        },
+                                        {
+                                            name: "Medium",
+                                            value: 2,
+                                        },
+                                        {
+                                            name: "Big",
+                                            value: 3,
+                                        },
+                                        {
+                                            name: "Jumbo",
+                                            value: 4,
+                                        },
+                                    ]
+                                } onSelect={this.onSetServ} />
                             </View>
                         </View>
                         <View style={[styles.btnview, Gstyles.col_center]}>

@@ -18,6 +18,9 @@ import vCreateFood from '../views/Diary/vCreateFood';
 import vAddFood from '../views/Diary/vAddFood';
 import vTrackingSteps from '../views/Diary/vTrackingSteps';
 import vAddNote from '../views/Diary/vAddNote';
+import vAddActivity from '../views/Diary/vAddActivity';
+import vNewExercise from '../views/Diary/vNewExercise';
+import vAddExercise from '../views/Diary/vAddExercise';
 // discover stack
 import vMealDetails from '../views/Discover/vMealDetails';
 
@@ -47,6 +50,9 @@ export default function Route() {
                 <Stack.Screen name="diary_addfood" component={vAddFood} />
                 <Stack.Screen name="diary_trackingsteps" component={vTrackingSteps} />
                 <Stack.Screen name="diary_addnote" component={vAddNote} />
+                <Stack.Screen name="diary_addactivity" component={vAddActivity} />
+                <Stack.Screen name="diary_newexercise" component={vNewExercise} />
+                <Stack.Screen name="diary_addexercise" component={vAddExercise} />
             </Stack.Navigator>
         </NavigationContainer>
     );
