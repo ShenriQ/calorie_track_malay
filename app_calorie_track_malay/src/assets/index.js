@@ -19,7 +19,6 @@ export const icons = {
     user_plus: require('./icons/user_plus.png'),
     back: require('./icons/back.png'),
     calendar: require('./icons/calendar.png'),
-    dosage: require('./icons/dosage.png'),
     forbidden: require('./icons/forbidden.png'),
     refill: require('./icons/refill.png'),
     circle_check: require('./icons/circle_check.png'),

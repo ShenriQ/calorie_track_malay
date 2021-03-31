@@ -21,6 +21,7 @@ import vAddNote from '../views/Diary/vAddNote';
 import vAddActivity from '../views/Diary/vAddActivity';
 import vNewExercise from '../views/Diary/vNewExercise';
 import vAddExercise from '../views/Diary/vAddExercise';
+import vTakePhoto from '../views/Diary/vTakePhoto';
 // discover stack
 import vMealDetails from '../views/Discover/vMealDetails';
 
@@ -53,6 +54,7 @@ export default function Route() {
                 <Stack.Screen name="diary_addactivity" component={vAddActivity} />
                 <Stack.Screen name="diary_newexercise" component={vNewExercise} />
                 <Stack.Screen name="diary_addexercise" component={vAddExercise} />
+                <Stack.Screen name="diary_takephoto" component={vTakePhoto} />
             </Stack.Navigator>
         </NavigationContainer>
     );

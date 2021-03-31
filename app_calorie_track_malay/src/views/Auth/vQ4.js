@@ -1,15 +1,17 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
+import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, TextInput, Platform, } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Button, Input } from 'react-native-elements';
+import RNExitApp from 'react-native-exit-app';
 import { connect } from 'react-redux';
 // custom import
 import { icons, imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { RectBtn } from '../../components/Auth/Btns';
-import { InputAnswer } from '../../components/Auth/Inputs';
+import { RectBtn, LinkBtn, OutlineBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
-import Spacing from '../../components/Global/Spacing';
+//svg
+import Svg17 from '../../assets/svgs/auth/17.svg'
 
 class vQ4 extends React.Component {
     constructor(props) {
@@ -17,86 +19,26 @@ class vQ4 extends React.Component {
         this.props = props;
         this.state = {
             loading: false,
-            index: 0,
-            ans1: '',
-            ans2: '',
-            ans3: '',
         }
     }
 
-    q_items = [
-        {
-            index: 4,
-            img: require('../../assets/imgs/auth/8.png'),
-            question: 'How old are you?',
-            desc: 'We asked your age to estimate how many calories your body needs each day'
-        },
-        {
-            index: 5,
-            img: require('../../assets/imgs/auth/9.png'),
-            question: 'How tall are you?',
-            desc: 'We asked your height and weight to calculate a suitable goal weight range for you'
-        },
-        {
-            index: 6,
-            img: require('../../assets/imgs/auth/10.png'),
-            question: 'What’s your weight?',
-            desc: 'We asked your height and weight to calculate a suitable goal weight range for you'
-        }
-    ]
-
-    onChangeValue = (value) => {
-        if(this.state.index == 0) {
-            this.setState({ ans1: value })
-        }
-        else if(this.state.index == 1) {
-            this.setState({ ans2: value })
-        }
-        else if(this.state.index == 2) {
-            this.setState({ ans3: value })
-        }
-    }
-
-    onGoNext = () => {
-        if(this.state.index == 2) {
-            this.props.navigation.navigate('q5')
-        }
-        else {
-            this.setState({index : this.state.index + 1})
-        }
-    }
-
-    getValue=()=>{
-        if(this.state.index == 0) {
-            return this.state.ans1
-        }
-        else if(this.state.index == 1) {
-            return this.state.ans2
-        }
-        else if(this.state.index == 2) {
-            return this.state.ans3
-        }
+    onStartQuery = () => {
+        this.props.navigation.navigate('q5')
     }
 
     render() {
         return (
             <React.Fragment>
                 <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                <ScrollView style={styles.container}>
-                    <Spacing height={70} />
-                    <Stepper index={this.q_items[this.state.index].index} />
-                    <Image source={this.q_items[this.state.index].img} style={styles.img} />
-                    <Text style={styles.q_txt}>{this.q_items[this.state.index].question}</Text>
-                    <View style={Gstyles.col_center}>
-                        <InputAnswer onChange={(text) => this.onChangeValue(text)} 
-                            value={this.getValue()} 
-                            placeholder={''} />
-                        <Text style={styles.desc_txt}>{this.q_items[this.state.index].desc}</Text>
+                <View style={styles.container}>
+                    <Stepper index={4} />
+                    <Svg17 width={'100%'} height={240} style={styles.img}/>
+                    <Text style={styles.title_txt}>{"What is your gender?"}</Text>
+                    <View style={[Gstyles.col_center, styles.btn_view]}>
+                        <OutlineBtn onPress={this.onStartQuery} name={"Male"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={"Female"} />
                     </View>
-                    <View style={[Gstyles.col_center, styles.nextbtn_view]}>
-                        <RectBtn onPress={this.onGoNext} name={Strings["Next"]} />
-                    </View>
-                </ScrollView>
+                </View>
             </React.Fragment>
         );
     }
@@ -104,13 +46,12 @@ class vQ4 extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', paddingLeft: 25, paddingRight: 25, backgroundColor: constant.C_BLACK_0
+        flex: 1, flexDirection: 'column', paddingTop : 70, paddingBottom : 30, paddingLeft : 25, paddingRight : 25, backgroundColor : constant.C_BLACK_0
     },
-    q_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center', marginBottom: 30 },
-    desc_txt: { width : 250, fontSize: 10, fontWeight: '400', color: constant.C_BLACK_100, textAlign: 'center', },
-    img_view: { width: '100%' },
-    img: { width: '100%', height: 162, resizeMode: 'contain', marginTop: 30, marginBottom: 30 },
-    nextbtn_view: { marginTop: 30, marginBottom: 30, },
+    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center',},
+    img_view: { paddingRight: 35 },
+    img: { width: '100%', height: 240, resizeMode: 'contain', marginTop : 30, marginBottom : 60 },
+    btn_view: { marginTop: 30 }
 });
 
 export default connect(null)(vQ4)

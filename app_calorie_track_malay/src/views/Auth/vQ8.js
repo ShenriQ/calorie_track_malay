@@ -1,15 +1,18 @@
 import React from 'react';
 import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Button, Input } from 'react-native-elements';
+import RNExitApp from 'react-native-exit-app';
 import { connect } from 'react-redux';
 // custom import
 import { icons, imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
-import { addUser } from '../../redux/actions';
-import { InputCheckbox } from '../../components/Auth/Inputs';
-import {RectBtn} from '../../components/Auth/Btns';
+import { RectBtn, LinkBtn, OutlineBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
 import Spacing from '../../components/Global/Spacing';
+//svg
+import Svg13 from '../../assets/svgs/auth/13.svg'
 
 class vQ8 extends React.Component {
     constructor(props) {
@@ -17,44 +20,32 @@ class vQ8 extends React.Component {
         this.props = props;
         this.state = {
             loading: false,
-            option1: false,
-            option2: false,
-            option3: false,
-            option4: false,
-            option5: false,
-            option6: false,
-            option7: false,
         }
     }
 
-    onSelectItem = (index) => {
-        if(index == 1) {
-            this.setState({option1 : !this.state.option1})
-        }
-        else if(index == 2) {
-            this.setState({option2 : !this.state.option2})
-        }
-        else if(index == 3) {
-            this.setState({option3 : !this.state.option3})
-        }
-        else if(index == 4) {
-            this.setState({option4 : !this.state.option4})
-        }
-        else if(index == 5) {
-            this.setState({option5 : !this.state.option5})
-        }
-        else if(index == 6) {
-            this.setState({option6 : !this.state.option6})
-        }
-        else if(index == 7) {
-            this.setState({option7 : !this.state.option7})
-        }
-    }
-
-    onGoNext = () => {
+    onStartQuery = () => {
         this.props.navigation.navigate('q9')
     }
 
+    btns = [
+        {name : 'Sedentary', desc1 : 'Less than <2000 steps per day', desc2 : 'with little to no exercise per week'},
+        {name : 'Light', desc1 : '3000 - 5000 steps per day', desc2 : 'and sports 1-2 days per week'},
+        {name : 'Moderate', desc1 : '7000 - 8000 steps per day', desc2 : 'and sports 3-5 days per week'},
+        {name : 'Heavy', desc1 : '10000 steps per day', desc2 : 'with sports 6-7 days per week'},
+    ]
+   
+    _renderBtn = (data, index) => {
+        return (
+            <TouchableOpacity key={index} style={[Gstyles.row_center, styles.outlinebtn]} activeOpacity={0.6} onPress={() => this.onStartQuery()}>
+                <Text style={styles.outlinebtn_txt}>{data.name}</Text>
+                <View style={[Gstyles.col_center]}>
+                    <Text style={[Gstyles.text_right, styles.outlinesub_txt]}>{data.desc1}</Text>
+                    <Text style={[Gstyles.text_right, styles.outlinesub_txt]}>{data.desc2}</Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+    
     render() {
         return (
             <React.Fragment>
@@ -62,21 +53,21 @@ class vQ8 extends React.Component {
                 <ScrollView style={styles.container}>
                     <Spacing height={70} />
                     <Stepper index={10} />
-                    <Image source={require('../../assets/imgs/auth/14.png')} style={styles.img} />
-                    <Text style={styles.title_txt}>{Strings["Do you have any medical conditions?"]}</Text>
-                    <Text style={styles.desc_txt}>{Strings["(select all that apply)"]}</Text>
+                    <Svg13 width={'100%'} height={229} style={styles.img} />
+                    <Text style={styles.title_txt}>{Strings["Select activity level?"]}</Text>
                     <View style={[Gstyles.col_center, styles.btn_view]}>
-                        <InputCheckbox onPress={()=>this.onSelectItem(1)} checked={this.state.option1} name={"No, I have no med conditions"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(2)} checked={this.state.option2} name={"High blood pressure"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(3)} checked={this.state.option3} name={"High blood sugar"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(4)} checked={this.state.option4} name={"Cholesterol"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(5)} checked={this.state.option5} name={"PCOS, endometriosis.."} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(6)} checked={this.state.option6} name={"I am pregnant/ breastfeeding"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(7)} checked={this.state.option7} name={"Other"} />
+                        {
+                            this.btns.map((btn, index) => 
+                                this._renderBtn(btn, index)
+                            )
+                        }
+                        {/* <OutlineBtn onPress={this.onStartQuery} name={Strings["Sedentary"]} sub_name={"Little to no exercise"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Mild"]} sub_name={"Sports 1-3 days per week"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Moderate"]} sub_name={"Sports 3-5 days a week"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Heavy"]} sub_name={"Sports 6-7 days a week"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Extreme"]} sub_name={"Heavy sports & demanding physical job"} /> */}
                     </View>
-                    <View style={[Gstyles.col_center, styles.nextbtn_view]}>
-                        <RectBtn onPress={this.onGoNext} name={Strings["Next"]} />
-                    </View>
+                    <Text style={styles.desc_txt}>{Strings["We use this to calculate your calorie target"]}</Text>
                 </ScrollView>
             </React.Fragment>
         );
@@ -85,14 +76,16 @@ class vQ8 extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', paddingLeft : 25, paddingRight : 25, backgroundColor : constant.C_BLACK_0
+        flex: 1, flexDirection: 'column', paddingLeft: 25, paddingRight: 25, backgroundColor: constant.C_BLACK_0
     },
-    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center',},
-    desc_txt: { fontSize: 14, fontWeight: '400', color: constant.C_BLACK_50, textAlign: 'center',},
+    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center', },
+    desc_txt: { width: '100%', fontSize: 10, fontWeight: '400', color: constant.C_BLACK_100, textAlign: 'center', marginBottom: 30 },
     img_view: { paddingRight: 35 },
-    img: { width: '100%', height: 228, resizeMode: 'contain', marginTop : 30, marginBottom : 40 },
-    btn_view: { marginTop: 16, },
-    nextbtn_view : { marginTop: 30, marginBottom : 30, },
+    img: { width: '100%', height: 229, resizeMode: 'contain', marginTop: 30, marginBottom: 60 },
+    btn_view: { marginTop: 16, marginBottom: 16 },
+    outlinebtn: { height: 51, width: '100%', paddingLeft: 14, paddingRight: 14, marginTop: 8, marginBottom: 8, borderRadius: 10, borderWidth: 1, borderColor: constant.C_BLUE_50, backgroundColor: constant.C_BLACK_0 },
+    outlinebtn_txt: { flex: 1, fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100 },
+    outlinesub_txt: { fontSize: 11, fontWeight: '500', color: constant.C_BLACK_50 },
 });
 
 export default connect(null)(vQ8)

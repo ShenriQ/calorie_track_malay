@@ -15,6 +15,7 @@ import vQ7 from '../views/Auth/vQ7';
 import vQ8 from '../views/Auth/vQ8';
 import vQ9 from '../views/Auth/vQ9';
 import vQ10 from '../views/Auth/vQ10';
+import vQ11 from '../views/Auth/vQ11';
 
 const Stack = createStackNavigator();
 export default function Route() {
@@ -40,6 +41,7 @@ export default function Route() {
                 <Stack.Screen name="q8" component={vQ8} />
                 <Stack.Screen name="q9" component={vQ9} />
                 <Stack.Screen name="q10" component={vQ10} />
+                <Stack.Screen name="q11" component={vQ11} />
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -19,6 +19,7 @@ export default class vCreateMeal extends React.Component {
         super(props);
         this.props = props;
         this.state = {
+            pagetype: this.props.route.params.pagetype,
             selectedIndex: 0,
             isModal: false,
         }
@@ -27,6 +28,11 @@ export default class vCreateMeal extends React.Component {
     componentDidMount = () => {
     }
 
+    mealitems = [
+        { name: 'Corn', qty: '1 piece', cal: 200 },
+        { name: 'Butter', qty: '1 tsp', cal: 30 },
+        { name: 'Salt', qty: '1 tsp', cal: 1 },
+    ]
     list = [
         { name: 'Calories', isReq: true, isEditable: true, unit: 'kcal' },
         { name: 'Protein', isReq: false, isEditable: false, unit: 'g' },
@@ -43,7 +49,7 @@ export default class vCreateMeal extends React.Component {
                             <Feather name="arrow-left" size={24} color={constant.C_BLACK_100} />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.titleTxt}>Create Meal</Text>
+                    <Text style={styles.titleTxt}>{this.state.pagetype} Meal</Text>
                     <View style={[Gstyles.flex_1, Gstyles.row_center, { justifyContent: 'flex-end', paddingRight: 20 }]}>
                         <TouchableOpacity onPress={() => { this.props.navigation.pop() }}>
                             <Text style={{ fontSize: 18, fontWeight: '500', color: constant.C_BLUE_50 }}>Save</Text>
@@ -54,13 +60,18 @@ export default class vCreateMeal extends React.Component {
         )
     }
     _renderPhotoView = () => {
+        const onTakePhoto=()=>{
+            this.props.navigation.navigate('diary_takephoto')
+        }
         return (
-            <ImageBackground source={{}} style={[Gstyles.col_center, { backgroundColor: constant.C_BLACK_10, borderRadius: 20, height: 200, width: '100%' }]}>
-                <View style={[Gstyles.col_center]}>
-                    <Svg_camera width={64} height={64} />
-                    <Text style={{ fontSize: 18, fontWeight: '500', color: constant.C_BLACK_30 }}>Add photo</Text>
-                </View>
-            </ImageBackground>
+            <TouchableOpacity onPress={()=>onTakePhoto()}>
+                <ImageBackground source={{}} style={[Gstyles.col_center, { backgroundColor: constant.C_BLACK_10, borderRadius: 20, height: 200, width: '100%' }]}>
+                    <View style={[Gstyles.col_center]}>
+                        <Svg_camera width={64} height={64} />
+                        <Text style={{ fontSize: 18, fontWeight: '500', color: constant.C_BLACK_30 }}>Add photo</Text>
+                    </View>
+                </ImageBackground>
+            </TouchableOpacity>
         )
     }
     _renderNameInputView = () => {
@@ -81,12 +92,25 @@ export default class vCreateMeal extends React.Component {
     }
     _renderMealItemsView = () => {
         return (
-            <View style={[Gstyles.row_center, styles.mealItemsView]}>
-                <Svg_fruit width={24} height={24} />
-                <Text style={{ flex: 1, fontSize: 16, color: constant.C_BLACK_80, marginLeft: 8 }}>Meal items</Text>
-                <TouchableOpacity style={{ padding: 4, borderRadius: 8, borderWidth: 1, borderColor: constant.C_BLUE_50 }}>
-                    <AntDesign name="plus" size={16} color={constant.C_BLUE_50} />
-                </TouchableOpacity>
+            <View style={[Gstyles.col_center, Gstyles.w_100]}>
+                <View style={[Gstyles.row_center, styles.mealItemsView]}>
+                    <Svg_fruit width={24} height={24} />
+                    <Text style={{ flex: 1, fontSize: 16, color: constant.C_BLACK_80, marginLeft: 8 }}>Meal items</Text>
+                    <TouchableOpacity style={{ padding: 4, borderRadius: 8, borderWidth: 1, borderColor: constant.C_BLUE_50 }}>
+                        <AntDesign name="plus" size={16} color={constant.C_BLUE_50} />
+                    </TouchableOpacity>
+                </View>
+                {
+                    this.mealitems.map((item, index) =>
+                        <View key={index} style={[Gstyles.row_center, { width: '100%', paddingLeft: 10, paddingTop: 8, paddingBottom: 8 }]}>
+                            <View style={[Gstyles.col_center_start, { flex: 1, alignItems: 'flex-start' }]}>
+                                <Text style={{ fontSize: 14, color: constant.C_BLACK_80, fontWeight: '400' }}>{item.name}</Text>
+                                <Text style={{ fontSize: 10, color: constant.C_BLUE_50, fontWeight: '400' }}>{item.qty}</Text>
+                            </View>
+                            <Text style={{ fontSize: 14, color: constant.C_BLACK_80, fontWeight: '400' }}>{item.cal} kcal</Text>
+                        </View>
+                    )
+                }
             </View>
         )
     }
@@ -126,7 +150,7 @@ export default class vCreateMeal extends React.Component {
                             {this._renderDirectionLabelView()}
                             {this._renderDirectionView()}
                         </View>
-                        <View style={{width: '100%', height: 6, backgroundColor: constant.C_BLACK_10, marginTop: 16, marginBottom : 12}}>
+                        <View style={{ width: '100%', height: 6, backgroundColor: constant.C_BLACK_10, marginTop: 16, marginBottom: 12 }}>
                         </View>
                         <View style={{ width: '100%', paddingLeft: 18, paddingRight: 18 }} >
                             <NutriInfoPie />

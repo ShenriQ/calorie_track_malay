@@ -1,15 +1,16 @@
 import React from 'react';
 import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
 import { connect } from 'react-redux';
 // custom import
 import { icons, imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { RectBtn, LinkBtn, OutlineBtn } from '../../components/Auth/Btns';
+import { RectBtn } from '../../components/Auth/Btns';
+import { InputAnswer } from '../../components/Auth/Inputs';
 import Stepper from '../../components/Auth/Stepper';
+import Spacing from '../../components/Global/Spacing';
+import SwipePicker from '../../components/Global/SwipePicker';
+//svg
+import Svg11 from '../../assets/svgs/auth/11.svg'
 
 class vQ6 extends React.Component {
     constructor(props) {
@@ -20,7 +21,30 @@ class vQ6 extends React.Component {
         }
     }
 
-    onStartQuery = () => {
+    weights = [
+        {
+            value: 73,
+            label: '73kg (8%)'
+        },
+        {
+            value: 72.5,
+            label: '72.5kg (9%)'
+        },
+        {
+            value: 72,
+            label: '72kg (10%)'
+        },
+        {
+            value: 71.5,
+            label: '71.5kg (10%)'
+        },
+        {
+            value: 71,
+            label: '71kg (11%)'
+        }
+    ]
+
+    onGoNext = () => {
         this.props.navigation.navigate('q7')
     }
 
@@ -28,17 +52,28 @@ class vQ6 extends React.Component {
         return (
             <React.Fragment>
                 <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                <ScrollView style={styles.container}>
+                <View style={styles.container}>
+                    <Spacing height={70} />
                     <Stepper index={8} />
-                    <Image source={require('../../assets/imgs/auth/12.png')} style={styles.img} />
-                    <Text style={styles.title_txt}>{Strings["Preferred rate of  weight loss?"]}</Text>
-                    <View style={[Gstyles.col_center, styles.btn_view]}>
-                        <OutlineBtn onPress={this.onStartQuery} name={"0.25kg per week"} />
-                        <OutlineBtn onPress={this.onStartQuery} name={"0.50kg per week"} />
-                        <OutlineBtn onPress={this.onStartQuery} name={"0.75kg per week"} />
-                        <OutlineBtn onPress={this.onStartQuery} name={"1.00kg per week"} />
+                    <Svg11  width={'100%'} height={250} style={styles.img} />
+                    <Text style={styles.title_txt}>{Strings["Set your target weight?"]}</Text>
+                    <View style={Gstyles.col_center}>
+                        <SwipePicker
+                            items={this.weights}
+                            onChange={({ index, item }) => {
+                                console.log(`Selected index: ${index}`);
+                                console.log(`Selected item: ${item}`);
+                            }}
+                            initialSelectedIndex = {2}
+                            height={145}
+                            width={250}
+                        />
+                        <Text style={styles.desc_txt}>{Strings["Set realistic target weight, we recommend no more than 10%."]}</Text>
                     </View>
-                </ScrollView>
+                    <View style={[Gstyles.col_center, styles.nextbtn_view]}>
+                        <RectBtn onPress={this.onGoNext} name={Strings["Next"]} />
+                    </View>
+                </View>
             </React.Fragment>
         );
     }
@@ -46,12 +81,13 @@ class vQ6 extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', paddingTop : 70, paddingBottom : 30, paddingLeft : 25, paddingRight : 25, backgroundColor : constant.C_BLACK_0
+        flex: 1, flexDirection: 'column', paddingLeft: 25, paddingRight: 25, backgroundColor: constant.C_BLACK_0
     },
-    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center',},
-    img_view: { paddingRight: 35 },
-    img: { width: '100%', height: 229, resizeMode: 'contain', marginTop : 30, marginBottom : 60 },
-    btn_view: { marginTop: 16 }
+    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center', },
+    desc_txt: { width: 200, fontSize: 10, fontWeight: '400', color: constant.C_BLACK_100, textAlign: 'center', },
+    img_view: { width: '100%' },
+    img: { width: '100%', height: 250, resizeMode: 'contain', marginTop: 30, marginBottom: 30 },
+    nextbtn_view: { marginTop: 30, marginBottom: 30, },
 });
 
 export default connect(null)(vQ6)

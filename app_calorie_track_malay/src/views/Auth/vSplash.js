@@ -11,6 +11,8 @@ import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import { addUser } from '../../redux/actions';
 import {RectBtn, LinkBtn} from '../../components/Auth/Btns';
+//svgs
+import Svg1 from '../../assets/svgs/auth/1.svg'
 
 class vSplash extends React.Component {
     constructor(props) {
@@ -53,7 +55,7 @@ class vSplash extends React.Component {
                     <Text style={styles.brand_txt}>{constant.app_brand}</Text>
                     <View style={styles.container}>
                         <View style={styles.img_view}>
-                            <Image source={require('../../assets/imgs/auth/1.png')} style={styles.img} />
+                            <Svg1 width={'100%'} height={'100%'} style={styles.img}/>
                         </View>
                         <Text style={styles.appname_txt}>{constant.app_name}</Text>
                     </View>

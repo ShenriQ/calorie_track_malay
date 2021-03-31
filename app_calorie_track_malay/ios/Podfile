@@ -16,6 +16,8 @@ target 'app_calorie_track_malay' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
   target 'app_calorie_track_malayTests' do
     inherit! :complete
     # Pods for testing

@@ -224,7 +224,10 @@ export default class vAddMeal extends React.Component {
                         <TouchableOpacity style={[Gstyles.row_center, Gstyles.w_100, styles.chooseModalBtn, ]} onPress={() => goPage('diary_quickadd')}>
                             <Text style={[Gstyles.text_left, {fontSize: 14, fontWeight:'400', }]}>Quick Add</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[Gstyles.row_center, Gstyles.w_100, styles.chooseModalBtn, ]} onPress={() => goPage('diary_createmeal')}>
+                        <TouchableOpacity style={[Gstyles.row_center, Gstyles.w_100, styles.chooseModalBtn, ]} 
+                            onPress={() => {
+                                this.props.navigation.navigate('diary_createmeal', {pagetype : 'Create'})
+                            }}>
                             <Text style={[Gstyles.text_left, {fontSize: 14, fontWeight:'400', }]}>Create a meal</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={[Gstyles.row_center, Gstyles.w_100, styles.chooseModalBtn, ]} onPress={() => goPage('diary_createfood')}>

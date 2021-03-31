@@ -10,6 +10,8 @@ import { icons, imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { RectBtn, LinkBtn, OutlineBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
+//svg
+import Svg4 from '../../assets/svgs/auth/4.svg'
 
 class vQ1 extends React.Component {
     constructor(props) {
@@ -30,7 +32,7 @@ class vQ1 extends React.Component {
                 <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
                 <View style={styles.container}>
                     <Stepper index={1} />
-                    <Image source={require('../../assets/imgs/auth/4.png')} style={styles.img} />
+                    <Svg4 width={'100%'} height={200} style={styles.img}/>
                     <Text style={styles.title_txt}>{Strings["What’s your goal ?"]}</Text>
                     <View style={[Gstyles.col_center, styles.btn_view]}>
                         <OutlineBtn onPress={this.onStartQuery} name={Strings["Lose weight"]} />

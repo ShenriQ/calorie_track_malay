@@ -10,6 +10,8 @@ import { InputCheckbox } from '../../components/Auth/Inputs';
 import {RectBtn} from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
 import Spacing from '../../components/Global/Spacing';
+//svg
+import Svg14 from '../../assets/svgs/auth/14.svg'
 
 class vQ9 extends React.Component {
     constructor(props) {
@@ -62,17 +64,16 @@ class vQ9 extends React.Component {
                 <ScrollView style={styles.container}>
                     <Spacing height={70} />
                     <Stepper index={11} />
-                    <Image source={require('../../assets/imgs/auth/15.png')} style={styles.img} />
-                    <View style={Gstyles.col_center}>
-                        <Text style={styles.title_txt}>{Strings["Is there anything you want to improve about your sleep?"]}</Text>
-                    </View>
+                    <Svg14 width={'100%'} height={228} style={styles.img} />
+                    <Text style={styles.title_txt}>{Strings["Do you have any medical conditions?"]}</Text>
+                    <Text style={styles.desc_txt}>{Strings["(select all that apply)"]}</Text>
                     <View style={[Gstyles.col_center, styles.btn_view]}>
-                        <InputCheckbox onPress={()=>this.onSelectItem(1)} checked={this.state.option1} name={"No, I sleep well"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(2)} checked={this.state.option2} name={"Difficulty falling asleep"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(3)} checked={this.state.option3} name={"Waking up tired"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(4)} checked={this.state.option4} name={"Waking up during the night"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(5)} checked={this.state.option5} name={"Insomnia"} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(6)} checked={this.state.option6} name={"Lack of sleep schedule"} />
+                        <InputCheckbox onPress={()=>this.onSelectItem(1)} checked={this.state.option1} name={"No, I have no med conditions"} />
+                        <InputCheckbox onPress={()=>this.onSelectItem(2)} checked={this.state.option2} name={"High blood pressure"} />
+                        <InputCheckbox onPress={()=>this.onSelectItem(3)} checked={this.state.option3} name={"High blood sugar"} />
+                        <InputCheckbox onPress={()=>this.onSelectItem(4)} checked={this.state.option4} name={"Cholesterol"} />
+                        <InputCheckbox onPress={()=>this.onSelectItem(5)} checked={this.state.option5} name={"PCOS, endometriosis.."} />
+                        <InputCheckbox onPress={()=>this.onSelectItem(6)} checked={this.state.option6} name={"I am pregnant/ breastfeeding"} />
                         <InputCheckbox onPress={()=>this.onSelectItem(7)} checked={this.state.option7} name={"Other"} />
                     </View>
                     <View style={[Gstyles.col_center, styles.nextbtn_view]}>
@@ -88,10 +89,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1, flexDirection: 'column', paddingLeft : 25, paddingRight : 25, backgroundColor : constant.C_BLACK_0
     },
-    title_txt: { fontSize: 14, fontWeight: '500', width : 220, color: constant.C_BLACK_100, textAlign: 'center',},
+    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center',},
     desc_txt: { fontSize: 14, fontWeight: '400', color: constant.C_BLACK_50, textAlign: 'center',},
     img_view: { paddingRight: 35 },
-    img: { width: '100%', height: 230, resizeMode: 'contain', marginTop : 30, marginBottom : 40 },
+    img: { width: '100%', height: 228, resizeMode: 'contain', marginTop : 30, marginBottom : 40 },
     btn_view: { marginTop: 16, },
     nextbtn_view : { marginTop: 30, marginBottom : 30, },
 });

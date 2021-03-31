@@ -7,6 +7,9 @@ import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { RectBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
 import Spacing from '../../components/Global/Spacing';
+//svg
+import Svg6 from '../../assets/svgs/auth/6.svg'
+import Svg7 from '../../assets/svgs/auth/7.svg'
 
 class vQ3 extends React.Component {
     constructor(props) {
@@ -36,11 +39,11 @@ class vQ3 extends React.Component {
                     {
                         this.state.selected ?
                             <TouchableOpacity onPress={this.onSelectItem} style={styles.img_view} activeOpacity={0.8}>
-                                <Image source={require('../../assets/imgs/auth/7.png')} style={styles.img} />
+                                <Svg7 width={'100%'} height={312} style={styles.img} />
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPress={this.onSelectItem} style={styles.img_view} activeOpacity={0.8}>
-                                <Image source={require('../../assets/imgs/auth/6.png')} style={styles.img} />
+                                <Svg6  width={'100%'} height={312} style={styles.img} />
                             </TouchableOpacity>
                     }
                     <Text style={styles.title_txt}>{Strings["Get reminders about your diet tracking and health tips"]}</Text>

@@ -14,6 +14,7 @@ import * as Progress from 'react-native-progress';
 // custom import
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
+import MealTime from '../../components/Global/MealTime';
 //svg icons
 import Svg_gauge from '../../assets/svgs/diary/item2_gauge.svg';
 import Svg_barchart from '../../assets/svgs/diary/ic_barchart.svg';
@@ -34,6 +35,7 @@ export default class vDiary extends React.Component {
         this.props = props;
         this.state = {
             activeTab: 0,
+            optionModalType: 'food',
             isOptionModal: false,
             isDateModal: false,
             isfrom: false,
@@ -217,7 +219,7 @@ export default class vDiary extends React.Component {
                         <Text style={{ color: constant.C_BLUE_50, fontSize: 14, fontWeight: '400', marginLeft: 6 }}>Add {data.type}</Text>
                     </TouchableOpacity>
                     <View style={Gstyles.flex_1} />
-                    <TouchableOpacity onPress={() => this.setState({ isOptionModal: true })}>
+                    <TouchableOpacity onPress={() => this.setState({ optionModalType: data.type, isOptionModal: true })}>
                         <Entypo name="dots-three-horizontal" size={22} color={constant.C_BLACK_50} />
                     </TouchableOpacity>
                 </View>
@@ -260,6 +262,10 @@ export default class vDiary extends React.Component {
     }
 
     _renderMoreOptionModal = () => {
+        const onSaveAsMeal = () => {
+            this.setState({ isOptionModal: false, })
+            this.props.rootnav.navigate('diary_createmeal', {pagetype : 'Save as'})
+        }
         const onTrackingStep = () => {
             this.setState({ isOptionModal: false, })
             this.props.rootnav.navigate('diary_trackingsteps')
@@ -278,21 +284,41 @@ export default class vDiary extends React.Component {
                 width={1}
                 onSwipeOut={() => this.setState({ isOptionModal: false })}
             >
-                <View
-                    style={[{ flex: 1, backgroundColor: constant.C_BLACK_0, }, Gstyles.col_center]}
-                >
-                    <TouchableOpacity onPress={() => onTrackingStep()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
-                        <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Manage steps tracking</Text>
-                    </TouchableOpacity>
-                    <View style={[styles.border1, { width: '100%' }]} />
-                    <TouchableOpacity onPress={() => onCopyfromdate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
-                        <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy from date</Text>
-                    </TouchableOpacity>
-                    <View style={[styles.border1, { width: '100%' }]} />
-                    <TouchableOpacity onPress={() => onCopyTodate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
-                        <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy to date</Text>
-                    </TouchableOpacity>
-                </View>
+                {
+                    this.state.optionModalType == 'food' ?
+                        <View
+                            style={[{ flex: 1, backgroundColor: constant.C_BLACK_0, }, Gstyles.col_center]}
+                        >
+                            <TouchableOpacity onPress={() => onSaveAsMeal()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                                <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Save as meal</Text>
+                            </TouchableOpacity>
+                            <View style={[styles.border1, { width: '100%' }]} />
+                            <TouchableOpacity onPress={() => onCopyfromdate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                                <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy from date</Text>
+                            </TouchableOpacity>
+                            <View style={[styles.border1, { width: '100%' }]} />
+                            <TouchableOpacity onPress={() => onCopyTodate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                                <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy to date</Text>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <View
+                            style={[{ flex: 1, backgroundColor: constant.C_BLACK_0, }, Gstyles.col_center]}
+                        >
+                            <TouchableOpacity onPress={() => onTrackingStep()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                                <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Manage steps tracking</Text>
+                            </TouchableOpacity>
+                            <View style={[styles.border1, { width: '100%' }]} />
+                            <TouchableOpacity onPress={() => onCopyfromdate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                                <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy from date</Text>
+                            </TouchableOpacity>
+                            <View style={[styles.border1, { width: '100%' }]} />
+                            <TouchableOpacity onPress={() => onCopyTodate()} style={[Gstyles.row_center, { width: '100%', justifyContent: 'space-between', paddingLeft: 14, paddingRight: 14, height: 50 }]}>
+                                <Text style={[{ color: constant.C_BLACK_80, fontSize: 14, fontWeight: '400' }]}>Copy to date</Text>
+                            </TouchableOpacity>
+                        </View>
+                }
+
             </BottomModal>
         )
     }
@@ -302,7 +328,7 @@ export default class vDiary extends React.Component {
             <BottomModal
                 visible={this.state.isDateModal}
                 onTouchOutside={() => this.setState({ isDateModal: false })}
-                height={300}
+                height={this.state.optionModalType == 'food' ? 400 : 300}
                 width={1}
                 onSwipeOut={() => this.setState({ isDateModal: false })}
                 modalTitle={
@@ -354,6 +380,12 @@ export default class vDiary extends React.Component {
                             }}
                         />
                     </View>
+                    {
+                        this.state.optionModalType == 'food' &&
+                        <View style={{width: '100%', paddingLeft: 20, paddingRight: 20, paddingTop: 12, paddingBottom: 12}}>
+                        <MealTime />
+                        </View>
+                    }
                 </View>
             </BottomModal>
         )
@@ -376,12 +408,12 @@ export default class vDiary extends React.Component {
         }).start();
     }
     _renderWaterModal = () => {
-        const onPlus=()=>{
-            this.setState({waterCnt: this.state.waterCnt + 1})
+        const onPlus = () => {
+            this.setState({ waterCnt: this.state.waterCnt + 1 })
         }
-        const onMinus=()=>{
-            if(this.state.waterCnt > 0) {
-                this.setState({waterCnt: this.state.waterCnt - 1})
+        const onMinus = () => {
+            if (this.state.waterCnt > 0) {
+                this.setState({ waterCnt: this.state.waterCnt - 1 })
             }
         }
         return (
@@ -413,15 +445,15 @@ export default class vDiary extends React.Component {
                             </TouchableOpacity>
                             <View style={[Gstyles.col_center, { marginLeft: 20, marginRight: 20 }]}>
                                 <Svg_watercup width={150} height={150} />
-                                <Text style={{position: 'absolute', top: '38%', color: constant.C_BLACK_0, fontSize: 18, fontWeight: '700'}}>x{this.state.waterCnt}</Text>
-                                <Text style={{fontSize:12, color: constant.C_BLACK_60}}>250ml per glass</Text>
+                                <Text style={{ position: 'absolute', top: '38%', color: constant.C_BLACK_0, fontSize: 18, fontWeight: '700' }}>x{this.state.waterCnt}</Text>
+                                <Text style={{ fontSize: 12, color: constant.C_BLACK_60 }}>250ml per glass</Text>
                             </View>
                             <TouchableOpacity style={[styles.waterModalBtn]} onPress={onPlus}>
                                 <AntDesign name="plus" size={24} color={constant.C_BLUE_50} />
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <Svg_wave width={screenWidth} height={110} style={{marginTop: -70}}/>
+                    <Svg_wave width={screenWidth} height={110} style={{ marginTop: -70 }} />
                 </View>
             </Animated.View>
         )

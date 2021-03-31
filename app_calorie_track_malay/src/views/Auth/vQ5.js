@@ -1,5 +1,7 @@
 import React from 'react';
 import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { connect } from 'react-redux';
 // custom import
 import { icons, imgs } from '@assets';
@@ -8,7 +10,10 @@ import { RectBtn } from '../../components/Auth/Btns';
 import { InputAnswer } from '../../components/Auth/Inputs';
 import Stepper from '../../components/Auth/Stepper';
 import Spacing from '../../components/Global/Spacing';
-import SwipePicker from '../../components/Global/SwipePicker';
+//svg
+import Svg8 from '../../assets/svgs/auth/8.svg'
+import Svg9 from '../../assets/svgs/auth/9.svg'
+import Svg10 from '../../assets/svgs/auth/10.svg'
 
 class vQ5 extends React.Component {
     constructor(props) {
@@ -16,62 +21,86 @@ class vQ5 extends React.Component {
         this.props = props;
         this.state = {
             loading: false,
+            index: 0,
+            ans1: '',
+            ans2: '',
+            ans3: '',
         }
     }
 
-    weights = [
+    q_items = [
         {
-            value: 73,
-            label: '73kg (8%)'
+            index: 5,
+            img: <Svg8 width={'100%'} height={162} style={styles.img} />,
+            question: 'How old are you?',
+            desc: 'We asked your age to estimate how many calories your body needs each day'
         },
         {
-            value: 72.5,
-            label: '72.5kg (9%)'
+            index: 6,
+            img: <Svg9 width={'100%'} height={162} style={styles.img} />,
+            question: 'How tall are you?',
+            desc: 'We asked your height and weight to calculate a suitable goal weight range for you'
         },
         {
-            value: 72,
-            label: '72kg (10%)'
-        },
-        {
-            value: 71.5,
-            label: '71.5kg (10%)'
-        },
-        {
-            value: 71,
-            label: '71kg (11%)'
+            index: 7,
+            img: <Svg10 width={'100%'} height={162} style={styles.img} />,
+            question: 'What’s your weight?',
+            desc: 'We asked your height and weight to calculate a suitable goal weight range for you'
         }
     ]
 
+    onChangeValue = (value) => {
+        if(this.state.index == 0) {
+            this.setState({ ans1: value })
+        }
+        else if(this.state.index == 1) {
+            this.setState({ ans2: value })
+        }
+        else if(this.state.index == 2) {
+            this.setState({ ans3: value })
+        }
+    }
+
     onGoNext = () => {
-        this.props.navigation.navigate('q6')
+        if(this.state.index == 2) {
+            this.props.navigation.navigate('q6')
+        }
+        else {
+            this.setState({index : this.state.index + 1})
+        }
+    }
+
+    getValue=()=>{
+        if(this.state.index == 0) {
+            return this.state.ans1
+        }
+        else if(this.state.index == 1) {
+            return this.state.ans2
+        }
+        else if(this.state.index == 2) {
+            return this.state.ans3
+        }
     }
 
     render() {
         return (
             <React.Fragment>
                 <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                     <Spacing height={70} />
-                    <Stepper index={7} />
-                    <Image source={require('../../assets/imgs/auth/11.png')} style={styles.img} />
-                    <Text style={styles.title_txt}>{Strings["Set your target weight?"]}</Text>
+                    <Stepper index={this.q_items[this.state.index].index} />
+                    {this.q_items[this.state.index].img}
+                    <Text style={styles.q_txt}>{this.q_items[this.state.index].question}</Text>
                     <View style={Gstyles.col_center}>
-                        <SwipePicker
-                            items={this.weights}
-                            onChange={({ index, item }) => {
-                                console.log(`Selected index: ${index}`);
-                                console.log(`Selected item: ${item}`);
-                            }}
-                            initialSelectedIndex = {2}
-                            height={145}
-                            width={250}
-                        />
-                        <Text style={styles.desc_txt}>{Strings["Set realistic target weight, we recommend no more than 10%."]}</Text>
+                        <InputAnswer onChange={(text) => this.onChangeValue(text)} 
+                            value={this.getValue()} 
+                            placeholder={''} />
+                        <Text style={styles.desc_txt}>{this.q_items[this.state.index].desc}</Text>
                     </View>
                     <View style={[Gstyles.col_center, styles.nextbtn_view]}>
                         <RectBtn onPress={this.onGoNext} name={Strings["Next"]} />
                     </View>
-                </View>
+                </ScrollView>
             </React.Fragment>
         );
     }
@@ -81,10 +110,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1, flexDirection: 'column', paddingLeft: 25, paddingRight: 25, backgroundColor: constant.C_BLACK_0
     },
-    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center', },
-    desc_txt: { width: 200, fontSize: 10, fontWeight: '400', color: constant.C_BLACK_100, textAlign: 'center', },
+    q_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center', marginBottom: 30 },
+    desc_txt: { width : 250, fontSize: 10, fontWeight: '400', color: constant.C_BLACK_100, textAlign: 'center', },
     img_view: { width: '100%' },
-    img: { width: '100%', height: 250, resizeMode: 'contain', marginTop: 30, marginBottom: 30 },
+    img: { width: '100%', height: 162, resizeMode: 'contain', marginTop: 30, marginBottom: 30 },
     nextbtn_view: { marginTop: 30, marginBottom: 30, },
 });
 

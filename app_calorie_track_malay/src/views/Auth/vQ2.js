@@ -10,6 +10,8 @@ import { InputCheckbox } from '../../components/Auth/Inputs';
 import {RectBtn} from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
 import Spacing from '../../components/Global/Spacing';
+//svg
+import Svg5 from '../../assets/svgs/auth/5.svg'
 
 class vQ2 extends React.Component {
     constructor(props) {
@@ -59,7 +61,7 @@ class vQ2 extends React.Component {
                 <ScrollView style={styles.container}>
                     <Spacing height={70} />
                     <Stepper index={2} />
-                    <Image source={require('../../assets/imgs/auth/5.png')} style={styles.img} />
+                    <Svg5 width={'100%'} height={120} style={styles.img}/>
                     <Text style={styles.title_txt}>{Strings["Why do you choose that goal?"]}</Text>
                     <Text style={styles.desc_txt}>{Strings["(select all that apply)"]}</Text>
                     <View style={[Gstyles.col_center, styles.btn_view]}>

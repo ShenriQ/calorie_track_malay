@@ -12,6 +12,8 @@ import { addUser } from "../../redux/actions";
 import { RectBtn, LinkBtn } from '../../components/Auth/Btns';
 import { InputSignin } from '../../components/Auth/Inputs';
 import Spacing from '../../components/Global/Spacing';
+//svg
+import Svg2 from '../../assets/svgs/auth/2.svg'
 
 class vRegister extends React.Component {
     constructor(props) {
@@ -84,7 +86,7 @@ class vRegister extends React.Component {
                 >
                     <View style={[styles.container, Gstyles.col_center]}>
                         <View style={[styles.img_view, Gstyles.col_center]} >
-                            <Image source={require('../../assets/imgs/auth/2.png')} style={styles.img} />
+                            <Svg2 width={286} height={286} style={styles.img} />
                         </View>
                         <View style={styles.formView}>
                             <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["First name (min. 3 characters)"]} />

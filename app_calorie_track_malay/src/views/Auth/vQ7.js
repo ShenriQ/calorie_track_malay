@@ -10,7 +10,8 @@ import { icons, imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { RectBtn, LinkBtn, OutlineBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
-import Spacing from '../../components/Global/Spacing';
+//svg
+import Svg12 from '../../assets/svgs/auth/12.svg'
 
 class vQ7 extends React.Component {
     constructor(props) {
@@ -30,18 +31,15 @@ class vQ7 extends React.Component {
             <React.Fragment>
                 <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
                 <ScrollView style={styles.container}>
-                    <Spacing height={70} />
                     <Stepper index={9} />
-                    <Image source={require('../../assets/imgs/auth/13.png')} style={styles.img} />
-                    <Text style={styles.title_txt}>{Strings["Select activity level?"]}</Text>
+                    <Svg12 width={'100%'} height={229} style={styles.img}/>
+                    <Text style={styles.title_txt}>{Strings["Preferred rate of  weight loss?"]}</Text>
                     <View style={[Gstyles.col_center, styles.btn_view]}>
-                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Sedentary"]} sub_name={"Little to no exercise"}/>
-                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Mild"]} sub_name={"Sports 1-3 days per week"}/>
-                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Moderate"]} sub_name={"Sports 3-5 days a week"}/>
-                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Heavy"]} sub_name={"Sports 6-7 days a week"}/>
-                        <OutlineBtn onPress={this.onStartQuery} name={Strings["Extreme"]} sub_name={"Heavy sports & demanding physical job"}/>
+                        <OutlineBtn onPress={this.onStartQuery} name={"0.25kg per week"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={"0.50kg per week"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={"0.75kg per week"} />
+                        <OutlineBtn onPress={this.onStartQuery} name={"1.00kg per week"} />
                     </View>
-                    <Text style={styles.desc_txt}>{Strings["We use this to calculate your calorie target"]}</Text>
                 </ScrollView>
             </React.Fragment>
         );
@@ -50,13 +48,12 @@ class vQ7 extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', paddingLeft : 25, paddingRight : 25, backgroundColor : constant.C_BLACK_0
+        flex: 1, flexDirection: 'column', paddingTop : 70, paddingBottom : 30, paddingLeft : 25, paddingRight : 25, backgroundColor : constant.C_BLACK_0
     },
     title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center',},
-    desc_txt: { width : '100%', fontSize: 10, fontWeight: '400', color: constant.C_BLACK_100, textAlign: 'center', marginBottom : 30 },
     img_view: { paddingRight: 35 },
     img: { width: '100%', height: 229, resizeMode: 'contain', marginTop : 30, marginBottom : 60 },
-    btn_view: { marginTop: 16, marginBottom : 16 }
+    btn_view: { marginTop: 16 }
 });
 
 export default connect(null)(vQ7)

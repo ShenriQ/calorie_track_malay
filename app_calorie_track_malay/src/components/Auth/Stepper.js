@@ -4,7 +4,7 @@ import * as Progress from 'react-native-progress';
 // custom import
 import { constant, common, Strings, Gstyles } from '../../utils';
 
-const All_Steps = 12
+const All_Steps = 13
 const Stepper = (props) => {
     return (
         <View style={[styles.stepper, Gstyles.row_center]}>

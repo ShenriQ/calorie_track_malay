@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import { addUser } from "../../redux/actions";
 import { RectBtn, LinkBtn } from '../../components/Auth/Btns';
 import { InputSignin } from '../../components/Auth/Inputs';
+//svg
+import Svg2 from '../../assets/svgs/auth/2.svg'
 
 class vLogin extends React.Component {
     constructor(props) {
@@ -81,14 +83,14 @@ class vLogin extends React.Component {
                 >
                     <View style={[styles.container, Gstyles.col_center]}>
                         <View style={[styles.img_view, Gstyles.col_center]} >
-                            <Image source={require('../../assets/imgs/auth/2.png')} style={styles.img} />
+                            <Svg2 width={286} height={286} style={styles.img} />
                         </View>
                         <View style={styles.formView}>
                             <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Email"]} />
                             <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Password"]} />
                             <View style={[Gstyles.col_center, styles.btn_view]}>
-                                <RectBtn onPress={this.onStartQuery} name={Strings["Sign in"]} />
-                                <LinkBtn onPress={this.onGoLogin} name={Strings["Forgotten your password?"]} />
+                                <RectBtn onPress={()=>{}} name={Strings["Sign in"]} />
+                                <LinkBtn onPress={()=>{}}  name={Strings["Forgotten your password?"]} />
                             </View>
                         </View>
                     </View>
