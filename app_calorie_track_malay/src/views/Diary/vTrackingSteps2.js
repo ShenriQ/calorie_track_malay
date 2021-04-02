@@ -8,33 +8,24 @@ import { Button, Input } from 'react-native-elements';
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
+import {RoundRectBlueBtn} from '../../components/Auth/Btns';
+import Spacing from '../../components/Global/Spacing';
 //svgs
-import Svg_calorie from '../../assets/svgs/diary/ic_calendar_calorie.svg'
-import Svg_protein from '../../assets/svgs/diary/ic_protein.svg'
-import Svg_carb from '../../assets/svgs/diary/ic_carb.svg'
-import Svg_fat from '../../assets/svgs/diary/ic_fat.svg'
+import Svg_steps from '../../assets/svgs/diary/bg_steps.svg'
 
-export default class vTrackingSteps extends React.Component {
+export default class vTrackingSteps2 extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
         this.state = {
             selectedIndex: 0,
             isModal: false,
+            steps : '',
         }
     }
 
     componentDidMount = () => {
     }
-
-    list = [
-        { name: 'Daily step goal', route : 'diary_trackingsteps_dailygoal', value: '2000' },
-        { name: 'Pedometer steps', route : 'diary_trackingsteps_pedometer', value: '' },
-        { name: 'Sync with device', route : '', value: '' },
-        { name: 'Iphone apple health', route : '', value: '' },
-        { name: 'FitBit', route : '', value: '' },
-        { name: 'Google fit', route : '', value: '' },
-    ]
 
     _renderHeader = () => {
         return (
@@ -45,7 +36,7 @@ export default class vTrackingSteps extends React.Component {
                             <Feather name="arrow-left" size={24} color={constant.C_BLACK_100} />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.titleTxt}>Steps</Text>
+                    <Text style={styles.titleTxt}>Set Pedometer</Text>
                     <View style={[Gstyles.flex_1, Gstyles.row_center, { justifyContent: 'flex-end', paddingRight: 20 }]}>
 
                     </View>
@@ -54,20 +45,26 @@ export default class vTrackingSteps extends React.Component {
         )
     }
 
-    _renderItem = (item, index) => {
-        const goPage=()=>{
-            if(item.route == '') { return }
-            this.props.navigation.navigate(item.route)
-        }   
+    _renderMain = () => {
         return (
-            <TouchableOpacity onPress={()=>goPage()} key={index} style={[Gstyles.row_center_start, styles.itemview]}>
-                <View style={[{ paddingLeft: 10, paddingRight: 10, flex: 1, }]}>
-                    <Text style={{ fontSize: 20, fontWeight: '400', color: constant.C_BLACK_80 }}>{item.name}</Text>
-                </View>
-                <View style={[{ flexDirection: 'row', alignItems: 'center', }]}>
-                    <Text style={{ fontSize: 20, fontWeight: '500', color: constant.C_BLUE_50 }}>{item.value}</Text>
-                </View>
-            </TouchableOpacity>
+            <View style={[Gstyles.col_center, {width: '100%'}]}>
+                <Svg_steps />
+                <Spacing height={20}/>
+                <Text  style={styles.subTitle}>Enter Steps</Text>
+                <Spacing height={20}/>
+                <TextInput 
+                    placeholder="0"
+                    placeholderTextColor={constant.C_BLACK_40}
+                    style={this.state.steps == '' ? styles.inactiveInput : styles.activeInput }
+                    value={this.state.steps}
+                    onChange={(value)=> this.setState({steps : value})}
+                    textAlign={'center'}
+                />
+                <Spacing height={20}/>
+                <Text style={styles.desc}>Your first 2000 steps are excluded from the calorie burn calculation. Most people achieve this unless very sedentary. </Text>
+                <Spacing height={20}/>
+                <RoundRectBlueBtn name="Save" onPress={()=>{}}/>
+            </View>
         )
     }
 
@@ -80,11 +77,7 @@ export default class vTrackingSteps extends React.Component {
                 {this._renderHeader()}
                 <View style={styles.formView} >
                     <ScrollView style={{ flex: 1, width: '100%', }} >
-                        {
-                            this.list.map((item, index) =>
-                                this._renderItem(item, index)
-                            )
-                        }
+                        {this._renderMain()}
                         <View style={{ height: 20 }}></View>
                     </ScrollView>
                 </View>
@@ -101,14 +94,15 @@ const styles = StyleSheet.create({
         backgroundColor: constant.C_BLACK_0, width: '100%', height: 80, elevation: 6, paddingBottom: 8, alignItems: 'flex-end', flexDirection: 'row',
     },
     formView: {
-        flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%',
+        flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%', padding: 30
     },
     titleTxt: {
         textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.C_BLACK_80, marginLeft: 16, marginRight: 16
     },
-    itemview: { height: 86, width: '100%', paddingLeft: 20, paddingRight: 20, borderBottomColor: constant.C_BLACK_30, borderBottomWidth: 1 },
-    modalTitleTxt: { fontSize: 14, fontWeight: '300', color: constant.C_BLACK_100 },
-    border1: { height: 1, backgroundColor: '#E5E5E5', width: '100%' },
-    macroview: { width: '100%', paddingLeft: 20, paddingRight: 20, },
+    inactiveInput : {fontSize: 22, fontWeight: '700', width: '100%', height: 42, backgroundColor : constant.C_BLACK_10, borderRadius: 8},
+    activeInput : {fontSize: 22, fontWeight: '700', width: '100%', height: 42, borderWidth: 1, borderColor: constant.C_BLUE_50, 
+        backgroundColor : constant.C_BLACK_0, borderRadius: 8, padding: 0, },
+    subTitle : {fontSize: 18, fontWeight: '400', color: constant.C_BLACK_100,},
+    desc : {fontSize: 14, fontWeight: '400', color: constant.C_BLACK_60,},
 });
 

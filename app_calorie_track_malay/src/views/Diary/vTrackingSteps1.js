@@ -9,12 +9,12 @@ import { Button, Input } from 'react-native-elements';
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 //svgs
-import Svg_calorie from '../../assets/svgs/diary/ic_calendar_calorie.svg'
+import Svg_gauge from '../../assets/svgs/diary/bg_gauge.svg'
 import Svg_protein from '../../assets/svgs/diary/ic_protein.svg'
 import Svg_carb from '../../assets/svgs/diary/ic_carb.svg'
 import Svg_fat from '../../assets/svgs/diary/ic_fat.svg'
 
-export default class vTrackingSteps extends React.Component {
+export default class vTrackingSteps1 extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
@@ -27,15 +27,6 @@ export default class vTrackingSteps extends React.Component {
     componentDidMount = () => {
     }
 
-    list = [
-        { name: 'Daily step goal', route : 'diary_trackingsteps_dailygoal', value: '2000' },
-        { name: 'Pedometer steps', route : 'diary_trackingsteps_pedometer', value: '' },
-        { name: 'Sync with device', route : '', value: '' },
-        { name: 'Iphone apple health', route : '', value: '' },
-        { name: 'FitBit', route : '', value: '' },
-        { name: 'Google fit', route : '', value: '' },
-    ]
-
     _renderHeader = () => {
         return (
             <View style={styles.header}>
@@ -45,7 +36,7 @@ export default class vTrackingSteps extends React.Component {
                             <Feather name="arrow-left" size={24} color={constant.C_BLACK_100} />
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.titleTxt}>Steps</Text>
+                    <Text style={styles.titleTxt}>Daily Step Goal</Text>
                     <View style={[Gstyles.flex_1, Gstyles.row_center, { justifyContent: 'flex-end', paddingRight: 20 }]}>
 
                     </View>
@@ -54,23 +45,26 @@ export default class vTrackingSteps extends React.Component {
         )
     }
 
-    _renderItem = (item, index) => {
-        const goPage=()=>{
-            if(item.route == '') { return }
-            this.props.navigation.navigate(item.route)
-        }   
+    _renderInfo = () => {
         return (
-            <TouchableOpacity onPress={()=>goPage()} key={index} style={[Gstyles.row_center_start, styles.itemview]}>
-                <View style={[{ paddingLeft: 10, paddingRight: 10, flex: 1, }]}>
-                    <Text style={{ fontSize: 20, fontWeight: '400', color: constant.C_BLACK_80 }}>{item.name}</Text>
+            <View style={[Gstyles.col_center, {width: '100%'}]}>
+                <Svg_gauge />
+                <View style={[Gstyles.col_center, {position: 'absolute', top: '30%'}]}>
+                    <Text style={{fontSize: 8, color: constant.C_BLACK_0}}>Steps walked</Text>
+                    <Text style={{fontSize: 30, fontWeight: '700', color: constant.C_BLACK_0, paddingTop: 6, paddingBottom: 6}}>2828</Text>
+                    <Text style={{fontSize: 13, color: constant.C_BLACK_0}}>Goal: 8000</Text>
                 </View>
-                <View style={[{ flexDirection: 'row', alignItems: 'center', }]}>
-                    <Text style={{ fontSize: 20, fontWeight: '500', color: constant.C_BLUE_50 }}>{item.value}</Text>
-                </View>
-            </TouchableOpacity>
+            </View>
         )
     }
 
+    _renderDataView = () => {
+        return (
+            <View style={[Gstyles.col_center_start, styles.dataview]}>
+                <Text style={{fontSize: 20, fontWeight: '500', color: constant.C_BLACK_0}}>Target: 2000 steps</Text>
+            </View>
+        )
+    }
 
     render() {
         return (
@@ -80,11 +74,9 @@ export default class vTrackingSteps extends React.Component {
                 {this._renderHeader()}
                 <View style={styles.formView} >
                     <ScrollView style={{ flex: 1, width: '100%', }} >
-                        {
-                            this.list.map((item, index) =>
-                                this._renderItem(item, index)
-                            )
-                        }
+                        {this._renderInfo()}
+                        <View style={{ height: 30 }}></View>
+                        {this._renderDataView()}
                         <View style={{ height: 20 }}></View>
                     </ScrollView>
                 </View>
@@ -101,14 +93,11 @@ const styles = StyleSheet.create({
         backgroundColor: constant.C_BLACK_0, width: '100%', height: 80, elevation: 6, paddingBottom: 8, alignItems: 'flex-end', flexDirection: 'row',
     },
     formView: {
-        flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%',
+        flex: 1, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', width: '100%', padding: 20
     },
     titleTxt: {
         textAlign: 'center', fontSize: 22, fontWeight: '700', color: constant.C_BLACK_80, marginLeft: 16, marginRight: 16
     },
-    itemview: { height: 86, width: '100%', paddingLeft: 20, paddingRight: 20, borderBottomColor: constant.C_BLACK_30, borderBottomWidth: 1 },
-    modalTitleTxt: { fontSize: 14, fontWeight: '300', color: constant.C_BLACK_100 },
-    border1: { height: 1, backgroundColor: '#E5E5E5', width: '100%' },
-    macroview: { width: '100%', paddingLeft: 20, paddingRight: 20, },
+    dataview: {width: '100%', height: 350, borderRadius: 20, backgroundColor: constant.C_BLUE_50, paddingTop: 60},
 });
 

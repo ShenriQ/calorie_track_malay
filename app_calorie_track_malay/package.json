@@ -38,6 +38,7 @@
     "react-native-modals": "^0.22.3",
     "react-native-pie": "^1.1.2",
     "react-native-progress": "^4.1.2",
+    "react-native-qrcode-scanner-view": "^2.0.0",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.17.1",
     "react-native-snap-carousel": "^3.9.1",

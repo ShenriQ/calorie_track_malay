@@ -54,7 +54,7 @@ export default class vAddFood extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.titleTxt}>Add food</Text>
-                    <View style={{width: 24, flex: 1}}/>
+                    <View style={{ width: 24, flex: 1 }} />
                 </View>
             </View>
         )
@@ -62,6 +62,10 @@ export default class vAddFood extends React.Component {
 
     onSetServ = (serv_item) => {
         this.setState({ serv_item: serv_item })
+    }
+
+    onGoWeightEstimation = () => {
+        this.props.navigation.navigate('diary_food_weight_estimation')
     }
 
     render() {
@@ -72,30 +76,32 @@ export default class vAddFood extends React.Component {
                 {this._renderHeader()}
                 <View style={styles.formView} >
                     <ScrollView style={{ flex: 1, width: '100%' }} >
-                        <View style={[Gstyles.col_center, {marginTop: 25, marginBottom: 25}]}>
-                            <Image source={tmp_imgs.apple} style={styles.foodimg}/>
+                        <View style={[Gstyles.col_center, { marginTop: 25, marginBottom: 25 }]}>
+                            <Image source={tmp_imgs.apple} style={styles.foodimg} />
                             <Text style={styles.foodTxt}>Apple</Text>
                         </View>
                         <View >
                             <View>
-                                <View style={{alignItems: 'flex-end'}}>
-                                <Text style={{fontSize : 18, fontWeight: '400', color: constant.C_BLACK_70}}>230 kcal</Text>
+                                <View style={{ alignItems: 'flex-end' }}>
+                                    <Text style={{ fontSize: 18, fontWeight: '400', color: constant.C_BLACK_70 }}>230 kcal</Text>
                                 </View>
                             </View>
                             <View style={styles.serv_info}>
-                                <View style={{flex: 1}}>
-                                <Svg_weighmachine width={18} height={18} />
+                                <View style={{ flex: 1 }}>
+                                    <TouchableOpacity onPress={() => this.onGoWeightEstimation()}>
+                                        <Svg_weighmachine width={18} height={18} />
+                                    </TouchableOpacity>
                                 </View>
                                 <Text style={styles.serv_txt}>
                                     {this.state.serv_item.value}
                                     <Text style={Gstyles.fs_24}> {this.state.serv_item.name}</Text>
                                 </Text>
-                                <View style={{alignItems: 'flex-end', flex :1}}>
+                                <View style={{ alignItems: 'flex-end', flex: 1 }}>
                                     <Text style={styles.serv_gram_txt}>200g</Text>
                                 </View>
                             </View>
                             <View style={styles.serv_ruler}>
-                                <Ruler activeIndex = {1} items = {
+                                <Ruler activeIndex={1} items={
                                     [
                                         {
                                             name: "Small",
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
         flex: 1, flexDirection: 'column', alignItems: 'center', backgroundColor: constant.C_BLACK_0,
     },
     header: {
-        backgroundColor: constant.C_BLACK_0, width: '100%', elevation : 4, height: 80, paddingBottom: 8, alignItems: 'flex-end', flexDirection: 'row',
+        backgroundColor: constant.C_BLACK_0, width: '100%', elevation: 4, height: 80, paddingBottom: 8, alignItems: 'flex-end', flexDirection: 'row',
     },
     fs_14: { fontSize: 14 },
     fs_24: { fontSize: 24 },
@@ -156,10 +162,10 @@ const styles = StyleSheet.create({
     set_occation: { borderRadius: 20, backgroundColor: constant.C_BLACK_0, elevation: 2, padding: 20, margin: 5, marginTop: 20 },
     subjectTxt: { fontSize: 20, fontWeight: '500', color: constant.C_BLACK_80, marginTop: 24, marginBottom: 8 },
     nutri_info: { width: '100%', },
-    btnview: {width: '100%', marginTop: 28,  borderTopWidth: 2, borderTopColor: constant.C_BLACK_20, },
+    btnview: { width: '100%', marginTop: 28, borderTopWidth: 2, borderTopColor: constant.C_BLACK_20, },
     trackbtn: { width: '100%', height: 45, marginBottom: 12, borderRadius: 10, backgroundColor: constant.C_BLUE_80 },
     color_desc: { color: constant.C_BLACK_60 },
-    foodimg: {width : 53, height : 53, resizeMode: 'cover', borderRadius: 12},
-    foodTxt: {fontSize: 35, fontWeight: '400', color: constant.C_BLACK_80},
+    foodimg: { width: 53, height: 53, resizeMode: 'cover', borderRadius: 12 },
+    foodTxt: { fontSize: 35, fontWeight: '400', color: constant.C_BLACK_80 },
 });
 

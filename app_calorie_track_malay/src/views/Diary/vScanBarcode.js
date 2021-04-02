@@ -3,17 +3,18 @@ import { BackHandler, View, Text, StyleSheet, ScrollView, StatusBar, TouchableOp
 import Spinner from 'react-native-loading-spinner-overlay';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Button, Input } from 'react-native-elements';
 import { RNCamera } from 'react-native-camera';
+import { QRScannerView } from 'react-native-qrcode-scanner-view';
 // custom import
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 //svgs
 import Svg_copy from '../../assets/svgs/ic_copyfile.svg'
 import Svg_capture from '../../assets/svgs/ic_capture.svg'
-import Svg_refresh from '../../assets/svgs/ic_refresh.svg'
+import Svg_refresh from '../../assets/svgs/diary/ic_refresh.svg'
 
-export default class vTakePhoto extends React.Component {
+export default class vScanBarcode extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
@@ -42,43 +43,58 @@ export default class vTakePhoto extends React.Component {
             <View style={styles.header}>
                 <View style={[{ width: '100%', }, Gstyles.row_center]}>
                     <View style={[Gstyles.flex_1, { flexDirection: 'row', paddingLeft: 20 }]}>
-                        <TouchableOpacity onPress={() => { this.props.navigation.pop() }}>
-                            <Feather name="arrow-left" size={24} color={constant.C_BLACK_100} />
-                        </TouchableOpacity>
                     </View>
-                    <Text style={styles.titleTxt}>{this.state.selectedPage == 1 ? 'Confirm Photo' : 'Take Photo'}</Text>
+                    <Text style={styles.titleTxt}>Barcode Scanner</Text>
                     <View style={[Gstyles.flex_1, Gstyles.row_center, { justifyContent: 'flex-end', paddingRight: 20 }]}>
-                        {
-                            this.state.selectedPage == 1 &&
-                            <TouchableOpacity onPress={() => { this.props.navigation.pop() }}>
-                                <Text style={{ fontSize: 18, fontWeight: '500', color: constant.C_BLUE_50 }}>Confirm</Text>
-                            </TouchableOpacity>
-                        }
+                        <TouchableOpacity onPress={() => { this.props.navigation.pop() }}>
+                            <Ionicons name="close" size={24} color={constant.C_BLACK_100} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
         )
     }
-    
+
     _renderCameraView = () => {
+        const barcodeReceived = (event) => { console.log('Type: ' + event.type + '\nData: ' + event.data) };
         return (
-            <RNCamera
-                ref={ref => {
-                    this.camera = ref;
+            < QRScannerView
+                onScanResult={barcodeReceived}
+                renderHeaderView={this._renderHeaderView}
+                renderFooterView={this._renderCaptureView}
+                hintText={null}
+                rectStyle={{
+                    width: 280, height: 238, borderWidth: 0,
+                    borderColor: constant.C_BLACK_0, borderRadius: 40
                 }}
-                style={styles.preview}
-                type={RNCamera.Constants.Type.back}
-                flashMode={RNCamera.Constants.FlashMode.on}
-                onGoogleVisionBarcodesDetected={({ barcodes }) => {
-                    console.log(barcodes);
-                }}
-            />
+                // isShowCorner = {false}    
+                scanBarAnimateReverse={true} />
+        )
+    }
+
+    _renderHeaderView = () => {
+        return (
+            <View style={[Gstyles.col_center]}>
+                <View style={[Gstyles.row_center, styles.headerView]} >
+                    <TouchableOpacity style={[Gstyles.col_center, styles.headerviewBtn]}>
+                        <Text style={styles.headerviewBtnTxt}>Manual Search</Text>
+                    </TouchableOpacity>
+                    <View style={{ width: 12 }}></View>
+                    <TouchableOpacity style={[Gstyles.col_center, styles.headerviewBtn]}>
+                        <Text style={styles.headerviewBtnTxt}>Flash Off</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={[Gstyles.col_center]}>
+                    <Text style={styles.hint}>Place the barcode properly in the box </Text>
+                    <Text style={styles.hint}>to scan the product</Text>
+                </View>
+            </View>
         )
     }
 
     _renderCaptureView = () => {
         return (
-            <View style={[Gstyles.row_center, { paddingLeft: 25, paddingRight: 25, height: 120, width: '100%' }]} >
+            <View style={[Gstyles.row_center, styles.captureView]} >
                 <TouchableOpacity>
                     <Svg_copy />
                 </TouchableOpacity>
@@ -100,19 +116,9 @@ export default class vTakePhoto extends React.Component {
                 <StatusBar hidden={true} translucent backgroundColor="transparent" barStyle="light-content" />
                 <Spinner visible={this.state.loading} />
                 {this._renderHeader()}
-                {
-                    this.state.selectedPage == 0 ?
-                        <View style={[Gstyles.flex_1, { width: '100%' }]}>
-                            {this._renderCameraView()}
-                            <TouchableOpacity style={[Gstyles.row_center, styles.flashBtn]}>
-                                <FontAwesome name="flash" color={constant.C_BLACK_0} size={12}/>
-                                <Text style={{marginLeft: 3, fontSize: 11, color: constant.C_BLACK_0}}>Flash</Text>
-                            </TouchableOpacity>
-                        </View>
-                        :
-                        <Image source={{uri: this.state.result_photo}} style={styles.preview} />
-                }
-                {this._renderCaptureView()}
+                <View style={[Gstyles.flex_1, { width: '100%' }]}>
+                    {this._renderCameraView()}
+                </View>
             </View>
         );
     }
@@ -137,6 +143,11 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-    flashBtn : {position:'absolute', top: 8, right: 8, borderRadius: 20,  padding: 8, paddingLeft:12, paddingRight: 12, backgroundColor: '#00000033'},
+    flashBtn: { position: 'absolute', top: 8, right: 8, borderRadius: 20, padding: 8, paddingLeft: 12, paddingRight: 12, backgroundColor: '#00000033' },
+    captureView: { position: 'absolute', bottom: 12, right: 8, paddingLeft: 25, paddingRight: 25, height: 120, width: '100%' },
+    headerView: { width: '100%', height: 80, paddingLeft: 20, paddingRight: 20 },
+    headerviewBtn: { flex: 1, height: 48, backgroundColor: constant.C_BLACK_0, borderRadius: 10 },
+    headerviewBtnTxt: { fontSize: 16, fontWeight: '500', color: constant.C_BLUE_50 },
+    hint : {fontSize: 16, color: '#f6f6f688'},
 });
 

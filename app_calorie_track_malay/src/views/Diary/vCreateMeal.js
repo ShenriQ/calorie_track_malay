@@ -124,7 +124,7 @@ export default class vCreateMeal extends React.Component {
     }
     _renderDirectionView = () => {
         return (
-            <TouchableOpacity activeOpacity={1} style={[styles.directionInputView]} >
+            <TouchableOpacity onPress={()=>{this.props.navigation.navigate('diary_adddirection')}} activeOpacity={1} style={[styles.directionInputView]} >
                 <View style={[Gstyles.row_center_start]}>
                     <AntDesign name='edit' size={16} color={constant.C_BLACK_30} />
                     <Text style={{ flex: 1, fontSize: 13, color: constant.C_BLACK_30, fontWeight: '300', marginLeft: 8 }}>Write instructions here</Text>

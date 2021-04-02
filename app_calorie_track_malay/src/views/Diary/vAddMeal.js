@@ -56,10 +56,10 @@ export default class vAddMeal extends React.Component {
         },
     ]
 
-    goAddFood = () => {
-        this.props.navigation.navigate('add_food')
+    goPage = (page_name) => {
+        this.props.navigation.navigate(page_name)
     }
-
+    
     _renderHeader = () => {
         return (
             <View style={styles.header}>
@@ -84,7 +84,7 @@ export default class vAddMeal extends React.Component {
         return (
             <View style={[{ width: '100%', height: 45, marginTop: 16, marginBottom: 16 }, Gstyles.row_center]}>
                 <View style={[{ flexDirection: 'row', paddingLeft: 20 }]}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => this.goPage('diary_weeklymealplan')}>
                         <Svg_mealplan width={40} height={40} />
                     </TouchableOpacity>
                 </View>
@@ -99,7 +99,7 @@ export default class vAddMeal extends React.Component {
                     />
                 </View>
                 <View style={[Gstyles.row_center, { justifyContent: 'flex-end', paddingRight: 20 }]}>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => this.goPage('diary_scanbarcode')}>
                         <Svg_scancode width={40} height={40} />
                     </TouchableOpacity>
                 </View>
