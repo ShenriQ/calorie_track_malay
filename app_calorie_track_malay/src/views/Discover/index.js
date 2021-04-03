@@ -13,12 +13,15 @@ import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { user_helper, profile_helper } from '@helper';
 import Spacing from '../../components/Global/Spacing';
+// svgs
 import Svg_Tomato from '../../assets/svgs/ic_tomato.svg';
 import Svg_Brocooli from '../../assets/svgs/ic_broccoli.svg';
 import Svg_Blueberry from '../../assets/svgs/ic_blueberry.svg';
 import Svg_BgredCateg from '../../assets/svgs/bg_red_food_categ.svg';
 import Svg_BgtealCateg from '../../assets/svgs/bg_teal_food_categ.svg';
 import Svg_BgblueCateg from '../../assets/svgs/bg_blue_food_categ.svg';
+
+import Svg_Plus from '../../assets/svgs/discover/ic_plus.svg';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get('window').height
@@ -29,7 +32,7 @@ export default class vDiscover extends React.Component {
 
         this.props = props;
         this.state = {
-            activeTab: 0,
+            activeTab: 1,
             selectedFilter : 2,
             filterModalY: new Animated.Value(-screenHeight),
         }
@@ -94,27 +97,27 @@ export default class vDiscover extends React.Component {
     ]
     foods = [
         {
-            name: 'Popcorn (Soft)', photo: require('../../assets/imgs/tmp/food1.png'), isFav: true, cnt: 737,
+            name: 'Popcorn (Soft)', photo: require('../../assets/imgs/tmp/food1.png'), isFav: true, cnt: 737, cal : 288,
             user: { name: 'Joseph29_11', photo: require('../../assets/imgs/tmp/avatar.png') },
         },
         {
-            name: 'Onigiri', photo: require('../../assets/imgs/tmp/food2.png'), isFav: false, cnt: 58,
+            name: 'Onigiri', photo: require('../../assets/imgs/tmp/food2.png'), isFav: false, cnt: 58, cal : 288,
             user: { name: 'Nakamura1411', photo: require('../../assets/imgs/tmp/avatar.png') },
         },
         {
-            name: 'Sandwich', photo: require('../../assets/imgs/tmp/food3.png'), isFav: false, cnt: 16,
+            name: 'Sandwich', photo: require('../../assets/imgs/tmp/food3.png'), isFav: false, cnt: 16, cal : 205,
             user: { name: 'Michelandre', photo: require('../../assets/imgs/tmp/avatar.png') },
         },
         {
-            name: 'Salad', photo: require('../../assets/imgs/tmp/food4.png'), isFav: false, cnt: 321,
+            name: 'Salad', photo: require('../../assets/imgs/tmp/food4.png'), isFav: false, cnt: 321, cal : 188,
             user: { name: 'Putra322', photo: require('../../assets/imgs/tmp/avatar.png') },
         },
         {
-            name: 'Pancake', photo: require('../../assets/imgs/tmp/food5.png'), isFav: false, cnt: 541,
+            name: 'Pancake', photo: require('../../assets/imgs/tmp/food5.png'), isFav: false, cnt: 541, cal : 235,
             user: { name: 'Joseph29_11', photo: require('../../assets/imgs/tmp/avatar.png') },
         },
         {
-            name: 'Smoothie', photo: require('../../assets/imgs/tmp/food6.png'), isFav: false, cnt: 339,
+            name: 'Smoothie', photo: require('../../assets/imgs/tmp/food6.png'), isFav: false, cnt: 339, cal : 124,
             user: { name: 'Joseph29_11', photo: require('../../assets/imgs/tmp/avatar.png') },
         }
     ]
@@ -235,16 +238,20 @@ export default class vDiscover extends React.Component {
             <View key={index} style={[Gstyles.col_center, { padding: 8, width : w }]}>
                 <TouchableOpacity onPress={()=>this.goMealDetail(foodItem)} style={[{ backgroundColor: constant.C_BLACK_0, elevation : 2, borderRadius : 12, width : '100%'}, Gstyles.col_center]}>
                     <ImageBackground source={foodItem.photo} style={{width : '100%', height : (w-12),}} imageStyle={{borderTopLeftRadius : 12, borderTopRightRadius : 12}}>
+                        <TouchableOpacity activeOpacity={0.7} style={[{ position : 'absolute', top : 13, right : 13,  padding: 6, paddingTop : 2, paddingBottom : 2, }, Gstyles.row_center]}>
+                            <Svg_Plus />
+                        </TouchableOpacity>
                         <TouchableOpacity activeOpacity={0.7} style={[{ position : 'absolute', bottom : 16, right : 16,  padding: 6, paddingTop : 2, paddingBottom : 2, backgroundColor : constant.C_BLACK_0, borderRadius: 12 }, Gstyles.row_center]}>
                             <Text style={{ color: constant.C_RED_50, fontSize: 10, fontWeight : '500', marginRight: 4 }}>{foodItem.cnt}</Text>
                             <Ionicons name={foodItem.isFav ? "ios-heart" : "heart-outline"} size={16} color={constant.C_RED_50} />
                         </TouchableOpacity>
                     </ImageBackground>
-                    <Text style={[{ fontSize: 14, fontWeight: '700', color: constant.C_BLACK_80, padding: 12, paddingBottom : 8 }, Gstyles.text_left]}>{foodItem.name}</Text>
-                    <View style={[{padding : 12, paddingTop : 0, flexDirection : 'row', width : '100%'}]}>
+                    <Text style={[{ fontSize: 14, fontWeight: '700', color: constant.C_BLACK_80, padding: 12, paddingBottom : 4 }, Gstyles.text_left]}>{foodItem.name}</Text>
+                    {/* <View style={[{padding : 12, paddingTop : 0, flexDirection : 'row', width : '100%'}]}>
                         <Image source={foodItem.user.photo} style={{width : 16,height : 16, borderRadius : 16, resizeMode : 'cover'}}></Image>
                         <Text style={{fontSize : 10, fontWeight :'400', color : constant.C_BLACK_70, marginLeft : 4}}>{foodItem.user.name}</Text>
-                    </View>
+                    </View> */}
+                    <Text style={[{fontSize: 14, fontWeight: '400', color: constant.C_BLUE_50, padding: 12, paddingTop: 0, paddingBottom : 8 }, Gstyles.text_left]}>{foodItem.cal} kcal</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -314,10 +321,10 @@ export default class vDiscover extends React.Component {
                 {this._renderFilterModal()}
                 <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
                 <Spinner visible={this.state.loading} />
-                <View style={[styles.header, Gstyles.col_center]}>
+                <View style={[styles.header, {justifyContent: 'flex-end'}]}>
                     {
                         this.state.activeTab == 1 &&
-                        <View style={[Gstyles.row_center, { padding: 20 }]}>
+                        <View style={[Gstyles.row_center, { padding: 20, paddingBottom: 16 }]}>
                             <Input
                                 placeholder={Strings["What do you want to search?"]} placeholderTextColor={constant.C_BLACK_50}
                                 onChangeText={value => this.setState({ pass: value })} errorMessage={this.state.err_pass}
@@ -333,7 +340,7 @@ export default class vDiscover extends React.Component {
                         </View>
                     }
                 </View>
-                <View style={{ width: '100%', flexDirection : 'row', paddingLeft: 25, paddingRight: 25 }}>
+                {/* <View style={{ width: '100%', flexDirection : 'row', paddingLeft: 25, paddingRight: 25 }}>
                     <View style={styles.headerTab}>
                         <TouchableOpacity
                             activeOpacity={0.7}
@@ -348,7 +355,7 @@ export default class vDiscover extends React.Component {
                             <Text style={[styles.headerTabTxt, { color: this.state.activeTab == 1 ? constant.C_BLACK_0 : constant.C_BLACK_60 }]} >{Strings["Meals"]}</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </View> */}
                 <View style={styles.formView} >
                     <ScrollView style={{ flex: 1, width: '100%' }} >
                         {
@@ -409,7 +416,7 @@ const styles = StyleSheet.create({
         flex: 1, flexDirection: 'column', alignItems: 'center', backgroundColor: constant.C_BLACK_0,
     },
     header: {
-        backgroundColor: constant.C_BLUE_50, width: '100%', height: 150,
+        backgroundColor: constant.C_BLUE_50, width: '100%', height: 105,
     },
     fs_12: { fontSize: 12 },
     headerTab: { height: 60, width: '100%', marginTop: -25, padding: 10, elevation: 2, backgroundColor: constant.C_BLACK_0, borderRadius: 15, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' },
