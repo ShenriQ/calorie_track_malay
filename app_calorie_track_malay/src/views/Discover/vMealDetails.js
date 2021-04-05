@@ -69,13 +69,15 @@ export default class vMealDetails extends React.Component {
             activeTab: 0,
             isShowTrackModal: false,
             curSettingId: 1,
+            curTrackDateIndex : 180,
             curTrackDate: new Date(),
             curTrackTime: 1,
             curServingSize: 2,
             isShowEditModal: false,
             isEditMore: false,
-            direction : '',
-            directionInputHeight : 0,
+            direction: '',
+            directionInputHeight: 0,
+            datepicker_list: []
         }
     }
 
@@ -89,6 +91,13 @@ export default class vMealDetails extends React.Component {
     }
 
     componentDidMount = () => {
+        // prepare date list for date picker (1 year)
+        let tmpDates = []
+        for (var i = -180; i < 180; i++) {
+            tmpDates.push(moment(new Date()).add(i, 'days')) 
+        }
+        
+        this.setState({datepicker_list : tmpDates})
     }
 
     shoppingList = [{ name: 'Fish' }, { name: 'Chicken' }, { name: 'Potatoes' }, { name: 'Olives' }, { name: 'Bread' },]
@@ -118,6 +127,15 @@ export default class vMealDetails extends React.Component {
             label: '4             0.50',
         }
     ]
+
+    getDateString=(date_obj = new Date())=>{
+        let today_str = moment(new Date()).format("ddd MMM D")
+        let date_str = moment(date_obj).format("ddd MMM D")
+        if(today_str == date_str) {
+            return 'Today'
+        }
+        return date_str
+    }
 
     getMealTimeIcon = (time) => {
         if (time == 'Breakfast') { return <Svg_breakfast /> }
@@ -310,16 +328,27 @@ export default class vMealDetails extends React.Component {
                     {
                         this.state.curSettingId == 1 &&
                         <View style={[{ width: '100%', flex: 1, height: 160, backgroundColor: constant.C_BLACK_10 }, Gstyles.row_center]}>
-                            <DatePicker
+                            {/* <DatePicker
                                 fadeToColor={'none'}
                                 style={{ width: width(100), height: 160, backgroundColor: constant.C_BLACK_10, }}
                                 mode='datetime'
                                 textColor={constant.C_BLUE_50}
                                 date={this.state.curTrackDate}
                                 onDateChange={(value) => this.setState({ curTrackDate: value })}
-                            />
-                            <Picker style={{ position: 'absolute', left: '50%', top: 0, width: width(50), height: '100%', backgroundColor: constant.C_BLACK_10 }}
-                                lineColor={constant.C_BLUE_50} //to set top and bottom line color (Without gradients)
+                            /> */}
+                            
+                            <Picker style={{width : '40%', height: '100%', backgroundColor: constant.C_BLACK_10 }}
+                                lineColor={constant.C_BLACK_10} //to set top and bottom line color (Without gradients)
+                                selectedValue={this.state.curTrackDateIndex}
+                                itemStyle={{ color: constant.C_BLUE_50, fontSize: 18 }}
+                                itemSpace={18}
+                                onValueChange={(index) => this.setState({curTrackDateIndex : index, curTrackDate: this.state.datepicker_list[index]})}>
+                                {this.state.datepicker_list.map((value, i) =>
+                                    <PickerItem label={this.getDateString(value)} value={i} key={i} />
+                                )}
+                            </Picker>
+                            <Picker style={{width : '40%',height: '100%', backgroundColor: constant.C_BLACK_10 }}
+                                lineColor={constant.C_BLACK_10} //to set top and bottom line color (Without gradients)
                                 selectedValue={this.state.curTrackTime}
                                 itemStyle={{ color: constant.C_BLUE_50, fontSize: 18 }}
                                 itemSpace={18}
@@ -328,6 +357,8 @@ export default class vMealDetails extends React.Component {
                                     <PickerItem label={value} value={i} key={i} />
                                 )}
                             </Picker>
+                            <View style={{ width: '100%', height: 1, position: 'absolute', top: 96, backgroundColor: constant.C_BLUE_50 }}></View>
+                            <View style={{ width: '100%', height: 1, position: 'absolute', top: 126, backgroundColor: constant.C_BLUE_50 }}></View>
                         </View>
                     }
                     <View style={[{ width: '80%', },]}>
@@ -493,7 +524,7 @@ export default class vMealDetails extends React.Component {
                                         multiline={true}
                                         value={this.state.direction}
                                         onChangeText={(text) => {
-                                            this.setState({ direction : text })
+                                            this.setState({ direction: text })
                                         }}
                                         onContentSizeChange={(event) => {
                                             this.setState({ directionInputHeight: event.nativeEvent.contentSize.height })
@@ -656,7 +687,9 @@ const styles = StyleSheet.create({
     // edit modal
     nameinputview: { borderBottomColor: constant.C_BLACK_50, borderBottomWidth: 1, width: '100%', marginTop: 18, paddingBottom: 6 },
     mealItemsView: { paddingTop: 14, paddingBottom: 7 },
-    directionInput : {width: '100%', borderRadius: 12, borderWidth: 1, borderColor: constant.C_BLACK_30, marginTop: 12, 
-        textAlignVertical : 'top', padding : 16, fontSize: 14, fontWeight: '400'},
+    directionInput: {
+        width: '100%', borderRadius: 12, borderWidth: 1, borderColor: constant.C_BLACK_30, marginTop: 12,
+        textAlignVertical: 'top', padding: 16, fontSize: 14, fontWeight: '400'
+    },
 });
 
