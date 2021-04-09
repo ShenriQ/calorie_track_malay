@@ -9,11 +9,13 @@ import { width, height } from 'react-native-dimension';
 import { Modal, ModalContent, BottomModal, ModalTitle, } from 'react-native-modals';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
+import { connect } from 'react-redux'
 // import Pie from 'react-native-pie';
 import * as Progress from 'react-native-progress';
 // custom import
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-
+import { loadUserInfo } from '../../redux/actions/user';
+import { api_listen_diary } from '../../apis/diary'
 import MealTime from '../../components/Global/MealTime';
 //svg icons
 import Svg_gauge from '../../assets/svgs/diary/item2_gauge.svg';
@@ -29,7 +31,7 @@ import Svg_wave from '../../assets/svgs/diary/img_waterwave.svg'
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get('window').height
 
-export default class vDiary extends React.Component {
+class vDiary extends React.Component {
     constructor(props) {
         super(props);
         this.props = props;
@@ -39,14 +41,60 @@ export default class vDiary extends React.Component {
             isOptionModal: false,
             isDateModal: false,
             isfrom: false,
+            curDate : new Date(),
             todate: new Date(),
             fromdate: new Date(),
             waterCnt: 0,
             waterModalY: new Animated.Value(-screenHeight),
         }
+
+        this.detachListener = null;
     }
 
     componentDidMount = () => {
+        if (common.isNullorEmpty(this.props.user.uid)) {
+            this.props.loadUserInfo()
+        }
+        else {
+            this.listenDiary()
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.user.uid != this.props.user.uid && common.isNullorEmpty(this.props.user.uid) == false) {
+            this.listenDiary()
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.detachListener != null) {
+            this.detachListener()
+        }
+    }
+
+    listenDiary = () => {
+        if (this.detachListener != null) {
+            this.detachListener()
+        }
+        this.detachListener = api_listen_diary(this.props.user.uid, (snapshot) => {
+            common.printLog("listen diary snapshot: ", snapshot)
+
+        }, (error) => {
+            common.printLog("Error listen diary : ", error)
+        })
+    }
+
+    onChangeDate=(date_obj = new Date())=>{
+        this.setState({curDate: date_obj})
+    }
+
+    getDateString=(date_obj = new Date())=>{
+        let today_str = moment(new Date()).format('DD MMM, YYYY')
+        let date_str = moment(date_obj).format('DD MMM, YYYY')
+        if(today_str == date_str) {
+            return 'Today'
+        }
+        return date_str
     }
 
     calorie_data = [{
@@ -99,6 +147,13 @@ export default class vDiary extends React.Component {
     }
 
     _renderHeader = () => {
+        const onBeforeDay = ()=>{
+            this.onChangeDate(moment(this.state.curDate).add(-1, 'days').toDate())
+            
+        }
+        const onNextDay = () => {
+            this.onChangeDate(moment(this.state.curDate).add(1, 'days').toDate())
+        }
         return (
             <View style={styles.header}>
                 <View style={[{ width: '100%', }, Gstyles.row_center]}>
@@ -107,11 +162,11 @@ export default class vDiary extends React.Component {
                             <AntDesign name="arrowleft" size={24} color={constant.C_BLACK_100} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => onBeforeDay()}>
                         <Feather name="chevron-left" size={24} color={constant.C_BLUE_50} />
                     </TouchableOpacity>
-                    <Text style={styles.titleTxt}>{Strings["Today"]}</Text>
-                    <TouchableOpacity onPress={() => { }}>
+                    <Text style={styles.titleTxt}>{this.getDateString(this.state.curDate)}</Text>
+                    <TouchableOpacity onPress={() => onNextDay()}>
                         <Feather name="chevron-right" size={24} color={constant.C_BLUE_50} />
                     </TouchableOpacity>
                     <View style={[Gstyles.flex_1, Gstyles.row_center, { justifyContent: 'flex-end', paddingRight: 20 }]}>
@@ -264,7 +319,7 @@ export default class vDiary extends React.Component {
     _renderMoreOptionModal = () => {
         const onSaveAsMeal = () => {
             this.setState({ isOptionModal: false, })
-            this.props.rootnav.navigate('diary_createmeal', {pagetype : 'Save as'})
+            this.props.rootnav.navigate('diary_createmeal', { pagetype: 'Save as' })
         }
         const onTrackingStep = () => {
             this.setState({ isOptionModal: false, })
@@ -382,8 +437,8 @@ export default class vDiary extends React.Component {
                     </View>
                     {
                         this.state.optionModalType == 'food' &&
-                        <View style={{width: '100%', paddingLeft: 20, paddingRight: 20, paddingTop: 12, paddingBottom: 12}}>
-                        <MealTime />
+                        <View style={{ width: '100%', paddingLeft: 20, paddingRight: 20, paddingTop: 12, paddingBottom: 12 }}>
+                            <MealTime />
                         </View>
                     }
                 </View>
@@ -416,6 +471,10 @@ export default class vDiary extends React.Component {
                 this.setState({ waterCnt: this.state.waterCnt - 1 })
             }
         }
+        const closeModal = () => {
+
+            this.closeWaterModal()
+        }
         return (
             <Animated.View
                 style={[
@@ -430,7 +489,7 @@ export default class vDiary extends React.Component {
             >
                 <View style={[styles.waterModalContent, Gstyles.col_center, Gstyles.w_100]}>
                     <View style={[Gstyles.row_center, Gstyles.w_100, styles.waterModalHeader,]}>
-                        <TouchableOpacity onPress={() => { this.closeWaterModal() }}>
+                        <TouchableOpacity onPress={() => closeModal()}>
                             <AntDesign name="close" size={24} color={constant.C_BLACK_80} />
                         </TouchableOpacity>
                         <Text style={[styles.titleTxt, Gstyles.flex_1]}>Water</Text>
@@ -525,3 +584,13 @@ const styles = StyleSheet.create({
     waterModalBtn: { marginTop: 20, padding: 6, borderRadius: 8, borderColor: constant.C_BLUE_50, borderWidth: 1 },
 });
 
+
+const mapStatetoProps = (state) => {
+    return {
+        user: state.user.user
+    }
+}
+const mapDispatchToProps = {
+    loadUserInfo
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vDiary);
