@@ -11,7 +11,7 @@ import { width, height } from 'react-native-dimension';
 
 // custom import
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
+
 import Spacing from '../../components/Global/Spacing';
 // svgs
 import Weight_svg from '../../assets/svgs/ic_weight.svg';

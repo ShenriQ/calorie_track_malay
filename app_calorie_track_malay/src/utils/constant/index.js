@@ -1,7 +1,42 @@
 const api_base_url = 'http://localhost/';
 const app_brand = "SehatKu"
 const app_name = "A calorie tracking and wellness app"
-const Key_usertoken = "user_token"; // local db key
+const Key_userdata = "Key_userdata"; // local db key
+
+// questions
+const q_goal = [{ key: "lose-weight", name: "Lose weight" },
+{ key: "maintain-weight", name: "Maintain weight" },
+{ key: "gain-weight", name: "Gain weight" },]
+
+const q_goal_reason = [{ key: "to-have-more-weight", name: "To have more energy." },
+{ key: "to-feel-good-in-my-body", name: "To feel good in my body." },
+{ key: "to-be-able-to-physically-do-more", name: "To be able to physically do more." },
+{ key: "do-take-fewer-medications", name: "Do take fewer medications." },
+{ key: "to-have-more-fewer-confidence", name: "To have more confidence."},
+{ key: "to-be-healthier", name: "To be healthier." },]
+
+const q_target_weight_loss = [{ key: "0.25kg-per-week", name: "0.25kg per week" },
+{ key: "0.50kg-per-week", name: "0.50kg per week" },
+{ key: "0.75kg-per-week", name: "0.75kg per week" },
+{ key: "1.00kg-per-week", name: "1.00kg per week" },]
+
+const q_medical_condition = [
+{ key: "No, I have no med conditions", name: "No, I have no med conditions" },
+{ key: "High blood pressure", name: "High blood pressure" },
+{ key: "High blood sugar", name: "High blood sugar" },
+{ key: "Cholesterol", name: "Cholesterol" },
+{ key: "PCOS, endometriosis..", name: "PCOS, endometriosis.." },
+{ key: "I am pregnant/ breastfeeding", name: "I am pregnant/ breastfeeding" },
+{ key: "Other", name: "Other" },]
+
+const q_sleep = [
+{ key: "No, I sleep well", name: "No, I sleep well" },
+{ key: "Difficulty falling asleep", name: "Difficulty falling asleep" },
+{ key: "Waking up tired", name: "Waking up tired" },
+{ key: "Waking up during the night", name: "Waking up during the night" },
+{ key: "Insomnia", name: "Insomnia" },
+{ key: "Lack of sleep schedule", name: "Lack of sleep schedule" },
+{ key: "Other", name: "Other" },]
 
 // colors
 const C_BG_WHITE = "#DCDCDC";
@@ -35,7 +70,13 @@ export default {
     api_base_url,
     app_brand,
     app_name,
-    Key_usertoken,
+    Key_userdata,
+    //////////
+    q_goal, 
+    q_goal_reason,
+    q_target_weight_loss,
+    q_medical_condition,
+    q_sleep,
     //////////
     C_BG_WHITE,
     C_RED_50,
@@ -60,4 +101,4 @@ export default {
     C_TEAL_50,
     C_YELLOW_30,
     C_YELLOW_50,
-}; 
+};

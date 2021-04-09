@@ -10,7 +10,7 @@ import { Modal, ModalContent, BottomModal, ModalTitle } from 'react-native-modal
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
+
 import Spacing from '../../components/Global/Spacing';
 import AboutModal from '../../components/Modals/About';
 import SignoutModal from '../../components/Modals/SignOut';

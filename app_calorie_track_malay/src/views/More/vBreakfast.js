@@ -7,7 +7,7 @@ import DatePicker from 'react-native-date-picker';
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
+
 import Spacing from '../../components/Global/Spacing';
 import { SwitchItem } from '../../components/Global/Switch';
 import CbxWeekday from '../../components/Global/CbxWeekday';

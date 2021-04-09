@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 // custom import
 import { icons, imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
-import { addUser } from '../../redux/actions';
 import { InputCheckbox } from '../../components/Auth/Inputs';
 import { RectBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';

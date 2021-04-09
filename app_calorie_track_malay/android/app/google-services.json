@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "85824715162",
+    "project_id": "calorie-tracking-shendi-lh",
+    "storage_bucket": "calorie-tracking-shendi-lh.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85824715162:android:15957298b02c6538f3e223",
+        "android_client_info": {
+          "package_name": "com.app_calorie_track_malay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85824715162-frb0a2h0rfh0q90r7dltsblq7rjf7ope.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAsie-VCCVLr2H_ASq78CH0aeSo7wmayI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85824715162-frb0a2h0rfh0q90r7dltsblq7rjf7ope.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

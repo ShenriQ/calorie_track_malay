@@ -1,14 +1,10 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, TextInput, Platform, } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
+import { View, Text, StyleSheet, } from 'react-native';
 import { connect } from 'react-redux';
 // custom import
-import { icons, imgs } from '@assets';
+import { setAnswer } from '../../redux/actions/user';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { RectBtn, LinkBtn, OutlineBtn } from '../../components/Auth/Btns';
+import { OutlineBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
 //svg
 import Svg17 from '../../assets/svgs/auth/17.svg'
@@ -22,36 +18,45 @@ class vQ4 extends React.Component {
         }
     }
 
-    onStartQuery = () => {
+    onStartQuery = (answer) => {
+        this.props.setAnswer({
+            ...this.props.answerInfo,
+            gender: answer
+        })
         this.props.navigation.navigate('q5')
     }
 
     render() {
         return (
-            <React.Fragment>
-                <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                <View style={styles.container}>
-                    <Stepper index={4} />
-                    <Svg17 width={'100%'} height={240} style={styles.img}/>
-                    <Text style={styles.title_txt}>{"What is your gender?"}</Text>
-                    <View style={[Gstyles.col_center, styles.btn_view]}>
-                        <OutlineBtn onPress={this.onStartQuery} name={"Male"} />
-                        <OutlineBtn onPress={this.onStartQuery} name={"Female"} />
-                    </View>
+            <View style={styles.container}>
+                <Stepper index={4} />
+                <Svg17 width={'100%'} height={240} style={styles.img} />
+                <Text style={styles.title_txt}>{"What is your gender?"}</Text>
+                <View style={[Gstyles.col_center, styles.btn_view]}>
+                    <OutlineBtn onPress={() => this.onStartQuery("Male")} name={"Male"} />
+                    <OutlineBtn onPress={() => this.onStartQuery("Female")} name={"Female"} />
                 </View>
-            </React.Fragment>
+            </View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', paddingTop : 70, paddingBottom : 30, paddingLeft : 25, paddingRight : 25, backgroundColor : constant.C_BLACK_0
+        flex: 1, flexDirection: 'column', paddingTop: 70, paddingBottom: 30, paddingLeft: 25, paddingRight: 25, backgroundColor: constant.C_BLACK_0
     },
-    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center',},
+    title_txt: { fontSize: 14, fontWeight: '500', color: constant.C_BLACK_100, textAlign: 'center', },
     img_view: { paddingRight: 35 },
-    img: { width: '100%', height: 240, resizeMode: 'contain', marginTop : 30, marginBottom : 60 },
+    img: { width: '100%', height: 240, resizeMode: 'contain', marginTop: 30, marginBottom: 60 },
     btn_view: { marginTop: 30 }
 });
 
-export default connect(null)(vQ4)
+const mapStatetoProps = (state) => {
+    return {
+        answerInfo: state.user.answerInfo
+    }
+}
+const mapDispatchToProps = {
+    setAnswer,
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vQ4);

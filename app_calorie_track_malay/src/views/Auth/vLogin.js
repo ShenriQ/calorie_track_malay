@@ -1,13 +1,11 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
+import {View, StyleSheet, StatusBar} from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-// custom import
-import { icons, imgs } from '@assets';
-import { constant, common, Strings, Gstyles } from '../../utils';
-import { user_helper, profile_helper } from '@helper';
 import { connect } from "react-redux";
-import { addUser } from "../../redux/actions";
+// custom import
+import { constant, common, Strings, Gstyles } from '../../utils';
+import {doLogin} from '../../redux/actions/user';
+import {showToast} from '../../redux/actions/global';
 import { RectBtn, LinkBtn } from '../../components/Auth/Btns';
 import { InputSignin } from '../../components/Auth/Inputs';
 //svg
@@ -22,25 +20,27 @@ class vLogin extends React.Component {
             loading: false,
             email: '',
             pass: '',
-            err_email: '',
-            err_pass: '',
+            err_msg: '',
         }
     }
 
     componentDidMount = () => {
     }
 
+    
     validate = () => {
-        if (this.state.email == '') {
-            this.setState({ err_email: 'please input valid email', err_pass: '' });
+        if (common.isValidEmail(this.state.email) == false) {
+            this.setState({ err_msg: 'please input valid email' });
+            this.props.showToast({ type: 'error', msg: 'Please input valid email!' })
             return false;
         }
-        else if (this.state.pass == '') {
-            this.setState({ err_email: '', err_pass: 'please input password' });
+        else if (common.isNullorEmpty(this.state.pass)) {
+            this.setState({err_msg: 'please input password' });
+            this.props.showToast({ type: 'error', msg: 'Please input password!' })
             return false;
         }
         else {
-            this.setState({ err_email: '', err_pass: '' });
+            this.setState({ err_msg: ''});
             return true;
         }
     }
@@ -48,33 +48,18 @@ class vLogin extends React.Component {
     onLogin = () => {
         let isValid = this.validate()
         if (isValid == true) {
-            this.setState({ loading: true })
-            user_helper.login(this.state.email, this.state.pass,
-                this.onLoginSuccess,
-                (error) => {
-                    // if(error.response.status == 400)
-                    this.setState({ loading: false })
-                    alert(error.response.data.message)
-                    console.log(error.response.data)
-                }
-            )
+            this.props.doLogin({
+                email : this.state.email,
+                pass : this.state.pass,
+            })
         }
-    }
-
-    onLoginSuccess = async (res) => {
-        console.log('res', res)
-        this.setState({ loading: false })
-        let userObj = { token: res.Authorization }
-        // await common._storeData(constant.Key_usertoken, userObj)
-        this.props.dispatch(addUser(userObj))
-        this.props.navigation.navigate('discover')
     }
 
     render() {
         return (
             <React.Fragment>
                 <StatusBar translucent backgroundColor="transparent" barStyle="dark-content" />
-                <Spinner visible={this.state.loading} />
+                
                 <KeyboardAwareScrollView
                     // style={{}}
                     resetScrollToCoords={{ x: 0, y: 0 }}
@@ -86,10 +71,12 @@ class vLogin extends React.Component {
                             <Svg2 width={286} height={286} style={styles.img} />
                         </View>
                         <View style={styles.formView}>
-                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Email"]} />
-                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Password"]} />
+                            <InputSignin onChange={(text) => this.setState({email: text})} value={this.state.email} 
+                                placeholder={Strings["Email"]} />
+                            <InputSignin onChange={(text) => this.setState({pass: text})} value={this.state.pass} 
+                                secureTextEntry ={true} placeholder={Strings["Password"]} />
                             <View style={[Gstyles.col_center, styles.btn_view]}>
-                                <RectBtn onPress={()=>{}} name={Strings["Sign in"]} />
+                                <RectBtn onPress={()=>this.onLogin()} name={Strings["Sign in"]} />
                                 <LinkBtn onPress={()=>{}}  name={Strings["Forgotten your password?"]} />
                             </View>
                         </View>
@@ -113,4 +100,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default connect(null)(vLogin);
+const mapDispatchToProps = {
+    doLogin, showToast
+}
+export default connect(null, mapDispatchToProps)(vLogin);

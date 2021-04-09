@@ -1,21 +1,20 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Image, ImageBackground, TextInput, Platform, } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Image, } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { width, height } from 'react-native-dimension';
-import { Modal, ModalContent } from 'react-native-modals';
+import {connect} from 'react-redux';
 // custom import
-import { icons, tmp_imgs } from '@assets';
+import {doLogout} from '../../redux/actions/user'
+
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
 import Spacing from '../../components/Global/Spacing';
 import AboutModal from '../../components/Modals/About';
 import SignoutModal from '../../components/Modals/SignOut';
 
-export default class vMore extends React.Component {
+class vMore extends React.Component {
     constructor(props) {
         super(props);
 
@@ -61,6 +60,11 @@ export default class vMore extends React.Component {
 
     goAddFood = () => {
         this.props.navigation.navigate('add_food')
+    }
+
+    onSignout = () => {
+        this.setState({isShowAboutModal : false})
+        this.props.doLogout()
     }
 
     _renderProfile = (data) => {
@@ -131,7 +135,7 @@ export default class vMore extends React.Component {
 
                 </View>
                 <AboutModal visible={this.state.isShowAboutModal} close={()=>this.setState({isShowAboutModal : false})}/>
-                <SignoutModal visible={this.state.isShowSignoutModal} close={()=>this.setState({isShowSignoutModal : false})}/>
+                <SignoutModal visible={this.state.isShowSignoutModal} onSignout={()=>this.onSignout()} close={()=>this.setState({isShowSignoutModal : false})}/>
             </View>
         );
     }
@@ -162,3 +166,12 @@ const styles = StyleSheet.create({
     settingItemTxt: { fontSize: 14, fontWeight: '700', color: constant.C_BLUE_50, paddingLeft: 12 },
 });
 
+const mapStatetoProps=(state)=>{
+    return {
+        user : state.user.user
+    }
+}
+const mapDispatchToProps = {
+    doLogout, 
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vMore);

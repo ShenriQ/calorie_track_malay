@@ -1,17 +1,15 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
+import {  View,StyleSheet,StatusBar,} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {CheckBox} from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-// custom import
-import { icons, imgs } from '@assets';
-import { constant, common, Strings, Gstyles } from '../../utils';
-import { user_helper, profile_helper } from '@helper';
 import { connect } from "react-redux";
-import { addUser } from "../../redux/actions";
-import { RectBtn, LinkBtn } from '../../components/Auth/Btns';
+// custom import
+import { constant, common, Strings, Gstyles } from '../../utils';
+import {doRegister} from '../../redux/actions/user';
+import {showToast} from '../../redux/actions/global';
+import { RectBtn } from '../../components/Auth/Btns';
 import { InputSignin } from '../../components/Auth/Inputs';
-import Spacing from '../../components/Global/Spacing';
 //svg
 import Svg2 from '../../assets/svgs/auth/2.svg'
 
@@ -22,11 +20,11 @@ class vRegister extends React.Component {
         this.props = props;
         this.state = {
             loading: false,
+            username : '',
             email: '',
             pass: '',
-            err_email: '',
-            err_pass: '',
-            termchecked : false,
+            err_msg: '',
+            termchecked: false,
         }
     }
 
@@ -34,43 +32,43 @@ class vRegister extends React.Component {
     }
 
     validate = () => {
-        if (this.state.email == '') {
-            this.setState({ err_email: 'please input valid email', err_pass: '' });
+        if (common.isNullorEmpty(this.state.username)) {
+            this.setState({ err_msg: 'please input name' });
+            this.props.showToast({ type: 'error', msg: 'Please input name!' })
             return false;
         }
-        else if (this.state.pass == '') {
-            this.setState({ err_email: '', err_pass: 'please input password' });
+        else if (common.isValidEmail(this.state.email) == false) {
+            this.setState({ err_msg: 'please input valid email' });
+            this.props.showToast({ type: 'error', msg: 'Please input valid email!' })
+            return false;
+        }
+        else if (common.isNullorEmpty(this.state.pass)) {
+            this.setState({err_msg: 'please input password' });
+            this.props.showToast({ type: 'error', msg: 'Please input password!' })
+            return false;
+        }
+        else if (this.state.termchecked == false) {
+            this.setState({err_msg: 'please confirm the terms' });
+            this.props.showToast({ type: 'error', msg: 'Please confirm the terms!' })
             return false;
         }
         else {
-            this.setState({ err_email: '', err_pass: '' });
+            this.setState({ err_msg: ''});
+            this.props.showToast()
             return true;
         }
     }
 
-    onLogin = () => {
+    onRegister = () => {
         let isValid = this.validate()
         if (isValid == true) {
-            this.setState({ loading: true })
-            user_helper.login(this.state.email, this.state.pass,
-                this.onLoginSuccess,
-                (error) => {
-                    // if(error.response.status == 400)
-                    this.setState({ loading: false })
-                    alert(error.response.data.message)
-                    console.log(error.response.data)
-                }
-            )
+            this.props.doRegister({
+                name : this.state.username, 
+                email : this.state.email,
+                pass : this.state.pass,
+                answerInfo : this.props.answerInfo
+            })
         }
-    }
-
-    onLoginSuccess = async (res) => {
-        console.log('res', res)
-        this.setState({ loading: false })
-        let userObj = { token: res.Authorization }
-        // await common._storeData(constant.Key_usertoken, userObj)
-        this.props.dispatch(addUser(userObj))
-        this.props.navigation.navigate('discover')
     }
 
     render() {
@@ -89,9 +87,12 @@ class vRegister extends React.Component {
                             <Svg2 width={286} height={286} style={styles.img} />
                         </View>
                         <View style={styles.formView}>
-                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["First name (min. 3 characters)"]} />
-                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Email"]} />
-                            <InputSignin onChange={(text) => { }} value={''} placeholder={Strings["Password (min. 6 characters)"]} />
+                            <InputSignin onChange={(text) => this.setState({username : text})} 
+                                value={this.state.username} placeholder={Strings["First name (min. 3 characters)"]} />
+                            <InputSignin onChange={(text) => this.setState({email : text})} 
+                                value={this.state.email} placeholder={Strings["Email"]} />
+                            <InputSignin onChange={(text) => this.setState({pass : text})} secureTextEntry ={true} 
+                                value={this.state.pass} placeholder={Strings["Password (min. 6 characters)"]} />
                             <View style={[Gstyles.col_center, styles.btn_view]}>
                                 <CheckBox
                                     containerStyle={styles.checkbox}
@@ -99,9 +100,9 @@ class vRegister extends React.Component {
                                     center
                                     title='By using this App you agree to the Terms of Use and Privacy Policy.'
                                     checked={this.state.termchecked}
-                                    onPress={()=>this.setState({termchecked : !this.state.termchecked})}
-                                    />
-                                    <RectBtn onPress={()=>{}} name={Strings["Next"]} />
+                                    onPress={() => this.setState({ termchecked: !this.state.termchecked })}
+                                />
+                                <RectBtn onPress={() => this.onRegister()} name={Strings["Next"]} />
                             </View>
                         </View>
                     </View>
@@ -113,17 +114,24 @@ class vRegister extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'column', backgroundColor: constant.C_BLACK_0, 
+        flex: 1, flexDirection: 'column', backgroundColor: constant.C_BLACK_0,
     },
     formView: {
         width: '100%', padding: 20,
     },
     img_view: { flex: 1, minHeight: 286 },
     img: { width: 286, height: 286, resizeMode: 'contain' },
-    btn_view: { marginBottom : 50},
-    checkbox : {backgroundColor : constant.C_BLACK_0, borderWidth : 0, width : 273},
-    termstxt : {fontSize : 10, fontWeight : '400', color : constant.C_BLACK_100}
+    btn_view: { marginBottom: 50 },
+    checkbox: { backgroundColor: constant.C_BLACK_0, borderWidth: 0, width: 273 },
+    termstxt: { fontSize: 10, fontWeight: '400', color: constant.C_BLACK_100 }
 });
 
-
-export default connect(null)(vRegister);
+const mapStatetoProps=(state)=>{
+    return {
+        answerInfo : state.user.answerInfo
+    }
+}
+const mapDispatchToProps = {
+    doRegister, showToast
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vRegister);

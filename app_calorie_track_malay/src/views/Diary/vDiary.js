@@ -13,7 +13,7 @@ import moment from 'moment';
 import * as Progress from 'react-native-progress';
 // custom import
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
+
 import MealTime from '../../components/Global/MealTime';
 //svg icons
 import Svg_gauge from '../../assets/svgs/diary/item2_gauge.svg';

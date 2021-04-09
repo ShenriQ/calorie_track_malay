@@ -1,11 +1,9 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
+import { View, Text, StyleSheet, StatusBar,  ScrollView, } from 'react-native';
 import { connect } from 'react-redux';
 // custom import
-import { icons, imgs } from '@assets';
+import {setAnswer} from '../../redux/actions/user';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
-import { addUser } from '../../redux/actions';
 import { InputCheckbox } from '../../components/Auth/Inputs';
 import {RectBtn} from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
@@ -19,38 +17,33 @@ class vQ2 extends React.Component {
         this.props = props;
         this.state = {
             loading: false,
-            option1: false,
-            option2: false,
-            option3: false,
-            option4: false,
-            option5: false,
-            option6: false,
+            checked : []
         }
     }
 
-    onSelectItem = (index) => {
-        if(index == 1) {
-            this.setState({option1 : !this.state.option1})
+    onSelectItem = (key) => {
+        let tmp = this.state.checked.slice(0, this.state.checked.length)
+        if(this.state.checked.filter(item => item == key).length == 0) {
+            tmp.push(key)
         }
-        else if(index == 2) {
-            this.setState({option2 : !this.state.option2})
+        else {
+            let foundIndex = this.state.checked.findIndex(item => item == key)
+            if(foundIndex != -1) {
+                tmp.splice(foundIndex, 1)
+            }
         }
-        else if(index == 3) {
-            this.setState({option3 : !this.state.option3})
-        }
-        else if(index == 4) {
-            this.setState({option4 : !this.state.option4})
-        }
-        else if(index == 5) {
-            this.setState({option5 : !this.state.option5})
-        }
-        else if(index == 6) {
-            this.setState({option6 : !this.state.option6})
-        }
-        
+        this.setState({checked: tmp})
+    }
+
+    isChecked=(key)=>{
+        return this.state.checked.filter(item => item == key).length > 0
     }
 
     onGoNext = () => {
+        this.props.setAnswer({
+            ...this.props.answerInfo,
+            goal_reason : this.state.checked
+        })
         this.props.navigation.navigate('q3')
     }
 
@@ -65,12 +58,12 @@ class vQ2 extends React.Component {
                     <Text style={styles.title_txt}>{Strings["Why do you choose that goal?"]}</Text>
                     <Text style={styles.desc_txt}>{Strings["(select all that apply)"]}</Text>
                     <View style={[Gstyles.col_center, styles.btn_view]}>
-                        <InputCheckbox onPress={()=>this.onSelectItem(1)} checked={this.state.option1} name={Strings["To have more energy."]} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(2)} checked={this.state.option2} name={Strings["To feel good in my body."]} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(3)} checked={this.state.option3} name={Strings["To be able to physically do more."]} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(4)} checked={this.state.option4} name={Strings["Do take fewer medications."]} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(5)} checked={this.state.option5} name={Strings["To have more confidence."]} />
-                        <InputCheckbox onPress={()=>this.onSelectItem(6)} checked={this.state.option6} name={Strings["To be healthier."]} />
+                        {
+                            constant.q_goal_reason.map((item, index) => 
+                            <InputCheckbox key={index} onPress={()=>this.onSelectItem(item.key)} 
+                                checked={this.isChecked(item.key)} name={item.name} />
+                            )
+                        }
                     </View>
                     <View style={[Gstyles.col_center, styles.nextbtn_view]}>
                         <RectBtn onPress={this.onGoNext} name={Strings["Next"]} />
@@ -93,4 +86,12 @@ const styles = StyleSheet.create({
     nextbtn_view : { marginTop: 30, marginBottom : 30, },
 });
 
-export default connect(null)(vQ2)
+const mapStatetoProps=(state)=>{
+    return {
+        answerInfo : state.user.answerInfo
+    }
+}
+const mapDispatchToProps = {
+    setAnswer, 
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vQ2);

@@ -1,11 +1,10 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
+import {View, Text, StyleSheet, StatusBar,} from 'react-native';
 import { connect } from 'react-redux';
 // custom import
-import { icons, imgs } from '@assets';
+import {setAnswer} from '../../redux/actions/user';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { RectBtn } from '../../components/Auth/Btns';
-import { InputAnswer } from '../../components/Auth/Inputs';
 import Stepper from '../../components/Auth/Stepper';
 import Spacing from '../../components/Global/Spacing';
 import SwipePicker from '../../components/Global/SwipePicker';
@@ -18,6 +17,7 @@ class vQ6 extends React.Component {
         this.props = props;
         this.state = {
             loading: false,
+            selectedIndex : 2,
         }
     }
 
@@ -45,6 +45,10 @@ class vQ6 extends React.Component {
     ]
 
     onGoNext = () => {
+        this.props.setAnswer({
+            ...this.props.answerInfo,
+            targetWeight : this.weights[this.state.selectedIndex]
+        })
         this.props.navigation.navigate('q7')
     }
 
@@ -63,8 +67,9 @@ class vQ6 extends React.Component {
                             onChange={({ index, item }) => {
                                 console.log(`Selected index: ${index}`);
                                 console.log(`Selected item: ${item}`);
+                                this.setState({selectedIndex: index})
                             }}
-                            initialSelectedIndex = {2}
+                            initialSelectedIndex = {this.state.selectedIndex}
                             height={145}
                             width={250}
                         />
@@ -90,4 +95,12 @@ const styles = StyleSheet.create({
     nextbtn_view: { marginTop: 30, marginBottom: 30, },
 });
 
-export default connect(null)(vQ6)
+const mapStatetoProps=(state)=>{
+    return {
+        answerInfo : state.user.answerInfo
+    }
+}
+const mapDispatchToProps = {
+    setAnswer, 
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vQ6);

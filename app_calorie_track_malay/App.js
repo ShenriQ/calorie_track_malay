@@ -1,16 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import { ModalPortal } from 'react-native-modals';
-import { Provider } from 'react-redux'
-import store from './src/redux/store';
-import MemberRoute from './src/routes/Member';
-import GuestRoute from './src/routes/Guest';
+import React from 'react';
 import {
-  setCustomView,
-  setCustomTextInput,
-  setCustomText,
-  setCustomImage,
-  setCustomTouchableOpacity
+  setCustomText
 } from 'react-native-global-props';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
+import AppMain from './src/AppMain';
 
 const customTextProps = {
   style: {
@@ -21,14 +15,9 @@ const customTextProps = {
 setCustomText(customTextProps);
 
 const App = (props) => {
-    const [isLogged, SetIsLogged] = useState(true)
-
     return (
       <Provider store={store}>
-        {
-          isLogged ? <MemberRoute /> : <GuestRoute />
-        }
-        <ModalPortal />
+        <AppMain />
       </Provider>
     );
 }

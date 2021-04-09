@@ -11,7 +11,7 @@ var PickerItem = Picker.Item;
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
+
 import Spacing from '../../components/Global/Spacing';
 // svgs
 import Svg_Tomato from '../../assets/svgs/ic_tomato.svg';

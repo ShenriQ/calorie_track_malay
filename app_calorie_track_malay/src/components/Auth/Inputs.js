@@ -13,6 +13,7 @@ export const InputSignin = (props) => {
             onChangeText={text => props.onChange(text)}
             value={props.value}
             placeholder={props.placeholder}
+            secureTextEntry = {props.secureTextEntry == true}
         />
     )
 }

@@ -10,7 +10,7 @@ import * as Progress from 'react-native-progress';
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
+
 import Icon from 'react-native-vector-icons/Feather';
 import SearchListItem from '../../components/Diary/SearchListItem';
 import ColorIndicator from '../../components/Diary/ColorIndicator';

@@ -1,15 +1,8 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, TextInput, Platform, } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
+import { View, Text, StyleSheet,StatusBar,} from 'react-native';
 import { connect } from 'react-redux';
 // custom import
-import { icons, imgs } from '@assets';
-import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
-import { addUser } from '../../redux/actions';
+import { constant, Strings, Gstyles } from '../../utils' //'@utils';
 import {RectBtn, LinkBtn} from '../../components/Auth/Btns';
 //svgs
 import Svg1 from '../../assets/svgs/auth/1.svg'
@@ -25,23 +18,11 @@ class vSplash extends React.Component {
     }
 
     componentDidMount = () => {
-        this.getSavedData();
     }
 
-    getSavedData = async () => {
-        let userObj = await common._retrieveData(constant.Key_usertoken);
-        if (userObj != null) {
-            console.log('saved userObj', userObj)
-            this.props.dispatch(addUser(userObj))
-        }
-    }
-
-    onQuitApp = () => {
-        Platform.OS === 'ios' ?
-            RNExitApp.exitApp() : BackHandler.exitApp()
-    }
     onStartQuery=()=>{
         this.props.navigation.navigate('q1')
+        // this.props.navigation.navigate('register')
     }
     onGoLogin=()=>{
         this.props.navigation.navigate('login')

@@ -8,7 +8,7 @@ import RNExitApp from 'react-native-exit-app';
 // custom import
 import { icons, tmp_imgs } from '@assets';
 import { constant, common, lang } from '../../utils' //'@utils';
-import { user_helper, profile_helper } from '@helper';
+
 import Icon from 'react-native-vector-icons/Feather';
 import SearchListItem from '../../components/Diary/SearchListItem';
 import Strings from '../../utils/lang';

@@ -1,8 +1,8 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
+import {View, Text, StyleSheet,StatusBar, TouchableOpacity, ScrollView,} from 'react-native';
 import { connect } from 'react-redux';
 // custom import
-import { icons, imgs } from '@assets';
+import {setAnswer} from '../../redux/actions/user';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { RectBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
@@ -26,6 +26,10 @@ class vQ3 extends React.Component {
     }
 
     onGoNext = () => {
+        this.props.setAnswer({
+            ...this.props.answerInfo,
+            isGetReminder : this.state.selected
+        })
         this.props.navigation.navigate('q4')
     }
 
@@ -67,4 +71,12 @@ const styles = StyleSheet.create({
     nextbtn_view: { marginTop: 30, marginBottom: 30, },
 });
 
-export default connect(null)(vQ3)
+const mapStatetoProps=(state)=>{
+    return {
+        answerInfo : state.user.answerInfo
+    }
+}
+const mapDispatchToProps = {
+    setAnswer, 
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vQ3);

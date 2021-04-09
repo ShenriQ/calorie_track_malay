@@ -7,8 +7,6 @@ import { width, height, totalSize } from 'react-native-dimension';
 // custom import
 import { icons, imgs } from '@assets';
 import { constant, common, lang } from '../../utils';
-import { user_helper, profile_helper } from '@helper';
-
 
 export default class SearchListItem extends React.Component {
     constructor(props) {

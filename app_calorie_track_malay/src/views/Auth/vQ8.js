@@ -1,14 +1,9 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { Button, Input } from 'react-native-elements';
-import RNExitApp from 'react-native-exit-app';
+import {View, Text, StyleSheet, StatusBar, TouchableOpacity,ScrollView,} from 'react-native';
 import { connect } from 'react-redux';
 // custom import
-import { icons, imgs } from '@assets';
+import {setAnswer} from '../../redux/actions/user';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
-import { RectBtn, LinkBtn, OutlineBtn } from '../../components/Auth/Btns';
 import Stepper from '../../components/Auth/Stepper';
 import Spacing from '../../components/Global/Spacing';
 //svg
@@ -23,7 +18,11 @@ class vQ8 extends React.Component {
         }
     }
 
-    onStartQuery = () => {
+    onStartQuery = (answer) => {
+        this.props.setAnswer({
+            ...this.props.answerInfo,
+            activity_level : answer.name
+        })
         this.props.navigation.navigate('q9')
     }
 
@@ -36,7 +35,7 @@ class vQ8 extends React.Component {
    
     _renderBtn = (data, index) => {
         return (
-            <TouchableOpacity key={index} style={[Gstyles.row_center, styles.outlinebtn]} activeOpacity={0.6} onPress={() => this.onStartQuery()}>
+            <TouchableOpacity key={index} style={[Gstyles.row_center, styles.outlinebtn]} activeOpacity={0.6} onPress={() => this.onStartQuery(data)}>
                 <Text style={styles.outlinebtn_txt}>{data.name}</Text>
                 <View style={[Gstyles.col_center]}>
                     <Text style={[Gstyles.text_right, styles.outlinesub_txt]}>{data.desc1}</Text>
@@ -88,4 +87,12 @@ const styles = StyleSheet.create({
     outlinesub_txt: { fontSize: 11, fontWeight: '500', color: constant.C_BLACK_50 },
 });
 
-export default connect(null)(vQ8)
+const mapStatetoProps=(state)=>{
+    return {
+        answerInfo : state.user.answerInfo
+    }
+}
+const mapDispatchToProps = {
+    setAnswer, 
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vQ8);

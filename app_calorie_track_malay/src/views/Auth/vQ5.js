@@ -1,10 +1,8 @@
 import React from 'react';
-import { BackHandler, View, Text, StyleSheet, ImageBackground, StatusBar, TouchableOpacity, Image, ScrollView, Platform, } from 'react-native';
-import Spinner from 'react-native-loading-spinner-overlay';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { View, Text, StyleSheet, StatusBar,ScrollView,} from 'react-native';
 import { connect } from 'react-redux';
 // custom import
-import { icons, imgs } from '@assets';
+import {setAnswer} from '../../redux/actions/user';
 import { constant, common, Strings, Gstyles } from '../../utils' //'@utils';
 import { RectBtn } from '../../components/Auth/Btns';
 import { InputAnswer } from '../../components/Auth/Inputs';
@@ -62,11 +60,26 @@ class vQ5 extends React.Component {
     }
 
     onGoNext = () => {
-        if(this.state.index == 2) {
-            this.props.navigation.navigate('q6')
-        }
-        else {
+        if(this.state.index == 0) {
+            this.props.setAnswer({
+                ...this.props.answerInfo,
+                age : this.state.ans1
+            })
             this.setState({index : this.state.index + 1})
+        }
+        else if(this.state.index == 1) {
+            this.props.setAnswer({
+                ...this.props.answerInfo,
+                tall : this.state.ans2
+            })
+            this.setState({index : this.state.index + 1})
+        }
+        else if(this.state.index == 2) {
+            this.props.setAnswer({
+                ...this.props.answerInfo,
+                weight : this.state.ans3
+            })
+            this.props.navigation.navigate('q6')
         }
     }
 
@@ -117,4 +130,12 @@ const styles = StyleSheet.create({
     nextbtn_view: { marginTop: 30, marginBottom: 30, },
 });
 
-export default connect(null)(vQ5)
+const mapStatetoProps=(state)=>{
+    return {
+        answerInfo : state.user.answerInfo
+    }
+}
+const mapDispatchToProps = {
+    setAnswer, 
+}
+export default connect(mapStatetoProps, mapDispatchToProps)(vQ5);

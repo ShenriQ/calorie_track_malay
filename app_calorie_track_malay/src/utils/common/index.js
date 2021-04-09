@@ -35,9 +35,22 @@ const _removeData = async (key) => {
   }
 }
 
+const isNullorEmpty = (str) => {
+  if (str == null || str == '') {
+    return true
+  }
+  return false
+}
+
+const isValidEmail = (email) => {
+  var pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return pattern.test(email);  // returns a boolean 
+}
+
+const printLog=(title, text)=>{
+  console.log(title + ' : ', text)
+}
 
 export default {
-  _storeData,
-  _retrieveData,
-  _removeData,
-}; 
+  _storeData, _retrieveData, _removeData, isNullorEmpty, isValidEmail, printLog
+}

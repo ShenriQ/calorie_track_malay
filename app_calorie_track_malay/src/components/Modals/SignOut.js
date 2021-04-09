@@ -27,10 +27,10 @@ const SignoutModal = (props) => {
                 }}
             >
                 <View style={[Gstyles.col_center, Gstyles.w_100, { paddingTop: 16, paddingBottom: 16, paddingLeft: 24, paddingRight: 24 }]}>
-                    <TouchableOpacity activeOpacity={0.7} style={[styles.signoutBtn, Gstyles.col_center]}>
+                    <TouchableOpacity onPress={()=>props.onSignout()} activeOpacity={0.7} style={[styles.signoutBtn, Gstyles.col_center]}>
                         <Text style={[styles.btnTxt, {color: constant.C_BLACK_0,}]}>Sign Out</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.7} style={[styles.cancelBtn, Gstyles.col_center]}>
+                    <TouchableOpacity onPress={()=>props.close()} activeOpacity={0.7} style={[styles.cancelBtn, Gstyles.col_center]}>
                         <Text style={[styles.btnTxt, {color: constant.C_BLUE_50,}]}>Cancel</Text>
                     </TouchableOpacity>
                 </View>
