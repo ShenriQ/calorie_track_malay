@@ -54,10 +54,10 @@ function MyTabs(props) {
         }}
       />
       <Tab.Screen
-        name="More"
+        name="Setting"
         component={vMore}
         options={{
-          tabBarLabel: 'More',
+          tabBarLabel: 'Setting',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="ellipsis-horizontal-outline" color={color} size={size} />
           ),
