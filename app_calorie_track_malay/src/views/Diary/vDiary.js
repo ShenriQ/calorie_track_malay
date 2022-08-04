@@ -149,7 +149,6 @@ class vDiary extends React.Component {
     _renderHeader = () => {
         const onBeforeDay = ()=>{
             this.onChangeDate(moment(this.state.curDate).add(-1, 'days').toDate())
-            
         }
         const onNextDay = () => {
             this.onChangeDate(moment(this.state.curDate).add(1, 'days').toDate())
